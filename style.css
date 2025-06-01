@@ -8,7 +8,7 @@
 
 body {
   background-color: #f8fff5;
-  color: #333;
+  /* color: #333; */
   line-height: 1.6;
 }
 
@@ -63,6 +63,7 @@ nav a {
   margin: 0 auto;
   padding: 0 2rem;
   width: 100%;
+  text-align: center;
 }
 
 .hero h1 {
@@ -70,6 +71,10 @@ nav a {
   font-weight: 700;
   margin-bottom: 1rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero p {
+    text-align: center;
 }
 
 .tagline {
@@ -99,6 +104,7 @@ nav a {
   background-color: #fff;
   color: #6e8efb;
   border: 2px solid #fff;
+  text-align: center;
 }
 
 .btn-primary:hover {
@@ -365,7 +371,6 @@ nav a {
   }
 }
 
-
 /* Quick Links Section */
 .quick-links {
   background-color: #f1f3f5;
@@ -422,8 +427,6 @@ nav a {
   background-color: #5a7df5;
 }
 
-
-
 footer {
   background-color: #2f7b2f;
   color: white;
@@ -434,9 +437,8 @@ footer {
 .socials {
   display: flex;
   gap: 20px; /* Adjust spacing between icons */
-  justify-content: center
+  justify-content: center;
 }
-
 
 .socials a {
   color: #333; /* Default icon color */
@@ -494,3 +496,5 @@ footer {
     transform: translateY(0);
   }
 }
+
+
