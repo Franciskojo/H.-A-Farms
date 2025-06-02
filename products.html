@@ -45,11 +45,37 @@
     <div id="cart"></div>
   </main>
 
-  <footer>
-    <p>&copy; 2025 H.A. Farms. All rights reserved.</p>
+   <p>&copy; 2025 H.A. Farms. All rights reserved.</p>
+    <div class="socials">
+      <a href="https://www.facebook.com/ishmaelartsandinstallations" target="_blank"><i
+          class="fa-brands fa-facebook"></i></a>
+      <a href="https://www.instagram.com/ishmaelart_?igsh=bDgwMHVhanVwbzBn" target="_blank"><i
+          class="fa-brands fa-instagram"></i></a>
+      <a href="https://vm.tiktok.com/ZMk7urquG/" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+    </div>
   </footer>
 
   <script src="script.js"></script>
   <script>showCart();</script>
 </body>
 </html>
+
+footer {
+  background-color: #2f7b2f;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+.socials {
+  display: flex;
+  gap: 20px; /* Adjust spacing between icons */
+  justify-content: center;
+}
+
+.socials a {
+  color: #333; /* Default icon color */
+  font-size: 18px; /* Icon size */
+  transition: color 0.3s ease;
+  gap: 20px;
+}
