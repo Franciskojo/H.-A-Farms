@@ -273,7 +273,7 @@ nav a {
 
 .testimonial-item {
   flex: 0 0 100%;
-  background: #b38686;
+  background: #f8f1e5;
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
@@ -310,7 +310,7 @@ nav a {
 .testimonial-author {
   font-size: 1.1rem;
   font-weight: bold;
-  color: #333;
+  /* color: #333; */
   margin-top: 10px;
 }
 
@@ -443,7 +443,7 @@ nav a {
 }
 
 .link-btn {
-  background-color: #6e8efb;
+  background-color: #e67e22;;
   color: white;
   border: none;
   padding: 0.6rem 1.2rem;
@@ -510,7 +510,7 @@ footer {
 
 .social-links a {
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   transition: color 0.3s;
 }
 
@@ -523,6 +523,13 @@ footer {
   padding-top: 20px;
   font-size: 0.9rem;
   color: #ddd;
+}
+
+.back-to-top {
+  display: block;
+  margin-top: 10px;
+  /* color: #007BFF; */
+  text-decoration: underline;
 }
 
 /* Responsive Adjustments */
