@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | E-Commerce</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/products.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">E-Shop</a>
+                <div class="nav-links">
+                    <a href="products.html">Products</a>
+                    <a href="cart.html">Cart</a>
+                    <div class="user-actions">
+                        <a href="auth/login.html">Login</a>
+                        <a href="auth/register.html">Register</a>
+                        <div class="logged-in">
+                            <a href="user/dashboard.html" class="user-profile">My Account</a>
+                            <a href="#" id="logout">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="products-header">
+            <h1>Our Products</h1>
+            <div class="product-filters">
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="home">Home Goods</option>
+                </select>
+                <select id="sortBy">
+                    <option value="featured">Featured</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="newest">Newest</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="product-grid">
+            <!-- Products will be loaded dynamically -->
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 E-Commerce Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/products.js"></script>
+</body>
+</html>

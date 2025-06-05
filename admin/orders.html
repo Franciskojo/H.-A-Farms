@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders | E-Commerce</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Dashboard</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/admin/dasboard.html">
+                    <i class="icon-dashboard"></i> Dashboard
+                </a>
+                <a href="products.html">
+                    <i class="icon-products"></i> Products
+                </a>
+                <a href="orders.html" class="active">
+                    <i class="icon-orders"></i> Orders
+                </a>
+                <a href="users.html">
+                    <i class="icon-users"></i> Users
+                </a>
+                <a href="#">
+                    <i class="icon-settings"></i> Settings
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>Manage Orders</h1>
+                <div class="admin-actions">
+                    <button class="btn-notification">
+                        <i class="icon-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <div class="admin-profile">
+                        <img src="../../assets/images/admin-avatar.jpg" alt="Admin">
+                    </div>
+                </div>
+            </header>
+            
+            <div class="dashboard-content">
+                <div class="content-header">
+                    <div class="filters">
+                        <select id="statusFilter">
+                            <option value="">All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                        
+                        <div class="date-filter">
+                            <input type="date" id="startDate">
+                            <span>to</span>
+                            <input type="date" id="endDate">
+                        </div>
+                    </div>
+                    
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search orders...">
+                        <button><i class="icon-search"></i></button>
+                    </div>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ORD-123456</td>
+                            <td>John Smith</td>
+                            <td>Jun 15, 2023</td>
+                            <td>$219.98</td>
+                            <td>
+                                <select class="status-select">
+                                    <option value="pending">Pending</option>
+                                    <option value="processing">Processing</option>
+                                    <option value="shipped" selected>Shipped</option>
+                                    <option value="delivered">Delivered</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="btn-edit">View</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- More orders would be here -->
+                    </tbody>
+                </table>
+                
+                <div class="pagination">
+                    <button class="page-btn" disabled>Previous</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">Next</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/admin-orders.js"></script>
+</body>
+</html>

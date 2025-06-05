@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | E-Commerce</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <nav>
+                <a href="../index.html" class="logo">E-Shop</a>
+                <div class="nav-links">
+                    <a href="../products.html">Products</a>
+                    <a href="../cart.html">Cart <span class="cart-count">0</span></a>
+                    <div class="user-actions">
+                        <div class="logged-in">
+                            <a href="/user/dasboard.html" class="user-profile">My Account</a>
+                            <a href="#" id="logout">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container user-dashboard">
+        <aside class="user-sidebar">
+            <div class="user-profile">
+                <img src="/images/user-avatar.jpg" alt="User Avatar">
+                <h3 id="userName">John Doe</h3>
+                <p id="userEmail">john@example.com</p>
+            </div>
+            
+            <nav class="user-menu">
+                <a href="dasboard.html" class="active">
+                    <i class="icon-dashboard"></i> Dashboard
+                </a>
+                <a href="orders.html">
+                    <i class="icon-orders"></i> My Orders
+                </a>
+                <a href="#">
+                    <i class="icon-address"></i> Addresses
+                </a>
+                <a href="#">
+                    <i class="icon-settings"></i> Account Settings
+                </a>
+            </nav>
+        </aside>
+        
+        <div class="user-content">
+            <h1>Account Dashboard</h1>
+            
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="icon-orders"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Recent Orders</h3>
+                        <p>You have <span id="orderCount">2</span> recent orders</p>
+                        <a href="orders.html">View Orders</a>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="icon-address"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Address Book</h3>
+                        <p>You have <span id="addressCount">1</span> saved address</p>
+                        <a href="#">Manage Addresses</a>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="icon-account"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Account Information</h3>
+                        <p>Update your password and account details</p>
+                        <a href="#">Edit Account</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="recent-orders">
+                <h2>Recent Orders</h2>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ORD-123456</td>
+                            <td>Jun 20, 2023</td>
+                            <td><span class="status shipped">Shipped</span></td>
+                            <td>$219.98</td>
+                            <td><a href="order-detail.html?id=ORD-123456" class="btn-action">View</a></td>
+                        </tr>
+                        <!-- More orders would be here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 E-Commerce Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/user-dasbord.js"></script>
+</body>
+</html>

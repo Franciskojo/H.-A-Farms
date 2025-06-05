@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Products | E-Commerce</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Dashboard</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/admin/dasboard.html">
+                    <i class="icon-dashboard"></i> Dashboard
+                </a>
+                <a href="products.html" class="active">
+                    <i class="icon-products"></i> Products
+                </a>
+                <a href="orders.html">
+                    <i class="icon-orders"></i> Orders
+                </a>
+                <a href="users.html">
+                    <i class="icon-users"></i> Users
+                </a>
+                <a href="#">
+                    <i class="icon-settings"></i> Settings
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>Manage Products</h1>
+                <div class="admin-actions">
+                    <button class="btn-notification">
+                        <i class="icon-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <div class="admin-profile">
+                        <img src="../../assets/images/admin-avatar.jpg" alt="Admin">
+                    </div>
+                </div>
+            </header>
+            
+            <div class="dashboard-content">
+                <div class="content-header">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search products...">
+                        <button><i class="icon-search"></i></button>
+                    </div>
+                    <a href="product-edit.html" class="btn-primary">
+                        <i class="icon-plus"></i> Add Product
+                    </a>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                <div class="product-info">
+                                    <img src="../../assets/images/product1.jpg" alt="Product">
+                                    <span>Wireless Headphones</span>
+                                </div>
+                            </td>
+                            <td>Electronics</td>
+                            <td>$199.99</td>
+                            <td>15</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="btn-edit">Edit</button>
+                                    <button class="btn-delete">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- More products would be here -->
+                    </tbody>
+                </table>
+                
+                <div class="pagination">
+                    <button class="page-btn" disabled>Previous</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">Next</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/admin-products.js"></script>
+</body>
+</html>

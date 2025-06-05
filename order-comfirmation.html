@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation | E-Commerce</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/orders.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">E-Shop</a>
+                <div class="nav-links">
+                    <a href="products.html">Products</a>
+                    <a href="cart.html">Cart <span class="cart-count">0</span></a>
+                    <div class="user-actions">
+                        <a href="auth/login.html">Login</a>
+                        <a href="auth/register.html">Register</a>
+                        <div class="logged-in">
+                            <a href="user/dashboard.html" class="user-profile">My Account</a>
+                            <a href="#" id="logout">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="confirmation-container">
+            <div class="confirmation-card">
+                <div class="confirmation-header">
+                    <h1>Order Confirmed!</h1>
+                    <p>Thank you for your purchase</p>
+                </div>
+                
+                <div class="confirmation-details">
+                    <div class="detail-row">
+                        <span>Order Number:</span>
+                        <span id="orderNumber">ORD-123456</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Date:</span>
+                        <span id="orderDate">June 20, 2023</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Total:</span>
+                        <span id="orderTotal">$219.98</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Payment Method:</span>
+                        <span id="paymentMethod">Credit Card ending in 4242</span>
+                    </div>
+                </div>
+                
+                <div class="confirmation-actions">
+                    <a href="products.html" class="btn-outline">Continue Shopping</a>
+                    <a href="user/orders.html" class="btn-primary">View Order Details</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 E-Commerce Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/order-confirmation.js"></script>
+</body>
+</html>

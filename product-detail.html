@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail | E-Commerce</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="css/products.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <nav>
+                <a href="../index.html" class="logo">E-Shop</a>
+                <div class="nav-links">
+                    <a href="../products.html">Products</a>
+                    <a href="../cart.html">Cart <span class="cart-count">0</span></a>
+                    <div class="user-actions">
+                        <a href="../auth/login.html">Login</a>
+                        <a href="../auth/register.html">Register</a>
+                        <div class="logged-in">
+                            <a href="../user/dashboard.html" class="user-profile">My Account</a>
+                            <a href="#" id="logout">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="product-detail">
+            <div class="product-gallery">
+                <img src="../assets/images/product1.jpg" alt="Product" id="mainImage">
+                <div class="thumbnail-container">
+                    <img src="../assets/images/product1.jpg" alt="Thumbnail" class="thumbnail active">
+                    <img src="../assets/images/product2.jpg" alt="Thumbnail" class="thumbnail">
+                    <img src="../assets/images/product3.jpg" alt="Thumbnail" class="thumbnail">
+                </div>
+            </div>
+            
+            <div class="product-info">
+                <h1 id="productName">Wireless Headphones</h1>
+                <div class="price" id="productPrice">$199.99</div>
+                <div class="rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="review-count">(42 reviews)</span>
+                </div>
+                <p class="description" id="productDescription">
+                    Premium noise-cancelling wireless headphones with 30-hour battery life. 
+                    Comfortable over-ear design with premium materials.
+                </p>
+                
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <button class="quantity-btn minus">-</button>
+                        <span class="quantity">1</span>
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                    <button class="add-to-cart" id="addToCartBtn">Add to Cart</button>
+                </div>
+                
+                <div class="product-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Category:</span>
+                        <span class="meta-value" id="productCategory">Electronics</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Availability:</span>
+                        <span class="meta-value in-stock">In Stock (15 items)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="product-tabs">
+            <div class="tabs-header">
+                <button class="tab-btn active" data-tab="description">Description</button>
+                <button class="tab-btn" data-tab="specs">Specifications</button>
+                <button class="tab-btn" data-tab="reviews">Reviews</button>
+            </div>
+            
+            <div class="tab-content active" id="description">
+                <h3>Product Description</h3>
+                <p>Detailed product description goes here...</p>
+            </div>
+            
+            <div class="tab-content" id="specs">
+                <h3>Technical Specifications</h3>
+                <ul class="specs-list">
+                    <li><strong>Brand:</strong> AudioPro</li>
+                    <li><strong>Model:</strong> NC-300</li>
+                    <li><strong>Battery Life:</strong> 30 hours</li>
+                    <li><strong>Connectivity:</strong> Bluetooth 5.0</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="reviews">
+                <h3>Customer Reviews</h3>
+                <div class="review">
+                    <div class="review-header">
+                        <span class="review-author">John D.</span>
+                        <span class="review-rating">★★★★★</span>
+                    </div>
+                    <p class="review-text">Excellent sound quality and very comfortable!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 E-Commerce Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="./js/product-detail.js"></script>
+</body>
+</html>
