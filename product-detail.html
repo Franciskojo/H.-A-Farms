@@ -1,119 +1,408 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Detail | E-Commerce</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="css/products.css">
+    <title>Product Details</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .product-detail {
+            display: flex;
+            gap: 40px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-gallery {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            background-color: #ecf0f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .main-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .thumbnail-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .thumbnail:hover {
+            border-color: #3498db;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 28px;
+            margin: 0 0 10px;
+            color: #2c3e50;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin: 0 0 20px;
+        }
+
+        .product-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .product-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .product-description {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #3498db;
+            color: #3498db;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        .specs-table th,
+        .specs-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .specs-table th {
+            background-color: #f8f9fa;
+            width: 30%;
+        }
+
+        .related-products {
+            margin-top: 50px;
+        }
+
+        .related-products h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .related-item {
+            background-color: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .related-image {
+            height: 150px;
+            background-color: #ecf0f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .related-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .related-info {
+            padding: 15px;
+        }
+
+        .related-title {
+            font-size: 16px;
+            margin: 0 0 5px;
+        }
+
+        .related-price {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .status-active {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .status-draft {
+            background: #f39c12;
+            color: white;
+        }
+    </style>
 </head>
+
 <body>
-    <header class="main-header">
-        <div class="container">
-            <nav>
-                <a href="../index.html" class="logo">E-Shop</a>
-                <div class="nav-links">
-                    <a href="../products.html">Products</a>
-                    <a href="../cart.html">Cart <span class="cart-count">0</span></a>
-                    <div class="user-actions">
-                        <a href="../auth/login.html">Login</a>
-                        <a href="../auth/register.html">Register</a>
-                        <div class="logged-in">
-                            <a href="../user/dashboard.html" class="user-profile">My Account</a>
-                            <a href="#" id="logout">Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
+    <div class="container">
+        <a href="/prod.html" class="back-link">← Back to Products</a>
 
-    <main class="container">
-        <section class="product-detail">
+        <div class="product-detail">
             <div class="product-gallery">
-                <img src="../assets/images/product1.jpg" alt="Product" id="mainImage">
+                <div class="main-image">
+                    <img src="https://via.placeholder.com/500x400?text=Wireless+Headphones" alt="Wireless Headphones"
+                        id="mainImage">
+                </div>
                 <div class="thumbnail-container">
-                    <img src="../assets/images/product1.jpg" alt="Thumbnail" class="thumbnail active">
-                    <img src="../assets/images/product2.jpg" alt="Thumbnail" class="thumbnail">
-                    <img src="../assets/images/product3.jpg" alt="Thumbnail" class="thumbnail">
+                    <div class="thumbnail"
+                        onclick="changeImage('https://via.placeholder.com/500x400?text=Wireless+Headphones+1')">
+                        <img src="https://via.placeholder.com/100x100?text=Thumb+1" alt="Thumbnail 1">
+                    </div>
+                    <div class="thumbnail"
+                        onclick="changeImage('https://via.placeholder.com/500x400?text=Wireless+Headphones+2')">
+                        <img src="https://via.placeholder.com/100x100?text=Thumb+2" alt="Thumbnail 2">
+                    </div>
+                    <div class="thumbnail"
+                        onclick="changeImage('https://via.placeholder.com/500x400?text=Wireless+Headphones+3')">
+                        <img src="https://via.placeholder.com/100x100?text=Thumb+3" alt="Thumbnail 3">
+                    </div>
+                    <div class="thumbnail"
+                        onclick="changeImage('https://via.placeholder.com/500x400?text=Wireless+Headphones+4')">
+                        <img src="https://via.placeholder.com/100x100?text=Thumb+4" alt="Thumbnail 4">
+                    </div>
                 </div>
             </div>
-            
+
             <div class="product-info">
-                <h1 id="productName">Wireless Headphones</h1>
-                <div class="price" id="productPrice">$199.99</div>
-                <div class="rating">
-                    <span class="stars">★★★★☆</span>
-                    <span class="review-count">(42 reviews)</span>
-                </div>
-                <p class="description" id="productDescription">
-                    Premium noise-cancelling wireless headphones with 30-hour battery life. 
-                    Comfortable over-ear design with premium materials.
-                </p>
-                
-                <div class="product-actions">
-                    <div class="quantity-selector">
-                        <button class="quantity-btn minus">-</button>
-                        <span class="quantity">1</span>
-                        <button class="quantity-btn plus">+</button>
-                    </div>
-                    <button class="add-to-cart" id="addToCartBtn">Add to Cart</button>
-                </div>
-                
+                <h1 class="product-title">Wireless Headphones <span class="status-badge status-active">Active</span>
+                </h1>
+                <div class="product-price">$99.99 <small
+                        style="color: #7f8c8d; text-decoration: line-through; font-size: 16px;">$129.99</small></div>
+
                 <div class="product-meta">
-                    <div class="meta-item">
-                        <span class="meta-label">Category:</span>
-                        <span class="meta-value" id="productCategory">Electronics</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Availability:</span>
-                        <span class="meta-value in-stock">In Stock (15 items)</span>
-                    </div>
+                    <span>Category: Electronics</span>
+                    <span>SKU: WH-2023-001</span>
+                    <span>Stock: 45 items</span>
                 </div>
-            </div>
-        </section>
-        
-        <section class="product-tabs">
-            <div class="tabs-header">
-                <button class="tab-btn active" data-tab="description">Description</button>
-                <button class="tab-btn" data-tab="specs">Specifications</button>
-                <button class="tab-btn" data-tab="reviews">Reviews</button>
-            </div>
-            
-            <div class="tab-content active" id="description">
-                <h3>Product Description</h3>
-                <p>Detailed product description goes here...</p>
-            </div>
-            
-            <div class="tab-content" id="specs">
-                <h3>Technical Specifications</h3>
-                <ul class="specs-list">
-                    <li><strong>Brand:</strong> AudioPro</li>
-                    <li><strong>Model:</strong> NC-300</li>
-                    <li><strong>Battery Life:</strong> 30 hours</li>
-                    <li><strong>Connectivity:</strong> Bluetooth 5.0</li>
-                </ul>
-            </div>
-            
-            <div class="tab-content" id="reviews">
-                <h3>Customer Reviews</h3>
-                <div class="review">
-                    <div class="review-header">
-                        <span class="review-author">John D.</span>
-                        <span class="review-rating">★★★★★</span>
-                    </div>
-                    <p class="review-text">Excellent sound quality and very comfortable!</p>
-                </div>
-            </div>
-        </section>
-    </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 E-Commerce Store. All rights reserved.</p>
+                <div class="product-description">
+                    <p>Experience crystal-clear sound with our premium wireless headphones. Featuring noise
+                        cancellation, 30-hour battery life, and comfortable over-ear design. Perfect for music lovers
+                        and professionals alike.</p>
+                    <p>Key Features:</p>
+                    <ul>
+                        <li>Active Noise Cancellation</li>
+                        <li>Bluetooth 5.0</li>
+                        <li>30-hour playtime</li>
+                        <li>Built-in microphone</li>
+                        <li>Foldable design</li>
+                    </ul>
+                </div>
+
+                <table class="specs-table">
+                    <tr>
+                        <th>Brand</th>
+                        <td>AudioPro</td>
+                    </tr>
+                    <tr>
+                        <th>Model</th>
+                        <td>WH-200X</td>
+                    </tr>
+                    <tr>
+                        <th>Connectivity</th>
+                        <td>Wireless (Bluetooth)</td>
+                    </tr>
+                    <tr>
+                        <th>Battery Life</th>
+                        <td>30 hours</td>
+                    </tr>
+                    <tr>
+                        <th>Weight</th>
+                        <td>250g</td>
+                    </tr>
+                </table>
+
+                <div class="product-actions">
+                    <button class="btn btn-primary">Add to Cart</button>
+                    <button class="btn btn-outline">Add to Wishlist</button>
+                    <a href="product-form.html?id=1" class="btn btn-secondary">Edit Product</a>
+                </div>
+            </div>
         </div>
-    </footer>
 
-    <script src="./js/product-detail.js"></script>
+        <div class="related-products">
+            <h2>Related Products</h2>
+            <div class="related-grid">
+                <div class="related-item">
+                    <div class="related-image">
+                        <img src="https://via.placeholder.com/200x150?text=Bluetooth+Speaker" alt="Bluetooth Speaker">
+                    </div>
+                    <div class="related-info">
+                        <h3 class="related-title">Bluetooth Speaker</h3>
+                        <div class="related-price">$59.99</div>
+                    </div>
+                </div>
+                <div class="related-item">
+                    <div class="related-image">
+                        <img src="https://via.placeholder.com/200x150?text=Earbuds" alt="Earbuds">
+                    </div>
+                    <div class="related-info">
+                        <h3 class="related-title">Wireless Earbuds</h3>
+                        <div class="related-price">$79.99</div>
+                    </div>
+                </div>
+                <div class="related-item">
+                    <div class="related-image">
+                        <img src="https://via.placeholder.com/200x150?text=Headphone+Stand" alt="Headphone Stand">
+                    </div>
+                    <div class="related-info">
+                        <h3 class="related-title">Headphone Stand</h3>
+                        <div class="related-price">$24.99</div>
+                    </div>
+                </div>
+                <div class="related-item">
+                    <div class="related-image">
+                        <img src="https://via.placeholder.com/200x150?text=Audio+Cable" alt="Audio Cable">
+                    </div>
+                    <div class="related-info">
+                        <h3 class="related-title">Premium Audio Cable</h3>
+                        <div class="related-price">$19.99</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        // In a real app, you would fetch product details based on the ID
+        console.log("Viewing product with ID:", productId);
+
+        // Image gallery functionality
+        function changeImage(newSrc) {
+            document.getElementById('mainImage').src = newSrc;
+        }
+
+        // Simulate loading product data
+        if (productId) {
+            // You would typically fetch this from an API
+            const productData = {
+                id: productId,
+                name: "Wireless Headphones",
+                price: 99.99,
+                comparePrice: 129.99,
+                description: "Experience crystal-clear sound with our premium wireless headphones...",
+                // ... other product properties
+            };
+
+            // Update page title
+            document.title = productData.name + " | Product Details";
+        }
+    </script>
 </body>
+
 </html>
