@@ -1,123 +1,68 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Mock product data - in a real app, this would come from an API
-    const products = [
-        {
-            id: 1,
-            name: "Wireless Headphones",
-            price: 199.99,
-            category: "electronics",
-            image: "assets/images/product1.jpg",
-            description: "Premium noise-cancelling wireless headphones with 30-hour battery life.",
-            featured: true
-        },
-        {
-            id: 2,
-            name: "Smart Watch",
-            price: 249.99,
-            category: "electronics",
-            image: "assets/images/product2.jpg",
-            description: "Fitness tracking smartwatch with heart rate monitor and GPS.",
-            featured: true
-        },
-        // More products...
-    ];
+const API_URL = 'https://h-a-farms-backend.onrender.com/products';
 
-    // Load products
-    renderProducts(products);
+async function loadProducts() {
+  try {
+    const response = await fetch(API_URL);
+    const products = await response.json();
 
-    // Filter and sort functionality
-    document.getElementById('categoryFilter').addEventListener('change', function() {
-        filterAndSortProducts();
-    });
+    const container = document.querySelector('.product-grid');
+    container.innerHTML = ''; // Clear static content
 
-    document.getElementById('sortBy').addEventListener('change', function() {
-        filterAndSortProducts();
-    });
+    products.forEach(product => {
+      const card = document.createElement('div');
+      card.classList.add('product-card');
 
-    function filterAndSortProducts() {
-        const category = document.getElementById('categoryFilter').value;
-        const sortBy = document.getElementById('sortBy').value;
+      const imagePath = product.images?.[0]?.url || '';
+      const imageUrl = imagePath
+        ? (imagePath.startsWith('/')
+            ? `https://h-a-farms-backend.onrender.com${imagePath}`
+            : `https://h-a-farms-backend.onrender.com/${imagePath}`)
+        : 'https://via.placeholder.com/300x200?text=No+Image';
 
-        let filteredProducts = [...products];
-
-        // Filter by category
-        if (category) {
-            filteredProducts = filteredProducts.filter(product => product.category === category);
-        }
-
-        // Sort products
-        switch (sortBy) {
-            case 'price-low':
-                filteredProducts.sort((a, b) => a.price - b.price);
-                break;
-            case 'price-high':
-                filteredProducts.sort((a, b) => b.price - a.price);
-                break;
-            case 'newest':
-                // Assuming newer products have higher IDs
-                filteredProducts.sort((a, b) => b.id - a.id);
-                break;
-            case 'featured':
-            default:
-                filteredProducts.sort((a, b) => b.featured - a.featured);
-        }
-
-        renderProducts(filteredProducts);
-    }
-
-    function renderProducts(productsToRender) {
-        const productGrid = document.querySelector('.product-grid');
-        productGrid.innerHTML = '';
-
-        if (productsToRender.length === 0) {
-            productGrid.innerHTML = '<p>No products found matching your criteria.</p>';
-            return;
-        }
-
-        productsToRender.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.className = 'product-card';
-            productCard.innerHTML = `
-                <a href="product-detail.html?id=${product.id}">
-                    <img src="${product.image}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <p class="price">$${product.price.toFixed(2)}</p>
-                </a>
-                <button class="add-to-cart" data-product-id="${product.id}">Add to Cart</button>
-            `;
-            productGrid.appendChild(productCard);
-        });
-
-        // Re-attach event listeners to new buttons
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const productId = this.dataset.productId;
-                addToCart(productId);
-            });
-        });
-    }
-
-    function addToCart(productId) {
-        // Reuse the function from main.js
-        if (typeof window.addToCart === 'function') {
-            window.addToCart(productId);
-        } else {
-            // Fallback
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const product = products.find(p => p.id.toString() === productId);
+      card.innerHTML = `
+        <div class="product-image">
+          <img src="${imageUrl}" alt="${product.productName}">
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">${product.productName}</h3>
+          <div class="product-price">GH₵${product.price}</div>
+          <div class="product-meta">
+            <span>${product.category}</span>
+            <span>In Stock: ${product.quantity}</span>
+          </div>
+          <div class="product-actions">
+            <a href="product-detail.html?id=${product._id}" class="action-btn view-btn">View</a>
+            <a href="/admin/edit-product.html?id=${product._id}" class="action-btn edit-btn">Add to cart</a>
             
-            if (product) {
-                cart.push({
-                    id: productId,
-                    name: product.name,
-                    price: product.price,
-                    image: product.image,
-                    quantity: 1
-                });
-                localStorage.setItem('cart', JSON.stringify(cart));
-                alert('Product added to cart!');
-            }
-        }
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+  } catch (err) {
+    console.error('Failed to load products:', err);
+  }
+}
+
+async function deleteProduct(id) {
+  if (!confirm('Are you sure you want to delete this product?')) return;
+
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      alert('Product deleted');
+      loadProducts(); // Reload list
+    } else {
+      const error = await response.json();
+      alert(`Error: ${error.message}`);
     }
-});
+  } catch (err) {
+    console.error('Delete failed:', err);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', loadProducts);
