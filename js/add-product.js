@@ -6,19 +6,50 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // 🔐 Get token from localStorage
-    const token = localStorage.getItem('accessToken');
-
+    const token = localStorage.getItem('authToken');
     if (!token) {
-      console.warn('No token found');
       alert('You must be logged in to perform this action.');
-      // Optional: Redirect to login page
       window.location.href = 'login.html';
       return;
     }
 
-    // 📦 Collect form data
     const formData = new FormData(form);
+
+    // 🧹 Clean up / format fields
+    formData.set('price', parseFloat(form.price.value) || 0);
+    formData.set('quantity', parseInt(form.quantity.value) || 0);
+    formData.set('trackInventory', form.trackInventory.checked);
+    formData.set('isPhysicalProduct', form.physicalProduct.checked);
+
+    // Remove invalid/unused field names
+    formData.delete('physicalProduct'); // Wrong key
+    if (!form.productId.value) {
+      formData.delete('productId');
+    }
+
+    // 🔁 Prepare variants array
+    const variants = [];
+    const variantNameEls = document.querySelectorAll('input[name="variantName[]"]');
+    const variantPriceEls = document.querySelectorAll('input[name="variantPrice[]"]');
+    const variantSkuEls = document.querySelectorAll('input[name="sku[]"]');
+
+    for (let i = 0; i < variantNameEls.length; i++) {
+      const name = variantNameEls[i].value.trim();
+      const price = parseFloat(variantPriceEls[i].value);
+      const sku = variantSkuEls[i].value.trim();
+
+      if (name || sku || !isNaN(price)) {
+        variants.push({
+          variantName: name || 'Variant',
+          price: isNaN(price) ? 0 : price,
+          sku,
+          quantity: 0,
+          isDefault: i === 0
+        });
+      }
+    }
+
+    formData.append('variants', JSON.stringify(variants));
 
     try {
       const response = await fetch(API_URL, {
@@ -30,20 +61,19 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Response status:', response.status);
-        console.error('Error message:', errorData);
-        throw new Error(errorData.message || 'Something went wrong!');
+        const errorText = await response.text();
+        console.error('❌ Server error:', errorText);
+        alert(`Error: ${errorText}`);
+        return;
       }
 
       const result = await response.json();
-      alert('✅ Product saved successfully!');
-      // Redirect after success
+      alert('✅ Product created successfully!');
       window.location.href = '/admin/products.html';
 
     } catch (err) {
-      console.error('❌ Error saving product:', err);
-      alert(err.message || 'Failed to save product.');
+      console.error('❌ Submission failed:', err);
+      alert(err.message || 'Failed to submit product.');
     }
   });
 });

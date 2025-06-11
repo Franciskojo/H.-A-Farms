@@ -1,135 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Add/Edit Product</title>
-    <link rel="stylesheet" href="/css/edite-product.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="pageTitle">Add/Edit Product</title>
+  <link rel="stylesheet" href="/css/edite-product.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-    <div class="container">
-        <h1 id="formTitle">Add New Product <span id="statusBadge" class="status-badge status-draft" style="display: none;">Draft</span></h1>
-        
-        <form id="productForm" enctype="multipart/form-data">
-            <input type="hidden" id="productId" name="productId" value="">
-            
-            <div class="form-group">
-                <label for="productName">Product Name*</label>
-                <input type="text" id="productName" name="productName" required>
-            </div>
+  <div class="container">
+    <h1 id="formTitle">
+      Add New Product 
+      <span id="statusBadge" class="status-badge status-draft" style="display: none;">Draft</span>
+    </h1>
 
-            <div class="form-group">
-                <label for="productDescription">Description*</label>
-                <textarea id="productDescription" name="productDescription" required></textarea>
-            </div>
+    <form id="productForm" enctype="multipart/form-data">
+      <input type="hidden" id="productId" name="productId" value="" />
 
+      <div class="form-group">
+        <label for="productName">Product Name*</label>
+        <input type="text" id="productName" name="productName" required />
+      </div>
+
+      <div class="form-group">
+        <label for="productDescription">Description*</label>
+        <textarea id="productDescription" name="description" required></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="price">Price (₵)</label>
+          <input type="number" id="price" name="price" min="0" step="0.01" required />
+        </div>
+
+        <div class="form-group">
+          <label for="quantity">Quantity*</label>
+          <input type="number" id="quantity" name="quantity" min="0" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category*</label>
+        <select id="category" name="category" required>
+          <option value="">Select a category</option>
+          <option value="premium eggs">Premium Eggs</option>
+          <option value="premium chicken">Premium Chicken</option>
+          <option value="farm Inputs">Farm Inputs</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="required-field">Product Image</label>
+        <div class="image-upload">
+          <input type="file" id="productImage" name="productImage" accept="image/*" />
+          <label for="productImage">
+            <i class="fas fa-cloud-upload-alt" style="font-size: 24px; margin-bottom: 10px;"></i><br>
+            Click to upload image or drag and drop<br>
+            <small>Recommended size: 800x800px (1 image only)</small>
+          </label>
+          <div class="image-preview" id="imagePreview"></div>
+        </div>
+      </div>
+
+      <div class="variant-section">
+        <h3>Product Variants</h3>
+        <p>Add different sizes or options for this product (e.g., 30 Eggs Crate, 60 Eggs Crate)</p>
+
+        <div id="variantsContainer">
+          <div class="variant-item">
+            <div class="variant-header">
+              <h4 class="variant-title">Default Variant</h4>
+            </div>
             <div class="form-row">
+              <div class="form-col">
                 <div class="form-group">
-                    <label for="price">Price*</label>
-                    <input type="number" id="price" name="price" min="0" step="0.01" required>
+                  <label for="variantName">Variant Name</label>
+                  <input type="text" id="variantName" placeholder="e.g., Standard Crate" />
                 </div>
-             
+              </div>
+              <div class="form-col">
                 <div class="form-group">
-                    <label for="quantity">Quantity*</label>
-                    <input type="number" id="quantity" name="quantity" min="0" required>
+                  <label for="variantPrice">Variant Price (₵)</label>
+                  <input type="number" id="variantPrice" min="0" step="0.01" />
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label for="category">Category*</label>
-                <select id="category" name="category" required>
-                    <option value="">Select a category</option>
-                    <option value="premium eggs">Premium Eggs</option>
-                    <option value="premium chicken">Premium Chicken</option>
-                    <option value="farm Inputs">Farm Inputs</option>
-                    <!-- <option value="books">Books</option> -->
-                    <!-- <option value="toys">Toys</option> -->
-                </select>
-            </div>
-
-            <!-- <div class="form-group">
-                <label for="tags">Tags</label>
-                <input type="text" id="tags" name="tags" placeholder="Separate tags with commas">
-            </div> -->
-
-            <div class="form-group">
-                <label for="productStatus">Status</label>
-                <select id="productStatus" name="productStatus">
-                    <option value="draft">Draft</option>
-                    <option value="active">Active</option>
-                    <option value="archived">Archived</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                    <label class="required-field">Product Images</label>
-                    <div class="image-upload">
-                        <input type="file" id="productImages" name="productImages" multiple accept="image/*">
-                        <label for="productImages">
-                            <i class="fas fa-cloud-upload-alt" style="font-size: 24px; margin-bottom: 10px;"></i><br>
-                            Click to upload images or drag and drop<br>
-                            <small>Recommended size: 800x800px (max 5 images)</small>
-                        </label>
-                        <div class="image-preview" id="imagePreview"></div>
-                    </div>
+              </div>
+              <div class="form-col">
+                <div class="form-group">
+                  <label for="variantSku">SKU</label>
+                  <input type="text" id="variantSku" placeholder="Product code" />
                 </div>
-
-
-                <div class="variant-section">
-                    <h3>Product Variants</h3>
-                    <p>Add different sizes or options for this product (e.g., 30 Eggs Crate, 60 Eggs Crate)</p>
-                    
-                    <div id="variantsContainer">
-                        <!-- Variants will be added here -->
-                        <div class="variant-item">
-                            <div class="variant-header">
-                                <h4 class="variant-title">Default Variant</h4>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-col">
-                                    <div class="form-group">
-                                        <label for="variantName">Variant Name</label>
-                                        <input type="text" id="variantName" name="variantName[]" placeholder="e.g., Standard Crate">
-                                    </div>
-                                </div>
-                                <div class="form-col">
-                                    <div class="form-group">
-                                        <label for="variantPrice">Price (₵)</label>
-                                        <input type="number" id="variantPrice" name="variantPrice[]" min="0" step="0.01">
-                                    </div>
-                                </div>
-                                <div class="form-col">
-                                    <div class="form-group">
-                                        <label for="variantSku">SKU</label>
-                                        <input type="text" id="variantSku" name="variantSku[]" placeholder="Product code">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                
-            <div class="form-group">
-                <label>
-                    <input type="checkbox" id="trackInventory" name="trackInventory"> Track inventory
-                </label>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label>
-                    <input type="checkbox" id="physicalProduct" name="physicalProduct" checked> This is a physical product
-                </label>
-            </div>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="trackInventory" name="trackInventory" />
+          Track inventory
+        </label>
+      </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="submitBtn">
-                        <i class="fas fa-save"></i> Save Product
-                    </button>
-                <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
-            </div>
-        </form>
-    </div>
-    <script src="/js/add-product.js"></script>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="physicalProduct" name="physicalProduct" checked />
+          This is a physical product
+        </label>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          <i class="fas fa-save"></i> Save Product
+        </button>
+        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="/js/add-product.js"></script>
 </body>
 </html>
