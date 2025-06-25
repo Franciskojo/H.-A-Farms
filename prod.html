@@ -6,16 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Product List</title>
   <link rel="stylesheet" href="/css/product.css">
-  <style>
-    
-  </style>
+
+  <!-- ✅ Add Font Awesome for Cart Icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
 <body>
   <div class="container">
     <h1>
       Our Products
+
+      <!-- ✅ Home Button -->
       <a href="/index.html" class="add-product-btn">+ Home</a>
+
+      <!-- ✅ Cart Icon with Link -->
+      <a href="/cart.html" class="cart-icon" title="View Cart">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+      </a>
     </h1>
 
     <div class="search-bar">
@@ -36,14 +44,44 @@
     </div>
   </div>
 
-  <!-- ✅ Footer added below -->
   <footer>
     &copy; 2025 H.A. Farms. All rights reserved.
     <br>
-    <a href="/privacy-policy.html">Privacy Policy</a> | <a href="/terms.html">Terms of Service</a>
+    <a href="/privacy-policy.html">Privacy Policy</a> |
+    <a href="/terms.html">Terms of Service</a>
   </footer>
 
   <script src="/js/products.js"></script>
+
+  <!-- ✅ Optional: JS to update cart count from localStorage -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      document.getElementById("cart-count").textContent = cart.length;
+    });
+  </script>
+
+  <style>
+    .cart-icon {
+      float: right;
+      margin-left: 20px;
+      text-decoration: none;
+      font-size: 1.5rem;
+      position: relative;
+      color: #333;
+    }
+
+    .cart-icon #cart-count {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.8rem;
+    }
+  </style>
 </body>
 
 </html>

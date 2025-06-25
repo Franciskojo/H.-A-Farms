@@ -1,198 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout | E-Commerce</title>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/checkout.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout | H. A. Farms</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/checkout.css" />
 </head>
 <body>
-    <header class="main-header">
-        <div class="container">
-            <nav>
-                <a href="index.html" class="logo">E-Shop</a>
-                <div class="nav-links">
-                    <a href="products.html">Products</a>
-                    <a href="cart.html">Cart <span class="cart-count">0</span></a>
-                    <div class="user-actions">
-                        <a href="auth/login.html">Login</a>
-                        <a href="auth/register.html">Register</a>
-                        <div class="logged-in">
-                            <a href="user/dashboard.html" class="user-profile">My Account</a>
-                            <a href="#" id="logout">Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <main class="container">
-        <div class="checkout-progress">
-            <div class="progress-step active">1. Shipping</div>
-            <div class="progress-step">2. Payment</div>
-            <div class="progress-step">3. Confirmation</div>
-        </div>
-        
-        <form id="checkoutForm" class="checkout-form">
-            <div class="checkout-section">
-                <h2>Shipping Information</h2>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" id="address" required>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="city">City</label>
-                        <input type="text" id="city" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="zip">ZIP Code</label>
-                        <input type="text" id="zip" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="country">Country</label>
-                    <select id="country" required>
-                        <option value="">Select Country</option>
-                        <option value="US">United States</option>
-                        <option value="UK">United Kingdom</option>
-                        <option value="CA">Canada</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" required>
-                </div>
-            </div>
-            
-            <div class="checkout-section">
-                <h2>Payment Method</h2>
-                
-                <div class="payment-methods">
-                    <div class="payment-method">
-                        <input type="radio" id="creditCard" name="paymentMethod" value="creditCard" checked>
-                        <label for="creditCard">Credit Card</label>
-                    </div>
-                    <div class="payment-method">
-                        <input type="radio" id="paypal" name="paymentMethod" value="paypal">
-                        <label for="paypal">PayPal</label>
-                    </div>
-                </div>
-                
-                <div class="credit-card-form" id="creditCardForm">
-                    <div class="form-group">
-                        <label for="cardNumber">Card Number</label>
-                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="expiry">Expiry Date</label>
-                            <input type="text" id="expiry" placeholder="MM/YY" maxlength="5">
-                        </div>
-                        <div class="form-group">
-                            <label for="cvc">CVC</label>
-                            <input type="text" id="cvc" placeholder="123" maxlength="4">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="cardName">Name on Card</label>
-                        <input type="text" id="cardName">
-                    </div>
-                </div>
-                
-                <div class="paypal-form" id="paypalForm" style="display: none;">
-                    <p>You will be redirected to PayPal to complete your payment.</p>
-                </div>
-            </div>
-            
-            <div class="checkout-actions">
-                <a href="cart.html" class="btn-back">Back to Cart</a>
-                <button type="submit" class="btn-primary">Place Order</button>
-            </div>
-        </form>
-        
-        <div class="order-summary">
-            <h2>Order Summary</h2>
-            <div class="order-items">
-                <!-- Order items will be loaded dynamically -->
-            </div>
-            <div class="summary-totals">
-                <div class="summary-row">
-                    <span>Subtotal</span>
-                    <span class="subtotal">$0.00</span>
-                </div>
-                <div class="summary-row">
-                    <span>Shipping</span>
-                    <span class="shipping">$5.99</span>
-                </div>
-                <div class="summary-row">
-                    <span>Tax</span>
-                    <span class="tax">$0.00</span>
-                </div>
-                <div class="summary-row total">
-                    <span>Total</span>
-                    <span class="total-price">$5.99</span>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-column">
-          <h3>H. A Farms</h3>
-          <p>Providing organic, sustainable produce since 2005.</p>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
+<header class="main-header">
+  <div class="container">
+    <nav>
+      <a href="index.html" class="logo">H. A. Farms</a>
+      <div class="nav-links">
+        <a href="prod.html">Products</a>
+        <a href="cart.html">Cart <span class="cart-count">0</span></a>
+        <div class="user-actions">
+          <a href="auth/login.html">Login</a>
+          <a href="auth/register.html">Register</a>
+          <div class="logged-in">
+            <a href="user/dashboard.html" class="user-profile">My Account</a>
+            <a href="#" id="logout">Logout</a>
           </div>
         </div>
-        <div class="footer-column">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <form id="checkoutForm" class="checkout-form">
+    <section class="checkout-section">
+      <h2>Shipping Information</h2>
+
+      <div class="form-group">
+        <label for="address">Street Address</label>
+        <input type="text" id="address" required />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="town">Town/City</label>
+          <input type="text" id="town" required />
         </div>
-        <div class="footer-column">
-          <h3>Location</h3>
-          <ul>
-            <li> Mankesim – New Kumasi / Fosu Station,</li>
-            <li>hannahaidoo.ha@gmail.com</li>
-            <li>+233542887480</li>
-          </ul>
+        <div class="form-group">
+          <label for="region">Region</label>
+          <input type="text" id="region" required />
         </div>
       </div>
-      <div class="copyright">
-        <p>&copy; 2025 H. A Farms. All rights reserved.</p>
-        <!-- <a href="#hero" class="back-to-top">Back to Top</a> -->
+
+      <div class="form-group">
+        <label for="digitalAddress">Digital Address</label>
+        <input type="text" id="digitalAddress" required />
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" required />
+      </div>
+
+      <div class="form-group">
+        <label for="country">Country</label>
+        <input type="text" id="country" placeholder="e.g. Ghana" required />
+      </div>
+
+      <div class="form-group">
+        <label for="notes">Order Notes (optional)</label>
+        <textarea id="notes" rows="3" placeholder="Special instructions..."></textarea>
+      </div>
+    </section>
+
+    <section class="checkout-section">
+      <h2>Payment Method</h2>
+      <div class="payment-methods">
+        <div>
+          <input type="radio" id="credit_card" name="paymentMethod" value="credit_card" checked />
+          <label for="credit_card">Credit Card</label>
+        </div>
+        <div>
+          <input type="radio" id="mobile_money" name="paymentMethod" value="mobile_money" />
+          <label for="mobile_money">Mobile Money</label>
+        </div>
+        <div>
+          <input type="radio" id="cash_on_delivery" name="paymentMethod" value="cash_on_delivery" />
+          <label for="cash_on_delivery">Cash on Delivery</label>
+        </div>
+      </div>
+    </section>
+
+    <div class="checkout-actions">
+      <a href="cart.html" class="btn-back">Back to Cart</a>
+      <button type="submit" class="btn-primary">Place Order</button>
+    </div>
+  </form>
+
+  <aside class="order-summary">
+    <h2>Order Summary</h2>
+    <div class="order-items"></div>
+    <div class="summary-totals">
+      <div class="summary-row">
+        <span>Subtotal:</span>
+        <span class="subtotal">GH₵0.00</span>
+      </div>
+      <div class="summary-row">
+        <span>Shipping:</span>
+        <span class="shipping">GH₵0.00</span>
+      </div>
+      <div class="summary-row">
+        <span>Tax:</span>
+        <span class="tax">GH₵0.00</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total:</span>
+        <span class="total">GH₵0.00</span>
       </div>
     </div>
-  </footer>
+  </aside>
+</main>
 
-    <script src="js/checkout.js"></script>
+<footer>
+  <div class="container">
+    <p>&copy; 2025 H. A. Farms. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="js/checkout.js"></script>
 </body>
 </html>

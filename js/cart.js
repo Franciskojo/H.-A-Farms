@@ -1,144 +1,219 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Load cart items
-    loadCart();
-    
-    // Checkout button
-    document.querySelector('.checkout-btn').addEventListener('click', function() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        if (cart.length === 0) {
-            alert('Your cart is empty!');
-            return;
-        }
-        
-        // Check if user is logged in
-        const authToken = localStorage.getItem('authToken');
-        if (!authToken) {
-            if (confirm('You need to login to proceed to checkout. Go to login page?')) {
-                window.location.href = 'auth/login.html?redirect=checkout.html';
-            }
-            return;
-        }
-        
-        window.location.href = 'checkout.html';
+const CART_API = 'https://h-a-farms-backend.onrender.com/cart';
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadCart(); // Load cart before enabling checkout
+
+  const checkoutBtn = document.querySelector(".checkout-btn");
+
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+      }
+
+      sessionStorage.setItem("checkoutSubtotal", document.querySelector(".subtotal").textContent);
+      sessionStorage.setItem("checkoutShipping", document.querySelector(".shipping").textContent);
+      sessionStorage.setItem("checkoutTax", document.querySelector(".tax").textContent);
+      sessionStorage.setItem("checkoutTotal", document.querySelector(".total").textContent);
+
+      window.location.href = "checkout.html";
     });
+  }
 });
 
-function loadCart() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartItemsContainer = document.querySelector('.cart-items');
-    const emptyCartDiv = document.querySelector('.empty-cart');
-    
-    if (cart.length === 0) {
-        emptyCartDiv.style.display = 'block';
-        document.querySelector('.checkout-btn').disabled = true;
-        return;
-    }
-    
-    emptyCartDiv.style.display = 'none';
-    
-    // Clear existing items (except empty cart message)
-    const existingItems = document.querySelectorAll('.cart-item');
-    existingItems.forEach(item => item.remove());
-    
-    let subtotal = 0;
-    
-    cart.forEach(item => {
-        const cartItem = document.createElement('div');
-        cartItem.className = 'cart-item';
-        cartItem.innerHTML = `
-            <img src="${item.image}" alt="${item.name}" class="item-image">
-            <div class="item-details">
-                <h3>${item.name}</h3>
-                <p class="item-price">$${item.price.toFixed(2)}</p>
-                <div class="item-quantity">
-                    <button class="quantity-btn minus">-</button>
-                    <span class="quantity">${item.quantity}</span>
-                    <button class="quantity-btn plus">+</button>
-                </div>
-            </div>
-            <button class="remove-item" data-product-id="${item.id}">&times;</button>
-        `;
-        cartItemsContainer.insertBefore(cartItem, emptyCartDiv);
-        
-        subtotal += item.price * item.quantity;
-    });
-    
-    // Calculate totals
-    const shipping = 5.99;
-    const tax = subtotal * 0.1; // 10% tax
-    const total = subtotal + shipping + tax;
-    
-    // Update summary
-    document.querySelector('.subtotal').textContent = `$${subtotal.toFixed(2)}`;
-    document.querySelector('.tax').textContent = `$${tax.toFixed(2)}`;
-    document.querySelector('.total-price').textContent = `$${total.toFixed(2)}`;
-    
-    // Add event listeners
-    document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
-        btn.addEventListener('click', function() {
-            updateQuantity(this.closest('.cart-item'), -1);
-        });
-    });
-    
-    document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
-        btn.addEventListener('click', function() {
-            updateQuantity(this.closest('.cart-item'), 1);
-        });
-    });
-    
-    document.querySelectorAll('.remove-item').forEach(btn => {
-        btn.addEventListener('click', function() {
-            removeItem(this.closest('.cart-item'), this.dataset.productId);
-        });
-    });
-}
+async function loadCart() {
+  const token = localStorage.getItem('authToken');
+  let cart = [];
 
-function updateQuantity(itemElement, change) {
-    const productId = itemElement.querySelector('.remove-item').dataset.productId;
-    const quantityElement = itemElement.querySelector('.quantity');
-    let quantity = parseInt(quantityElement.textContent);
-    
-    quantity += change;
-    
-    if (quantity < 1) {
-        removeItem(itemElement, productId);
+  if (token) {
+    try {
+      const res = await fetch(`${CART_API}/get`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const contentType = res.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await res.text();
+        console.error("Received non-JSON response:", text);
+        alert("Unexpected server error. Please try again later.");
         return;
-    }
-    
-    quantityElement.textContent = quantity;
-    
-    // Update cart in localStorage
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const itemIndex = cart.findIndex(item => item.id.toString() === productId);
-    
-    if (itemIndex !== -1) {
-        cart[itemIndex].quantity = quantity;
+      }
+
+      const data = await res.json();
+
+      if (res.ok) {
+        cart = data.items
+          .filter(item => item.product && item.product.id)
+          .map(item => ({
+            id: item.product.id,
+            name: item.product.productName || item.product.name || "Unnamed",
+            image: item.product.productImage || 'https://via.placeholder.com/80',
+            price: item.price,
+            quantity: item.quantity
+          }));
+
         localStorage.setItem('cart', JSON.stringify(cart));
-        loadCart(); // Refresh cart to update totals
+      } else {
+        console.error('API error loading cart:', data.message);
+        alert(data.message || 'Failed to load cart.');
+      }
+    } catch (err) {
+      console.error('Network error loading cart:', err);
+      alert('Failed to load cart. Please try again.');
     }
+  } else {
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
+  }
+
+  renderCart(cart);
+  const cartCountEl = document.getElementById("cart-count");
+  if (cartCountEl) cartCountEl.textContent = cart.length;
 }
 
-function removeItem(itemElement, productId) {
-    if (confirm('Remove this item from your cart?')) {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const updatedCart = cart.filter(item => item.id.toString() !== productId);
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
-        
-        // Update UI
-        itemElement.remove();
-        
-        // Check if cart is now empty
-        if (updatedCart.length === 0) {
-            document.querySelector('.empty-cart').style.display = 'block';
-            document.querySelector('.checkout-btn').disabled = true;
-        }
-        
-        // Update totals
-        loadCart();
-        
-        // Update cart count in header
-        if (typeof window.updateCartCount === 'function') {
-            window.updateCartCount();
-        }
+function renderCart(cart) {
+  const container = document.querySelector('.cart-items');
+  container.innerHTML = '';
+
+  if (!cart.length) {
+    container.innerHTML = '<p>Your cart is empty.</p>';
+    updateSummary(0);
+    return;
+  }
+
+  let subtotal = 0;
+
+  cart.forEach(item => {
+    const itemEl = document.createElement('div');
+    itemEl.classList.add('cart-item');
+
+    itemEl.innerHTML = `
+      <img src="${item.image}" width="80" />
+      <div>
+        <h4>${item.name}</h4>
+        <p>Price: GH₵${item.price.toFixed(2)}</p>
+        <div class="qty-controls">
+          <button data-id="${item.id}" class="minus">-</button>
+          <span>${item.quantity}</span>
+          <button data-id="${item.id}" class="plus">+</button>
+        </div>
+        <button class="remove" data-id="${item.id}">Remove</button>
+      </div>
+    `;
+
+    container.appendChild(itemEl);
+    subtotal += item.price * item.quantity;
+  });
+
+  updateSummary(subtotal);
+  attachQtyHandlers();
+}
+
+function updateSummary(subtotal) {
+  const shipping = 0.00;
+  const tax = subtotal * 0.1;
+  const total = subtotal + shipping + tax;
+
+  document.querySelector('.subtotal').textContent = `GH₵${subtotal.toFixed(2)}`;
+  document.querySelector('.shipping').textContent = `GH₵${shipping.toFixed(2)}`;
+  document.querySelector('.tax').textContent = `GH₵${tax.toFixed(2)}`;
+  document.querySelector('.total').textContent = `GH₵${total.toFixed(2)}`;
+}
+
+function attachQtyHandlers() {
+  document.querySelectorAll('.plus').forEach(btn => {
+    btn.addEventListener('click', () => updateQty(btn.dataset.id, 1));
+  });
+  document.querySelectorAll('.minus').forEach(btn => {
+    btn.addEventListener('click', () => updateQty(btn.dataset.id, -1));
+  });
+  document.querySelectorAll('.remove').forEach(btn => {
+    btn.addEventListener('click', () => removeItem(btn.dataset.id));
+  });
+}
+
+async function updateQty(productId, change) {
+  const token = localStorage.getItem('authToken');
+  const qtySpan = document.querySelector(`button[data-id="${productId}"].minus`)?.nextElementSibling;
+  if (!qtySpan) return;
+
+  let currentQty = parseInt(qtySpan.textContent);
+  const newQty = currentQty + change;
+
+  if (token) {
+    if (newQty <= 0) {
+      await removeFromBackend(productId);
+    } else {
+      await addOrUpdateInBackend(productId, newQty);
     }
+  } else {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const index = cart.findIndex(item => item.id === productId);
+    if (index === -1) return;
+
+    if (newQty <= 0) {
+      cart.splice(index, 1);
+    } else {
+      cart[index].quantity = newQty;
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  loadCart();
+}
+
+function removeItem(productId) {
+  updateQty(productId, -Infinity);
+}
+
+async function addOrUpdateInBackend(productId, quantity) {
+  const token = localStorage.getItem('authToken');
+  return safeFetch(`${CART_API}/add`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ productId, quantity })
+  });
+}
+
+async function removeFromBackend(productId) {
+  const token = localStorage.getItem('authToken');
+  return safeFetch(`${CART_API}/items/${productId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  });
+}
+
+async function safeFetch(url, options) {
+  try {
+    const res = await fetch(url, options);
+    const contentType = res.headers.get('content-type');
+
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await res.text();
+      console.error('Non-JSON response:', text);
+      alert('Server error. Please try again later.');
+      return;
+    }
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.error('API error:', data);
+      alert(data.message || 'Something went wrong.');
+    }
+
+    return data;
+  } catch (err) {
+    console.error('Network error:', err);
+    alert('Network error. Please try again.');
+  }
 }

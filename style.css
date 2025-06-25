@@ -353,7 +353,7 @@ nav a:hover {
 }
 
 .link-card {
-  background: white;
+  /* background: white; */
   padding: 2rem;
   border-radius: 10px;
   width: 250px;

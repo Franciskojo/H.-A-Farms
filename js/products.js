@@ -1,5 +1,5 @@
 const API_URL = 'https://h-a-farms-backend.onrender.com/products';
-const CART_API_URL = 'https://h-a-farms-backend.onrender.com/cart'; // Update if needed
+const CART_API_URL = 'https://h-a-farms-backend.onrender.com/cart';
 
 // Load and display products
 async function loadProducts() {
@@ -8,9 +8,10 @@ async function loadProducts() {
     const products = await response.json();
 
     const container = document.querySelector('.product-grid');
-    container.innerHTML = ''; // Clear static content
+    container.innerHTML = '';
 
     products.forEach(product => {
+      console.log("Loaded product:", product);
       const card = document.createElement('div');
       card.classList.add('product-card');
 
@@ -25,14 +26,21 @@ async function loadProducts() {
         </div>
         <div class="product-info">
           <h3 class="product-title">${product.productName}</h3>
-          <div class="product-price">GH₵${product.price}</div>
+          <div class="product-price">GH₵${product.price.toFixed(2)}</div>
           <div class="product-meta">
             <span>${product.category}</span>
             <span>In Stock: ${product.quantity}</span>
           </div>
           <div class="product-actions">
-            <a href="product-detail.html?id=${product._id}" class="action-btn view-btn">View</a>
-            <a href="#" class="action-btn addtocart-btn" data-id="${product._id}">Add to cart</a>
+            <a href="product-detail.html?id=${product.id}" class="action-btn view-btn">View</a>
+            <a href="#" class="action-btn addtocart-btn" 
+               data-id="${product.id}" 
+               data-name="${product.productName}" 
+               data-price="${product.price}" 
+               data-image="${imageUrl}" 
+               data-stock="${product.quantity}">
+              Add to cart
+            </a>
           </div>
         </div>
       `;
@@ -40,47 +48,103 @@ async function loadProducts() {
       container.appendChild(card);
     });
 
-    // Attach event listeners to "Add to cart" buttons
-    const addToCartButtons = document.querySelectorAll('.addtocart-btn');
-    addToCartButtons.forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const productId = btn.dataset.id;
-        await addToCart(productId);
-        // Optional: redirect to cart page after adding
-        // window.location.href = 'cart.html';
-      });
-    });
-
+    attachCartListeners();
   } catch (err) {
     console.error('Failed to load products:', err);
+    alert('Failed to load products. Please try again.');
   }
 }
 
-// Add product to cart
-async function addToCart(productId) {
+function attachCartListeners() {
+  const buttons = document.querySelectorAll('.addtocart-btn');
+  buttons.forEach(button => {
+    button.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      const product = {
+        id: button.dataset.id, // ✅ use `id`, not `_id`
+        name: button.dataset.name,
+        price: parseFloat(button.dataset.price),
+        image: button.dataset.image,
+        stock: parseInt(button.dataset.stock)
+      };
+
+      await handleAddToCart(product);
+    });
+  });
+}
+
+// Handles both guest and authenticated add-to-cart
+async function handleAddToCart(product) {
+  const token = localStorage.getItem('authToken');
+
+  const productId = product.id;
+  if (!productId || productId === 'undefined') {
+    console.error("🚨 Missing or invalid product ID in handleAddToCart", product);
+    alert("Failed to add product: invalid product ID.");
+    return;
+  }
+
+  if (!token) {
+    // Guest user - store in localStorage
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const index = cart.findIndex(item => item.id === productId); // ✅ use `id`
+
+    if (index !== -1) {
+      if (cart[index].quantity + 1 > product.stock) {
+        return alert(`Only ${product.stock} items available in stock.`);
+      }
+      cart[index].quantity += 1;
+    } else {
+      cart.push({
+        id: productId,
+        name: product.name,
+        price: product.price,
+        image: product.image || '',
+        stock: product.stock,
+        quantity: 1
+      });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert(`${product.name} added to cart.`);
+    return;
+  }
+
+  // Authenticated user - sync with backend
   try {
-    const response = await fetch(CART_API_URL, {
+    console.log("✅ Adding to backend cart:", { productId, quantity: 1 });
+
+    const response = await fetch(`${CART_API_URL}/add`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Include auth headers if required
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({
-        productId: productId,
-        quantity: 1,
-      }),
+        productId,
+        quantity: 1
+      })
     });
 
-    if (response.ok) {
-      alert('Product added to cart!');
-    } else {
-      const error = await response.json();
-      alert(`Error adding to cart: ${error.message}`);
+    const text = await response.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      console.error("❌ Non-JSON response from backend:", text);
+      alert("Unexpected server response. Please try again.");
+      return;
     }
-  } catch (err) {
-    console.error('Add to cart failed:', err);
-    alert('An error occurred while adding the product to the cart.');
+
+    if (response.ok) {
+      alert(`${product.name} added to cart!`);
+    } else {
+      alert(`Error: ${data.message}`);
+    }
+  } catch (error) {
+    console.error('💥 Add to cart failed:', error);
+    alert('Failed to add product to cart.');
   }
 }
 

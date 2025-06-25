@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Confirmation | H. A. Farms</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="/css/comfirmation.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>🎉 Thank You for Your Order!</h1>
+    <div class="confirmation-details">
+      <p>Your order ID is: <strong id="orderId">...</strong></p>
+      <p>We’ve received your order and will process it shortly.</p>
+      <a href="prod.html" class="btn-primary">Continue Shopping</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 H. A. Farms. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get("orderId");
+    document.getElementById("orderId").textContent = orderId || "N/A";
+  </script>
+</body>
+</html>
+
