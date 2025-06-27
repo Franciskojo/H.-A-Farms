@@ -1,107 +1,56 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Get product ID from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
-    
-    // In a real app, you would fetch product details from an API
-    // For now, we'll use mock data
-    const mockProducts = {
-        '1': {
-            name: "Wireless Headphones",
-            price: 199.99,
-            description: "Premium noise-cancelling wireless headphones with 30-hour battery life.",
-            category: "Electronics",
-            images: [
-                "assets/images/product1.jpg",
-                "assets/images/product2.jpg",
-                "assets/images/product3.jpg"
-            ]
+document.addEventListener('DOMContentLoaded', async function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+
+      if (!productId) {
+        alert('No product ID found in URL.');
+        return;
+      }
+
+      const API_BASE = 'https://h-a-farms-backend.onrender.com/products';
+
+      async function getProductById(id) {
+        try {
+          const res = await fetch(`${API_BASE}/${id}`);
+          if (!res.ok) throw new Error("Product not found");
+          return await res.json();
+        } catch (err) {
+          console.error(err.message);
+          alert("Failed to load product.");
         }
-    };
-    
-    const product = mockProducts[productId] || mockProducts['1'];
-    
-    // Populate product data
-    document.getElementById('productName').textContent = product.name;
-    document.getElementById('productPrice').textContent = `$${product.price.toFixed(2)}`;
-    document.getElementById('productDescription').textContent = product.description;
-    document.getElementById('productCategory').textContent = product.category;
-    
-    // Set main image
-    const mainImage = document.getElementById('mainImage');
-    mainImage.src = product.images[0];
-    
-    // Thumbnail click handler
-    document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
-        thumb.src = product.images[index];
-        thumb.addEventListener('click', function() {
-            mainImage.src = this.src;
-            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-    
-    // Quantity selector
-    const quantityElement = document.querySelector('.quantity');
-    document.querySelector('.quantity-btn.minus').addEventListener('click', function() {
-        let quantity = parseInt(quantityElement.textContent);
-        if (quantity > 1) {
-            quantityElement.textContent = quantity - 1;
-        }
-    });
-    
-    document.querySelector('.quantity-btn.plus').addEventListener('click', function() {
-        let quantity = parseInt(quantityElement.textContent);
-        quantityElement.textContent = quantity + 1;
-    });
-    
-    // Add to cart button
-    document.getElementById('addToCartBtn').addEventListener('click', function() {
-        const quantity = parseInt(quantityElement.textContent);
-        
-        // In a real app, you would add the product to cart via API
-        // For now, we'll use localStorage
+      }
+
+      const product = await getProductById(productId);
+      if (!product) return;
+
+      // Populate product info
+      document.getElementById('productName').textContent = product.productName || 'Unnamed Product';
+      document.getElementById('productPrice').textContent = `₵${(product.price || 0).toFixed(2)}`;
+      document.getElementById('productDescription').textContent = product.description || 'No description.';
+      document.getElementById('productCategory').textContent = product.category || 'N/A';
+      document.getElementById('productStatus').textContent = product.status || 'active';
+      document.getElementById('mainImage').src = product.productImage || 'https://via.placeholder.com/500x400';
+      document.getElementById('mainImage').alt = product.productName || 'Product Image';
+      document.getElementById('editProductBtn').href = `/admin/edite-product.html?id=${product._id}`;
+
+      // Add to cart logic
+      document.getElementById('addToCartBtn').addEventListener('click', () => {
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        
-        const existingItem = cart.find(item => item.id === productId);
-        
-        if (existingItem) {
-            existingItem.quantity += quantity;
+
+        const existing = cart.find(item => item.id === productId);
+        if (existing) {
+          existing.quantity += 1;
         } else {
-            cart.push({
-                id: productId,
-                name: product.name,
-                price: product.price,
-                image: product.images[0],
-                quantity: quantity
-            });
+          cart.push({
+            id: productId,
+            name: product.productName,
+            price: product.price,
+            image: product.productImage,
+            quantity: 1
+          });
         }
-        
+
         localStorage.setItem('cart', JSON.stringify(cart));
-        alert(`${quantity} ${product.name} added to cart!`);
-        
-        // Update cart count
-        if (typeof window.updateCartCount === 'function') {
-            window.updateCartCount();
-        }
+        alert(`${product.productName} added to cart!`);
+      });
     });
-    
-    // Tab functionality
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const tabId = this.dataset.tab;
-            
-            // Update active tab button
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Update active tab content
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-                if (content.id === tabId) {
-                    content.classList.add('active');
-                }
-            });
-        });
-    });
-});

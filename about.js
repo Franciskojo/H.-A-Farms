@@ -29,3 +29,9 @@
         member.querySelector('h3').style.color = 'var(--primary-color)';
       });
     });
+
+    document.getElementById("menuToggle").addEventListener("click", () => {
+    document.getElementById("navLinks").classList.toggle("show");
+  });
+
+  

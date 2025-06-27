@@ -21,26 +21,98 @@ body {
 }
 
 /* Header Navigation */
+/* HEADER WRAPPER */
 .header-nav {
   background-color: #2f7b2f;
   color: white;
   padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
 }
 
-.logo img {
+/* FLEX ROW for Desktop: logo + nav inline */
+@media (min-width: 769px) {
+  .header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-toggle {
+    display: none; /* hidden on desktop */
+  }
+
+  nav {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0;
+    opacity: 1 !important;
+    max-height: none !important;
+    pointer-events: auto;
+  }
+}
+
+/* MOBILE: stacked layout */
+@media (max-width: 768px) {
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menu-toggle {
+    display: block;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  nav.show {
+    max-height: 300px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  nav a {
+    margin: 0.5rem 0;
+  }
+}
+
+/* Shared Styles */
+.logo-im img {
   height: 50px;
+  width: auto;
 }
 
 nav a {
   color: white;
-  margin-left: 1.5rem;
   text-decoration: none;
   font-weight: 500;
 }
+
+nav a:hover {
+  color: greenyellow;
+}
+
+nav a.active {
+  border-bottom: 2px solid white;
+}
+
 
 .container {
   max-width: 1200px;
@@ -261,6 +333,10 @@ footer {
   color: #ddd;
   text-decoration: none;
   transition: color 0.3s;
+}
+
+.bl {
+  color: #f8f1e5;
 }
 
 .footer-column ul li a:hover {

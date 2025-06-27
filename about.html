@@ -12,15 +12,21 @@
 
 <body>
   <!-- Header -->
-  <header class="header-nav">
-    <div class="logo-im"><img src="assets/logo.png" alt="H. A. Farms Logo" /></div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="/prod.html" class="active">Products</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+ <header class="header-nav">
+  <div class="top-bar">
+    <div class="logo-im">
+      <img src="asset/hafarms_logo.png" alt="H. A. Farms Logo" />
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">&#9776;</button>
+  </div>
+  <nav id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="products.html" class="active">Products</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
 
   <!-- Hero Section -->
   <!-- <section class="hero">
@@ -173,7 +179,7 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-column">
-          <h3>Farm Fresh</h3>
+          <h3>H. A. Farms</h3>
           <p class="farm">Providing organic, sustainable produce since 2005.</p>
           <div class="social-links">
             <a href="#"><i class="fab fa-facebook"></i></a>
@@ -200,7 +206,7 @@
         </div>
       </div>
       <div class="copyright">
-        <p>&copy; 2025 H. A Farms. All rights reserved.</p>
+        <p class="bl">&copy; 2025 H. A Farms. All rights reserved.</p>
       </div>
     </div>
   </footer>

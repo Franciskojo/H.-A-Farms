@@ -1,486 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H.A. Farms | Premium Poultry Products</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="product.css">
-</head>
-<body>
-    <!-- Header with Cart Icon -->
-    <header class="header">
-        <div class="logo">H.A. Farms</div>
-        <div class="cart-icon" id="cartIcon">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count" id="cartCount">0</span>
-        </div>
-    </header>
 
-    <div class="container">
-        <!-- Premium Eggs Section -->
-        <section class="product-category">
-            <h2 class="section-title">Premium Eggs</h2>
-            <div class="product-grid">
-                <!-- Egg Product 1 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1587486913049-53fc88980cfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="HA Farms Premium Eggs" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">HA Farms Premium Eggs (30 Eggs)</h3>
-                        <p class="product-description">Farm-fresh, nutrient-rich eggs from free-range chickens. Perfect for baking, cooking, or a healthy breakfast.</p>
-                        <p class="product-price">₵45.00</p>
-                        <div class="product-options">
-                            <label class="option-label">Crate Size:</label>
-                            <select class="option-select" id="egg1-option">
-                                <option value="30-eggs">Standard Crate (30 Eggs)</option>
-                                <option value="60-eggs">Double Crate (60 Eggs) - ₵85.00</option>
-                                <option value="120-eggs">Family Pack (120 Eggs) - ₵160.00</option>
-                            </select>
-                        </div>
-                        <button class="btn-add-to-cart" onclick="addToCart('HA Farms Premium Eggs', 45, '30 Eggs Crate', 'https://images.unsplash.com/photo-1587486913049-53fc88980cfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">Add to Cart</button>
-                    </div>
-                </div>
-                
-                <!-- Egg Product 2 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1587486913049-53fc88980cfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Organic Free-Range Eggs" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Organic Free-Range Eggs (30 Eggs)</h3>
-                        <p class="product-description">Certified organic eggs from pasture-raised chickens with no antibiotics or hormones.</p>
-                        <p class="product-price">₵60.00</p>
-                        <div class="product-options">
-                            <label class="option-label">Crate Size:</label>
-                            <select class="option-select" id="egg2-option">
-                                <option value="30-eggs">Standard Crate (30 Eggs)</option>
-                                <option value="60-eggs">Double Crate (60 Eggs) - ₵115.00</option>
-                            </select>
-                        </div>
-                        <button class="btn-add-to-cart" onclick="addToCart('Organic Free-Range Eggs', 60, '30 Eggs Crate', 'https://images.unsplash.com/photo-1587486913049-53fc88980cfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Egg Product 3 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1587486913049-53fc88980cfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Jumbo Size Eggs" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Jumbo Size Eggs (30 Eggs)</h3>
-                        <p class="product-description">Extra large eggs with richer yolks, perfect for professional baking and cooking.</p>
-                        <p class="product-price">₵55.00</p>
-                        <div class="product-options">
-                            <label class="option-label">Crate Size:</label>
-                            <select class="option-select" id="egg3-option">
-                                <option value="30-eggs">Standard Crate (30 Eggs)</option>
-                                <option value="60-eggs">Double Crate (60 Eggs) - ₵105.00</option>
-                            </select>
-                        </div>
-                        <button class="btn-add-to-cart" onclick="addToCart('Jumbo Size Eggs', 55, '30 Eggs Crate', 'https://images.unsplash.com/photo-1587486913049-53fc88980cfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Premium Chicken Section -->
-        <section class="product-category">
-            <h2 class="section-title">Premium Chicken</h2>
-            <div class="product-grid">
-                <!-- Chicken Product 1 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Whole Chicken" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Whole Chicken (1.5-2kg)</h3>
-                        <p class="product-description">Fresh, humanely raised whole chicken. Perfect for roasting, grilling, or traditional dishes.</p>
-                        <p class="product-price">₵55.00</p>
-                        <div class="product-options">
-                            <label class="option-label">Cut Preference:</label>
-                            <select class="option-select" id="chicken1-option">
-                                <option value="whole">Whole Chicken</option>
-                                <option value="cut-8">Cut into 8 Pieces</option>
-                                <option value="cut-12">Cut into 12 Pieces</option>
-                            </select>
-                        </div>
-                        <button class="btn-add-to-cart" onclick="addToCart('Whole Chicken', 55, '1.5-2kg Whole', 'https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">Add to Cart</button>
-                    </div>
-                </div>
-                
-                <!-- Chicken Product 2 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Chicken Drumsticks" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Chicken Drumsticks (1kg Pack)</h3>
-                        <p class="product-description">Juicy, tender drumsticks. Great for frying, grilling, or stews.</p>
-                        <p class="product-price">₵35.00</p>
-                        <div class="product-options">
-                            <label class="option-label">Pack Size:</label>
-                            <select class="option-select" id="chicken2-option">
-                                <option value="1kg">1kg (6-8 pieces)</option>
-                                <option value="2kg">2kg (12-16 pieces) - ₵65.00</option>
-                            </select>
-                        </div>
-                        <button class="btn-add-to-cart" onclick="addToCart('Chicken Drumsticks', 35, '1kg Pack', )">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Chicken Product 3 -->
-                <div class="product-card">
-                    <img src="https://media.istockphoto.com/id/1414433990/photo/pile-of-chicken-pieces-in-container-box.jpg?s=1024x1024&w=is&k=20&c=aVRBL7YL2ZB6qLSw17uW7flInDKUbSPcdXZhV7MQfkg=" alt="Chicken Wings" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Chicken Wings (1kg Pack)</h3>
-                        <p class="product-description">Plump and meaty wings, ideal for grilling, frying, or your favorite wing recipes.</p>
-                        <p class="product-price">₵40.00</p>
-                        <div class="product-options">
-                            <label class="option-label">Pack Size:</label>
-                            <select class="option-select" id="chicken3-option">
-                                <option value="1kg">1kg (8-10 pieces)</option>
-                                <option value="2kg">2kg (16-20 pieces) - ₵75.00</option>
-                            </select>
-                        </div>
-                        <button class="btn-add-to-cart" onclick="addToCart('Chicken Wings', 40, '1kg Pack', 'https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Chicken Product 4 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Chicken Breast" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Chicken Breast (1kg Pack)</h3>
-                        <p class="product-description">Lean, tender chicken breast fillets. Perfect for healthy meals and grilling.</p>
-                        <p class="product-price">₵50.00</p>
-                        <div class="product-options">
-                            <label class="option-label">Pack Size:</label>
-                            <select class="option-select" id="chicken4-option">
-                                <option value="1kg">1kg (4-5 pieces)</option>
-                                <option value="2kg">2kg (8-10 pieces) - ₵95.00</option>
-                            </select>
-                        </div>
-                        <button class="btn-add-to-cart" onclick="addToCart('Chicken Breast', 50, '1kg Pack', 'https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Farm Inputs (B2B) Section -->
-        <section class="product-category">
-            <h2 class="section-title">Farm Inputs</h2>
-            <div class="product-grid">
-                <!-- Farm Input 1 -->
-                <div class="product-card">
-                    <img src="./asset/feed1.jpg" alt="Poultry Feed" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Premium Poultry Feed (25kg)</h3>
-                        <p class="product-description">High-quality feed for layers and broilers. Contains essential nutrients for healthy growth.</p>
-                        <p class="product-price">₵120.00</p>
-                        <div class="product-options">
-                            <label class="option-label">Feed Type:</label>
-                            <select class="option-select" id="feed1-option">
-                                <option value="starter">Starter Feed (0-8 weeks)</option>
-                                <option value="grower">Grower Feed (8-18 weeks)</option>
-                                <option value="layer">Layer Feed (18+ weeks)</option>
-                            </select>
-                        </div>
-                        <button class="btn-add-to-cart" onclick="addToCart('Premium Poultry Feed', 120, '25kg Bag', 'https://images.unsplash.com/photo-1586771107445-d3ca888129ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">Add to Cart</button>
-                    </div>
-                </div>
-                
-                <!-- Farm Input 2 -->
-                <div class="product-card">
-                    <img src="./asset/vaci.jpeg" alt="Vaccines" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Poultry Vaccines (10 doses)</h3>
-                        <p class="product-description">Essential vaccines for disease prevention. Includes Newcastle, Gumboro, and Fowl Pox.</p>
-                        <p class="product-price">₵75.00</p>
-                        <div class="product-options">
-                            <label class="option-label">Vaccine Type:</label>
-                            <select class="option-select" id="vaccine1-option">
-                                <option value="newcastle">Newcastle Disease</option>
-                                <option value="gumboro">Gumboro Disease</option>
-                                <option value="fowlpox">Fowl Pox</option>
-                            </select>
-                        </div>
-                        <button class="btn-add-to-cart" onclick="addToCart('Poultry Vaccines', 75, '10 doses', 'https://images.unsplash.com/photo-1586771107445-d3ca888129ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Farm Input 3 -->
-                <div class="product-card">
-                    <img src="./asset/aut.jpg" alt="Feeders" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Automatic Chicken Feeders (Set of 5)</h3>
-                        <p class="product-description">Durable plastic feeders that minimize waste and keep feed clean.</p>
-                        <p class="product-price">₵150.00</p>
-                        <div class="product-options">
-                            <label class="option-label">Capacity:</label>
-                            <select class="option-select" id="feeder1-option">
-                                <option value="5kg">5kg Capacity</option>
-                                <option value="10kg">10kg Capacity - ₵200.00</option>
-                            </select>
-                        </div>
-                        <button class="btn-add-to-cart" onclick="addToCart('Automatic Chicken Feeders', 150, 'Set of 5', 'https://images.unsplash.com/photo-1586771107445-d3ca888129ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Farm Input 4 -->
-                <div class="product-card">
-                    <img src="./asset/water.jpeg" alt="Waterers" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Poultry Waterers (Set of 5)</h3>
-                        <p class="product-description">Automatic waterers that provide clean water and reduce spillage.</p>
-                        <p class="product-price">₵130.00</p>
-                        <div class="product-options">
-                            <label class="option-label">Capacity:</label>
-                            <select class="option-select" id="waterer1-option">
-                                <option value="5l">5 Liter Capacity</option>
-                                <option value="10l">10 Liter Capacity - ₵180.00</option>
-                            </select>
-                        </div>
-                        <button class="btn-add-to-cart" onclick="addToCart('Poultry Waterers', 130, 'Set of 5', 'https://images.unsplash.com/photo-1586771107445-d3ca888129ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-    
-    <!-- Shopping Cart Sidebar -->
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h3 class="cart-title">Your Cart</h3>
-            <button class="close-cart" onclick="closeCart()">&times;</button>
-        </div>
-        
-        <div class="cart-items" id="cartItems">
-            <!-- Cart items will be added here dynamically -->
-            <p class="empty-cart-message">Your cart is empty</p>
-        </div>
-        
-        <div class="cart-summary">
-            <div class="subtotal">
-                <span>Subtotal:</span>
-                <span id="subtotal">₵0.00</span>
-            </div>
-            <div class="delivery">
-                <span>Delivery Fee:</span>
-                <span id="delivery">₵10.00</span>
-            </div>
-            <div class="total">
-                <span>Total:</span>
-                <span id="total">₵10.00</span>
-            </div>
-            
-            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
-        </div>
-    </div>
-    
-    <!-- Overlay when cart is open -->
-    <div class="overlay" id="overlay" onclick="closeCart()"></div>
-    
-    <script>
-        // Shopping cart data
-        let cart = [];
-        
-        // DOM Elements
-        const cartIcon = document.getElementById('cartIcon');
-        const cartCount = document.getElementById('cartCount');
-        const cartSidebar = document.getElementById('cartSidebar');
-        const cartItems = document.getElementById('cartItems');
-        const subtotal = document.getElementById('subtotal');
-        const delivery = document.getElementById('delivery');
-        const total = document.getElementById('total');
-        const overlay = document.getElementById('overlay');
-        
-        // Event Listeners
-        cartIcon.addEventListener('click', openCart);
-        
-        // Open cart sidebar
-        function openCart() {
-            cartSidebar.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // Close cart sidebar
-        function closeCart() {
-            cartSidebar.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-        
-        // Add item to cart
-        function addToCart(name, price, variant, image) {
-            // Check if item already exists in cart
-            const existingItem = cart.find(item => item.name === name && item.variant === variant);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    name,
-                    price,
-                    variant,
-                    image,
-                    quantity: 1
-                });
-            }
-            
-            updateCart();
-            showCartNotification(name);
-        }
-        
-        // Update cart UI
-        function updateCart() {
-            // Update cart count
-            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCount.textContent = itemCount;
-            
-            // Update cart items list
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
-            } else {
-                cartItems.innerHTML = cart.map(item => `
-                    <div class="cart-item">
-                        <img src="${item.image}" alt="${item.name}" class="cart-item-img">
-                        <div class="cart-item-details">
-                            <h4 class="cart-item-title">${item.name}</h4>
-                            <p class="cart-item-price">₵${item.price.toFixed(2)}</p>
-                            <p class="cart-item-variant">${item.variant}</p>
-                            <div class="cart-item-quantity">
-                                <button class="quantity-btn" onclick="changeQuantity('${item.name}', '${item.variant}', -1)">-</button>
-                                <input type="text" class="quantity-input" value="${item.quantity}" readonly>
-                                <button class="quantity-btn" onclick="changeQuantity('${item.name}', '${item.variant}', 1)">+</button>
-                            </div>
-                            <span class="remove-item" onclick="removeItem('${item.name}', '${item.variant}')">Remove</span>
-                        </div>
-                    </div>
-                `).join('');
-            }
-            
-            // Update totals
-            const subtotalValue = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const deliveryValue = subtotalValue > 0 ? 10 : 0;
-            const totalValue = subtotalValue + deliveryValue;
-            
-            subtotal.textContent = `₵${subtotalValue.toFixed(2)}`;
-            delivery.textContent = `₵${deliveryValue.toFixed(2)}`;
-            total.textContent = `₵${totalValue.toFixed(2)}`;
-        }
-        
-        // Change item quantity
-        function changeQuantity(name, variant, change) {
-            const item = cart.find(item => item.name === name && item.variant === variant);
-            
-            if (item) {
-                item.quantity += change;
-                
-                if (item.quantity <= 0) {
-                    cart = cart.filter(i => !(i.name === name && i.variant === variant));
-                }
-                
-                updateCart();
-            }
-        }
-        
-        // Remove item from cart
-        function removeItem(name, variant) {
-            cart = cart.filter(item => !(item.name === name && item.variant === variant));
-            updateCart();
-        }
-        
-        // Show notification when item is added
-        function showCartNotification(name) {
-            const notification = document.createElement('div');
-            notification.className = 'cart-notification';
-            notification.textContent = `${name} added to cart!`;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 10);
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
-        }
-        
-        // Checkout function
-        function checkout() {
-            if (cart.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
-            
-            // In a real implementation, this would redirect to a checkout page
-            alert(`Proceeding to checkout with ${cart.reduce((sum, item) => sum + item.quantity, 0)} items. Total: ${total.textContent}`);
-            
-            // For demo purposes, we'll just clear the cart
-            cart = [];
-            updateCart();
-            closeCart();
-        }
-    </script>
-</body>
-</html>
-
-<!-- <!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Products – H.A. Farms</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product List</title>
+  <link rel="stylesheet" href="/css/product.css">
+
+  <!-- ✅ Add Font Awesome for Cart Icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
+
 <body>
-  <header>
-    <div class="logo"><img src="assets/logo.png" alt="Logo" /></div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="products.html" class="active">Products</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+  <div class="container">
+    <h1>
+      Our Products
 
-  <main class="container">
-    <h1>Our Premium Products</h1>
-    <div class="product-list">
-      <div class="product-card">
-        <img src="assets/eggs.jpg" alt="Eggs" />
-        <h3>Premium Eggs</h3>
-        <p>Indulge in the pure, rich taste of Premium Eggs, sourced from the healthiest, free-range hens raised in a natural, stress-free environment. Our eggs are carefully selected for their superior quality, vibrant yolks, and firm, fresh whites—perfect for gourmet cooking, baking, or a simple, wholesome breakfast</p>
-        <button onclick="addToCart('Premium Eggs', 25)">Add to Cart</button>
-      </div>
+      <!-- ✅ Home Button -->
+      <a href="/index.html" class="add-product-btn">+ Home</a>
 
-      <div class="product-card">
-        <img src="assets/chicken.jpg" alt="Chicken" />
-        <h3>Premium Chicken</h3>
-        <p>Packaged and ready to cook – GHS 50</p>
-        <button onclick="addToCart('Premium Chicken', 50)">Add to Cart</button>
-      </div>
+      <!-- ✅ Cart Icon with Link -->
+      <a href="/cart.html" class="cart-icon" title="View Cart">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+      </a>
+    </h1>
 
-      <div class="product-card">
-        <img src="assets/farm-inputs.jpg" alt="Farm Inputs" />
-        <h3>Farm Inputs</h3>
-        <p>Available at our Mankesim outlet</p>
-        <button onclick="addToCart('Farm Inputs', 40)">Add to Cart</button>
-      </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search products..." />
+      <button>Search</button>
     </div>
 
-    <div id="cart"></div>
-  </main>
-
-   <p>&copy; 2025 H.A. Farms. All rights reserved.</p>
-    <div class="socials">
-      <a href="https://www.facebook.com/ishmaelartsandinstallations" target="_blank"><i
-          class="fa-brands fa-facebook"></i></a>
-      <a href="https://www.instagram.com/ishmaelart_?igsh=bDgwMHVhanVwbzBn" target="_blank"><i
-          class="fa-brands fa-instagram"></i></a>
-      <a href="https://vm.tiktok.com/ZMk7urquG/" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+    <div class="product-grid">
+      <!-- Products will be dynamically inserted here -->
     </div>
+
+    <div class="pagination">
+      <a href="#" class="active">1</a>
+      <a href="#">2</a>
+      <a href="#">3</a>
+      <a href="#">4</a>
+      <a href="#">5</a>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 H.A. Farms. All rights reserved.
+    <br>
+    <a href="/privacy-policy.html">Privacy Policy</a> |
+    <a href="/terms.html">Terms of Service</a>
   </footer>
 
-  <script src="script.js"></script>
-  <script>showCart();</script>
-</body>
-</html> -->
+  <script src="/js/products.js"></script>
 
+  <!-- ✅ Optional: JS to update cart count from localStorage -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      document.getElementById("cart-count").textContent = cart.length;
+    });
+  </script>
+
+  <style>
+    .cart-icon {
+      float: right;
+      margin-left: 20px;
+      text-decoration: none;
+      font-size: 1.5rem;
+      position: relative;
+      color: #333;
+    }
+
+    .cart-icon #cart-count {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.8rem;
+    }
+  </style>
+</body>
+
+</html>

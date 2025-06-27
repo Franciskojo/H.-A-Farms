@@ -42,61 +42,138 @@ header {
 }
 
 /* Mobile Menu Toggle */
-.menu-toggle {
-  display: none;
-  cursor: pointer;
-  padding: 10px;
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.menu-toggle span {
-  display: block;
-  width: 25px;
-  height: 3px;
-  background-color: white;
-  margin: 5px 0;
-  transition: all 0.3s ease;
+body {
+  font-family: "Segoe UI", sans-serif;
 }
 
-/* Navigation Links */
+/* Header Container */
+header {
+  background-color: #2f7b2f;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo */
+.logo img {
+  height: 50px;
+}
+
+/* Nav */
 nav {
   display: flex;
   align-items: center;
   gap: 2rem;
 }
 
+/* Links */
 .nav-links, .auth-links {
   display: flex;
   gap: 1.5rem;
 }
 
-nav a {
-  text-decoration: none;
+
+.nav-links a,
+.auth-links a {
   color: white;
+  text-decoration: none;
   font-weight: 500;
-  font-size: 1rem;
-  position: relative;
-  padding: 0.5rem 0;
   transition: color 0.3s ease;
 }
 
-nav a:hover {
+.nav-links a:hover,
+.auth-links a:hover {
   color: greenyellow;
 }
 
-/* Register link special styling */
+/* Auth Buttons */
 .register-link {
-  color: #fff;
-  background-color: #28a745;
-  padding: 0.5rem 1.2rem;
+   --primary-color: #4a8f29;
+  color: #2f7b2f;
+  padding: 0.4rem 0.8rem;
   border-radius: 4px;
+  font-weight: bold;
+}
+
+/* .register-link:hover {
+  color: greenyellow;
+  color: #4a8f29;
+} */
+
+.register-link {
+  background-color: #4a8f29;
+}
+
+.login-link {
+  background-color: #4a8f29;
+}
+
+/* Mobile Menu Toggle Button */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;;
+}
+
+.menu-toggle i {
+  display: block;
+  width: 20px;
+  height: 15px;
+  border-radius: 1px;
   transition: all 0.3s ease;
 }
 
-.register-link:hover {
-  background-color: #218838;
-  color: #fff;
-  transform: translateY(-2px);
+/* Mobile Styles */
+@media (max-width: 768px) {
+  header {
+    flex-wrap: wrap;
+  }
+
+  .menu-toggle {
+    display: flex;
+    margin-left: auto;
+  }
+
+  nav {
+    flex-direction: column;
+    width: 100%;
+    display: none;
+    margin-top: 1rem;
+    gap: 1rem;
+  }
+
+  nav.open {
+    display: flex;
+  }
+
+  .nav-links,
+  .auth-links {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .nav-links a,
+  .auth-links a {
+    width: 100%;
+    padding: 0.5rem 0;
+  }
 }
+
 
 /* Hero Banner Styles */
 .hero {
@@ -453,7 +530,7 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 20px;
   font-size: 0.9rem;
-  color: #ddd;
+  /* color: #ddd; */
 }
 
 /* Animations */
