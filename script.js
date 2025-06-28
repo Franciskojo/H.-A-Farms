@@ -129,3 +129,41 @@ document.addEventListener('DOMContentLoaded', function () {
     e.target.reset();
   }
 });
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const headlines = [
+      "Fresh, Healthy & Affordable Poultry",
+      "Farm-Raised Chicken You Can Trust",
+      "Naturally Nutritious. Deliciously Local.",
+      "Your Daily Source of Farm-Fresh Eggs"
+    ];
+
+    const taglines = [
+      "Premium Eggs and Chicken delivered with care.",
+      "Responsibly Raised, Expertly Packed.",
+      "Direct from Our Farm to Your Family.",
+      "High-Quality Produce. Honest Prices."
+    ];
+
+    let index = 0;
+    const headlineEl = document.getElementById("dynamicHeadline");
+    const taglineEl = document.getElementById("dynamicTagline");
+
+    function updateText() {
+      headlineEl.classList.remove("fade-in");
+      taglineEl.classList.remove("fade-in");
+
+      setTimeout(() => {
+        headlineEl.textContent = headlines[index];
+        taglineEl.textContent = taglines[index];
+        headlineEl.classList.add("fade-in");
+        taglineEl.classList.add("fade-in");
+        index = (index + 1) % headlines.length;
+      }, 300); // fade out time
+    }
+
+    setInterval(updateText, 4000); // Change text every 4 seconds
+  });
+
+
