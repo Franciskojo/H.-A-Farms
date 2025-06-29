@@ -1,88 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | E-Commerce</title>
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="../css/auth.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register | E-Commerce</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="../css/auth.css" />
 </head>
 <body>
-    <!-- <header class="main-header">
-        <div class="container">
-            <nav>
-                <a href="../index.html" class="logo">H. A Farms</a>
-                <div class="nav-links">
-                    <a href="../products.html">Products</a>
-                    <a href="../cart.html">Cart</a>
-                    <div class="user-actions">
-                        <a href="login.html">Login</a>
-                        <a href="register.html">Register</a>
-                        <div class="logged-in">
-                            <a href="login.html" class="user-profile">login</a>
-                            <a href="#" id="logout">Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header> -->
+  <div class="auth-container">
+    <div class="auth-card">
+      <h1>Create Account</h1>
 
-    <div class="auth-container">
-        <div class="auth-card">
-            <h1>Create Account</h1>
-            
-            <form id="registerForm">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required minlength="8">
-                </div>
-                
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" required>
-                </div>
-                
-                <button type="submit" class="btn-primary">Register</button>
-            </form>
-            
-            <div class="social-login">
-                <p>Or register with</p>
-                <div class="social-buttons">
-                    <button class="social-btn google">
-                        <i class="icon-google"></i>
-                    </button>
-                    <button class="social-btn facebook">
-                        <i class="icon-facebook"></i>
-                    </button>
-                    <button class="social-btn twitter">
-                        <i class="icon-twitter"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="auth-footer">
-                Already have an account? <a href="login.html">Login</a>
-            </div>
+      <form id="registerForm" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="fullName" required />
         </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required minlength="6" />
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" required />
+        </div>
+
+        <div class="form-group">
+          <label for="profilePicture">Profile Picture (optional)</label>
+          <input type="file" id="profilePicture" name="profilePicture" accept="image/*" />
+        </div>
+
+        <button type="submit" class="btn-primary">Register</button>
+      </form>
+
+      <div class="social-login">
+        <p>Or register with</p>
+        <div class="social-buttons">
+          <button class="social-btn google"><i class="icon-google"></i></button>
+          <button class="social-btn facebook"><i class="icon-facebook"></i></button>
+          <button class="social-btn twitter"><i class="icon-twitter"></i></button>
+        </div>
+      </div>
+
+      <div class="auth-footer">
+        Already have an account? <a href="login.html">Login</a>
+      </div>
     </div>
+  </div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 H. A Farms. All rights reserved.</p>
-        </div>
-    </footer>
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 H. A Farms. All rights reserved.</p>
+    </div>
+  </footer>
 
-    <script src="/js/auth.js"></script>
+  <script src="/js/auth.js"></script>
 </body>
 </html>
