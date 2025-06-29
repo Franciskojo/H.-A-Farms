@@ -20,32 +20,77 @@
 }
 
 .user-profile {
-    text-align: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #edf2f7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  max-width: 400px;
+  margin: 1rem auto;
+  text-align: center;
 }
 
 .user-profile img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 1rem;
-    border: 3px solid #f8fafc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #2f7b2f;
+  margin-bottom: 1rem;
 }
 
-.user-profile h3 {
-    margin: 0.5rem 0 0;
-    color: #2d3748;
+.user-profile h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.3rem;
 }
 
 .user-profile p {
-    margin: 0.25rem 0 0;
-    color: #718096;
-    font-size: 0.9rem;
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+  word-break: break-word;
 }
+
+#userProfilePicture {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+.edit-btn {
+      background-color: #2f7b2f;
+      color: #fff;
+      padding: 6px 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #editProfileForm input {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    #editProfileForm button {
+      background-color: #2f7b2f;
+      color: #fff;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
 
 .user-menu {
     display: flex;

@@ -1,158 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Dashboard | H. A. Farms</title>
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/user.css">
-    <!-- <link rel="stylesheet" href="/style.css"> -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard | H. A. Farms</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/user.css" />
 </head>
+
 <body>
-    <header class="main-header">
-        <div class="container">
-            <nav>
-                <a href="../index.html" class="logo">H. A. Farms</a>
-                <div class="nav-links">
-                    <a href="/products.html">Products</a>
-                    <a href="../cart.html">Cart <span class="cart-count">0</span></a>
-                    <div class="user-actions">
-                        <div class="logged-in">
-                            <a href="/user/dasboard.html" class="user-profile">My Account</a>
-                            <a href="#" id="logout">Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <main class="container user-dashboard">
-        <aside class="user-sidebar">
-            <div class="user-profile">
-                <img src="/images/user-avatar.jpg" alt="User Avatar">
-                <h3 id="userName">Loading...</h3>
-                <p id="userEmail">Loading...</p>
+  <header class="main-header">
+    <div class="container">
+      <nav>
+        <a href="../index.html" class="logo">H. A. Farms</a>
+        <div class="nav-links">
+          <a href="/products.html">Products</a>
+          <a href="../cart.html">Cart <span class="cart-count">0</span></a>
+          <div class="user-actions">
+            <div class="logged-in">
+              <a href="/user/dasboard.html" class="user-profile">My Account</a>
+              <a href="#" id="logout">Logout</a>
             </div>
-            
-            <nav class="user-menu">
-                <a href="dasboard.html" class="active">
-                    <i class="icon-dashboard"></i> Dashboard
-                </a>
-                <a href="orders.html">
-                    <i class="icon-orders"></i> My Orders
-                </a>
-                <a href="#">
-                    <i class="icon-address"></i> Addresses
-                </a>
-                <a href="account-settings.html">
-                    <i class="icon-settings"></i> Account Settings
-                </a>
-            </nav>
-        </aside>
-        
-        <div class="user-content">
-            <h1>Account Dashboard</h1>
-            
-            <div class="dashboard-cards">
-                <div class="dashboard-card">
-                    <div class="card-icon">
-                        <i class="icon-orders"></i>
-                    </div>
-                    <div class="card-info">
-                        <h3>Recent Orders</h3>
-                        <p>You have <span id="orderCount">2</span> recent orders</p>
-                        <a href="orders.html">View Orders</a>
-                    </div>
-                </div>
-                
-                <div class="dashboard-card">
-                    <div class="card-icon">
-                        <i class="icon-address"></i>
-                    </div>
-                    <div class="card-info">
-                        <h3>Address Book</h3>
-                        <p>You have <span id="addressCount">1</span> saved address</p>
-                        <a href="#">Manage Addresses</a>
-                    </div>
-                </div>
-                
-                <div class="dashboard-card">
-                    <div class="card-icon">
-                        <i class="icon-account"></i>
-                    </div>
-                    <div class="card-info">
-                        <h3>Account Information</h3>
-                        <p>Update your password and account details</p>
-                        <a href="#">Edit Account</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="recent-orders">
-                <h2>Recent Orders</h2>
-                <table class="orders-table">
-                    <thead>
-                        <tr>
-                            <th>Order #</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Total</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>loading</td>
-                            <td>loading</td>
-                            <td><span class="status shipped">Shipped</span></td>
-                            <td>loading</td>
-                            <td><a href="order-detail.html?id=ORD-123456" class="btn-action">View</a></td>
-                        </tr>
-                        <!-- More orders would be here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-    <!-- <div class="container">
-      <div class="footer-content">
-        <div class="footer-column">
-          <h3>H. A Farms</h3>
-          <p>Providing organic, sustainable produce since 2005.</p>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
           </div>
         </div>
-        <div class="footer-column">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container user-dashboard">
+    <aside class="user-sidebar">
+      <img id="userProfilePicture" src="/asset/default-avatar.png" alt="Profile Picture" width="100" height="100" />
+      <input type="file" id="editProfilePicture" accept="image/*" style="display: none;" />
+
+      <h2 id="userName">Loading...</h2>
+      <p id="userEmail">Loading...</p>
+      <span>Orders: <strong id="orderCount">0</strong></span>
+
+      <button id="editProfileBtn" class="edit-btn">Edit Profile</button>
+
+      <form id="editProfileForm" style="display: none; margin-top: 1rem;">
+        <input type="text" id="editFullName" placeholder="Full Name" required />
+        <input type="email" id="editEmail" placeholder="Email" required />
+        <button type="submit">Save</button>
+      </form>
+
+      <nav class="user-menu">
+        <a href="dasboard.html" class="active"><i class="icon-dashboard"></i> Dashboard</a>
+        <a href="orders.html"><i class="icon-orders"></i> My Orders</a>
+        <a href="#"><i class="icon-address"></i> Addresses</a>
+        <a href="account-settings.html"><i class="icon-settings"></i> Account Settings</a>
+      </nav>
+    </aside>
+
+    <div class="user-content">
+      <h1>Account Dashboard</h1>
+
+      <div class="dashboard-cards">
+        <div class="dashboard-card">
+          <div class="card-icon"><i class="icon-orders"></i></div>
+          <div class="card-info">
+            <h3>Recent Orders</h3>
+            <p>You have <span id="orderCount">0</span> recent orders</p>
+            <a href="orders.html">View Orders</a>
+          </div>
         </div>
-        <div class="footer-column">
-          <h3>Location</h3>
-          <ul>
-            <li> Mankesim – New Kumasi / Fosu Station,</li>
-            <li>hannahaidoo.ha@gmail.com</li>
-            <li>+233542887480</li>
-          </ul>
+
+        <div class="dashboard-card">
+          <div class="card-icon"><i class="icon-address"></i></div>
+          <div class="card-info">
+            <h3>Address Book</h3>
+            <p>You have <span id="addressCount">1</span> saved address</p>
+            <a href="#">Manage Addresses</a>
+          </div>
         </div>
-      </div> -->
-      <div class="copyright">
-        <p>&copy; 2025 H. A. Farms. All rights reserved.</p>
-        <!-- <a href="#hero" class="back-to-top">Back to Top</a> -->
+
+        <div class="dashboard-card">
+          <div class="card-icon"><i class="icon-account"></i></div>
+          <div class="card-info">
+            <h3>Account Information</h3>
+            <p>Update your password and account details</p>
+            <a href="#">Edit Account</a>
+          </div>
+        </div>
       </div>
+
+      <div class="recent-orders">
+        <h2>Recent Orders</h2>
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>Order #</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Loading</td>
+              <td>Loading</td>
+              <td><span class="status shipped">Shipped</span></td>
+              <td>Loading</td>
+              <td><a href="order-detail.html?id=ORD-123456" class="btn-action">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="copyright">
+      <p>&copy; 2025 H. A. Farms. All rights reserved.</p>
     </div>
   </footer>
 
-    <script src="/js/user-dashbord.js"></script>
+  <script src="/js/user-dashbord.js"></script>
 </body>
+
 </html>

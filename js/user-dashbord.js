@@ -1,78 +1,119 @@
 document.addEventListener('DOMContentLoaded', async function () {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-        console.error('No auth token found');
-        window.location.href = '/login.html'; // Redirect if not logged in
-        return;
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    window.location.href = '/login.html';
+    return;
+  }
+
+  let user = null;
+
+  try {
+    // 1. Fetch profile
+    const profileRes = await fetch('https://h-a-farms-backend.onrender.com/users/me', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!profileRes.ok) throw new Error('Failed to load user');
+    user = await profileRes.json();
+
+    document.getElementById('userName').textContent = user.name || 'User';
+    document.getElementById('userEmail').textContent = user.email;
+
+    const profileImg = document.getElementById('userProfilePicture');
+    if (profileImg) {
+      profileImg.src = user.profilePicture || '/asset/default-avatar.png';
+      profileImg.alt = `${user.name}'s profile picture`;
     }
 
-    try {
-        // 1. Fetch user profile
-        const profileRes = await fetch('https://h-a-farms-backend.onrender.com/me', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        if (!profileRes.ok) throw new Error('Failed to load user');
-        const user = await profileRes.json();
-        document.getElementById('userName').textContent = user.fullName;
-        document.getElementById('userEmail').textContent = user.email;
+    document.getElementById('editFullName').value = user.name;
+    document.getElementById('editEmail').value = user.email;
 
+    // 2. Fetch orders
+    const orderRes = await fetch('https://h-a-farms-backend.onrender.com/order/get', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-        // Fetch user orders
-        const orderRes = await fetch('https://h-a-farms-backend.onrender.com/order/get', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        if (!orderRes.ok) throw new Error('Failed to load orders');
+    const orderData = await orderRes.json();
+    const orders = Array.isArray(orderData) ? orderData : orderData.orders || [];
+    document.getElementById('orderCount').textContent = orders.length;
 
-        const orderData = await orderRes.json();
-        console.log('Order response:', orderData);
+    const tbody = document.querySelector('.orders-table tbody');
+    tbody.innerHTML = '';
 
-        // Safely get array from response
-        const orders = Array.isArray(orderData)
-            ? orderData
-            : orderData.orders || orderData.data || [];
-
-        document.getElementById('orderCount').textContent = orders.length;
-
-        // Render order rows
-        const tbody = document.querySelector('.orders-table tbody');
-        tbody.innerHTML = '';
-
-        if (orders.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5">You have no recent orders.</td></tr>`;
-        } else {
-            orders.slice(0, 5).forEach(order => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-            <td>${order.orderId || order._id}</td>
-            <td>${new Date(order.createdAt).toLocaleDateString()}</td>
-            <td><span class="status ${order.status?.toLowerCase() || 'pending'}">${order.status || 'Pending'}</span></td>
-            <td>₵${order.total?.toFixed(2) || '0.00'}</td>
-            <td><a href="order-detail.html?id=${order._id}" class="btn-action">View</a></td>
+    if (orders.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5">You have no recent orders.</td></tr>`;
+    } else {
+      orders.slice(0, 5).forEach(order => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${order.orderId || order._id}</td>
+          <td>${new Date(order.createdAt).toLocaleDateString()}</td>
+          <td><span class="status ${order.status?.toLowerCase() || 'pending'}">${order.status || 'Pending'}</span></td>
+          <td>₵${order.total?.toFixed(2) || '0.00'}</td>
+          <td><a href="order-detail.html?id=${order._id}" class="btn-action">View</a></td>
         `;
-                tbody.appendChild(tr);
-            });
+        tbody.appendChild(tr);
+      });
+    }
+
+  } catch (err) {
+    console.error('Dashboard error:', err);
+    alert('Failed to load dashboard.');
+  }
+
+  // 3. Logout
+  const logoutBtn = document.getElementById('logout');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', e => {
+      e.preventDefault();
+      localStorage.clear();
+      window.location.href = '/login.html';
+    });
+  }
+
+  // 4. Toggle Edit Profile form
+  const editBtn = document.getElementById('editProfileBtn');
+  const editForm = document.getElementById('editProfileForm');
+
+  if (editBtn && editForm) {
+    editBtn.addEventListener('click', () => {
+      editForm.style.display = 'block';
+      editBtn.style.display = 'none';
+    });
+  }
+
+  // 5. Handle Edit Profile form submission
+  if (editForm) {
+    editForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append('name', document.getElementById('editFullName').value.trim());
+      formData.append('email', document.getElementById('editEmail').value.trim());
+
+      const fileInput = document.getElementById('editProfilePicture');
+      if (fileInput && fileInput.files.length > 0) {
+        formData.append('profilePicture', fileInput.files[0]);
+      }
+
+      try {
+        const res = await fetch(`https://h-a-farms-backend.onrender.com/users/${user._id}`, {
+          method: 'PATCH',
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData
+        });
+
+        const result = await res.json();
+        if (!res.ok) {
+          alert(result.message || 'Failed to update profile');
+          return;
         }
 
-        // Optional: address count if your backend supports it
-        // const addressRes = await fetch('https://h-a-farms-backend.onrender.com/user/addresses', { headers: { Authorization: `Bearer ${token}` } });
-        // const addresses = await addressRes.json();
-        // document.getElementById('addressCount').textContent = addresses.length;
-
-    } catch (error) {
-        console.error('Dashboard error:', error);
-    }
-
-    // 3. Logout handler
-    const logoutBtn = document.getElementById('logout');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            localStorage.removeItem('authToken');
-            window.location.href = '/login.html';
-        });
-    }
+        alert('Profile updated successfully!');
+        location.reload();
+      } catch (error) {
+        console.error('Profile update error:', error);
+        alert('An error occurred while updating profile.');
+      }
+    });
+  }
 });

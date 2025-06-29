@@ -8,38 +8,38 @@ document.addEventListener('DOMContentLoaded', function () {
       const fullName = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
       const profilePicture = document.getElementById('profilePicture')?.files[0]; // Optional
 
-      if (!fullName || !email || !password || !confirmPassword) {
-        alert('Please fill in all fields');
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        alert('Passwords do not match');
+      if (!fullName || !email || !password) {
+        alert('Please fill in all required fields.');
         return;
       }
 
       if (password.length < 6) {
-        alert('Password must be at least 6 characters');
+        alert('Password must be at least 6 characters.');
         return;
       }
 
       const formData = new FormData();
-      formData.append('fullName', fullName);
+      formData.append('name', fullName); // ✅ match your backend model if `name`, or change to `fullName` if needed
       formData.append('email', email);
       formData.append('password', password);
-      formData.append('confirmPassword', confirmPassword);
       if (profilePicture) {
         formData.append('profilePicture', profilePicture);
       }
 
       try {
-        const response = await fetch('https://h-a-farms-backend.onrender.com/register', {
+        const response = await fetch('https://h-a-farms-backend.onrender.com/users/register', {
           method: 'POST',
           body: formData
         });
+
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          const text = await response.text();
+          console.error('Non-JSON response:', text);
+          throw new Error('Server did not return valid JSON.');
+        }
 
         const data = await response.json();
 
@@ -48,11 +48,11 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
 
+        // Success: store token + user info
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('currentUser', JSON.stringify(data.user));
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const redirect = urlParams.get('redirect');
+        const redirect = new URLSearchParams(window.location.search).get('redirect');
         window.location.href = redirect ? `../${redirect}` : '../auth/login.html';
 
       } catch (error) {
@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
-
 
 
 
@@ -82,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try {
-        const response = await fetch('https://h-a-farms-backend.onrender.com/login', {
+        const response = await fetch('https://h-a-farms-backend.onrender.com/users/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -119,9 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
-
-
 
 
 
