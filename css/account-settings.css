@@ -1,0 +1,75 @@
+/* Container styling */
+main.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Form title */
+main.container h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #2f7b2f;
+}
+
+/* Form field styling */
+form#settingsForm label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #333;
+}
+
+form#settingsForm input[type="text"],
+form#settingsForm input[type="email"],
+form#settingsForm input[type="file"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border 0.3s ease;
+}
+
+form#settingsForm input:focus {
+  border-color: #2f7b2f;
+  outline: none;
+}
+
+/* Button styling */
+form#settingsForm button[type="submit"] {
+  margin-top: 2rem;
+  width: 100%;
+  background-color: #2f7b2f;
+  color: #fff;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form#settingsForm button:hover {
+  background-color: #256225;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  main.container {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  form#settingsForm button {
+    font-size: 0.95rem;
+  }
+}
+
+

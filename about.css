@@ -167,7 +167,7 @@ p {
 .mission-content {
   max-width: 800px;
   margin: 0 auto;
-  font-size: 1.2rem;
+  font-size: 1.rem;
 }
 
 /* Story Section */
@@ -179,7 +179,7 @@ p {
 
 .story-content {
   flex: 1;
-  font-size: 1.2rem;
+  font-size: 1.rem;
 }
 
 .story-image {

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Account Settings | H. A. Farms</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/account-settings.css" />
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <nav>
+        <a href="../index.html" class="logo">H. A. Farms</a>
+        <div class="nav-links">
+          <a href="/products.html">Products</a>
+          <a href="../cart.html">Cart</a>
+          <div class="user-actions">
+            <a href="/user/dashboard.html">Dashboard</a>
+            <!-- <a href="#" id="logout">Logout</a> -->
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Account Settings</h1>
+    <form id="settingsForm" enctype="multipart/form-data">
+      <label>Full Name:</label>
+      <input type="text" name="fullName" id="fullName"  />
+
+      <label>Email:</label>
+      <input type="email" name="email" id="email"  />
+
+      <label>Profile Picture:</label>
+      <input type="file" name="profilePicture" id="profilePicture" accept="image/*" />
+
+      <button type="submit">Update Profile</button>
+    </form>
+  </main>
+
+  <script src="/js/account-setting.js"></script>
+</body>
+</html>

@@ -29,7 +29,7 @@ body {
 
 a {
     text-decoration: none;
-    color: var(--primary-color);
+    color: white;
 }
 
 .btn {
@@ -52,7 +52,7 @@ a {
 
 /* Header Styles */
 .main-header {
-    background-color: white;
+    background-color: green;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
@@ -69,7 +69,7 @@ a {
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--dark-color);
+    color: white;
 }
 
 .nav-links {
@@ -86,6 +86,36 @@ a {
 .logged-in {
     display: none;
 }
+
+/* Responsive: Stack nav on smaller screens */
+@media (max-width: 768px) {
+  .main-header .container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .main-header nav {
+    width: 100%;
+  }
+
+  .main-header .nav-links {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .user-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .user-actions a {
+    width: 100%;
+    text-align: left;
+  }
+}
+
 
 /* Hero Section */
 .hero {
