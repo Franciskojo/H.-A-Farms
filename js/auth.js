@@ -1,75 +1,68 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const registerForm = document.getElementById('registerForm');
+  const registerForm = document.getElementById('registerForm');
 
-    if (registerForm) {
-        registerForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
+  if (registerForm) {
+    registerForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
 
-            const fullName = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+      const fullName = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const profilePicture = document.getElementById('profilePicture')?.files[0]; // Optional
 
-            // Basic frontend validation
-            if (!fullName || !email || !password || !confirmPassword) {
-                alert('Please fill in all fields');
-                return;
-            }
+      if (!fullName || !email || !password || !confirmPassword) {
+        alert('Please fill in all fields');
+        return;
+      }
 
-            if (password !== confirmPassword) {
-                alert('Passwords do not match');
-                return;
-            }
+      if (password !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
 
-            if (password.length < 6) {
-                alert('Password must be at least 6 characters');
-                return;
-            }
+      if (password.length < 6) {
+        alert('Password must be at least 6 characters');
+        return;
+      }
 
-            const userData = {
-                fullName,
-                email,
-                password,
-                confirmPassword,
-            };
+      const formData = new FormData();
+      formData.append('fullName', fullName);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('confirmPassword', confirmPassword);
+      if (profilePicture) {
+        formData.append('profilePicture', profilePicture);
+      }
 
-            try {
-                const response = await fetch('https://h-a-farms-backend.onrender.com/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(userData),
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    alert(data.message || 'Registration failed');
-                    return;
-                }
-
-                // Registration successful — save token and user
-                localStorage.setItem('authToken', data.token); // adjust if your backend returns token
-                localStorage.setItem('currentUser', JSON.stringify(data.user)); // adjust if your backend returns user
-
-                // Redirect
-                const urlParams = new URLSearchParams(window.location.search);
-                const redirect = urlParams.get('redirect');
-
-                if (redirect) {
-                    window.location.href = `../${redirect}`;
-                } else {
-                    window.location.href = '../auth/login.html';
-                }
-
-            } catch (error) {
-                console.error('Error registering user:', error);
-                alert('An error occurred. Please try again later.');
-            }
+      try {
+        const response = await fetch('https://h-a-farms-backend.onrender.com/register', {
+          method: 'POST',
+          body: formData
         });
-    }
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert(data.message || 'Registration failed');
+          return;
+        }
+
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('currentUser', JSON.stringify(data.user));
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect');
+        window.location.href = redirect ? `../${redirect}` : '../auth/login.html';
+
+      } catch (error) {
+        console.error('Error registering user:', error);
+        alert('An error occurred. Please try again later.');
+      }
+    });
+  }
 });
+
 
 
 
