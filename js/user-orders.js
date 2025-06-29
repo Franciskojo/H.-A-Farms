@@ -1,10 +1,29 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async function () {
   const token = localStorage.getItem('authToken');
-  if (!token) return (window.location.href = '/login.html');
+  if (!token) {
+    window.location.href = '/login.html';
+    return;
+  }
 
+  let user = null;
+
+  try {
+    const profileRes = await fetch('https://h-a-farms-backend.onrender.com/users/me', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!profileRes.ok) throw new Error('Failed to load user');
+    user = await profileRes.json();
+
+    document.getElementById('userName').textContent = user.name || 'User';
+    document.getElementById('userEmail').textContent = user.email;
+  } catch (err) {
+    console.error('Error fetching profile:', err);
+    return;
+  }
+
+  // Order listing logic
   let currentPage = 1;
   const limit = 5;
-
   const tbody = document.querySelector('.orders-table tbody');
   const paginationContainer = document.querySelector('.pagination');
 
@@ -16,15 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams();
     params.append('page', currentPage);
     params.append('limit', limit);
-
-    const status = statusFilter.value;
-    const start = startDateInput.value;
-    const end = endDateInput.value;
-
-    if (status) params.append('status', status);
-    if (start) params.append('startDate', start);
-    if (end) params.append('endDate', end);
-
+    if (statusFilter.value) params.append('status', statusFilter.value);
+    if (startDateInput.value) params.append('startDate', startDateInput.value);
+    if (endDateInput.value) params.append('endDate', endDateInput.value);
     return params;
   }
 
@@ -36,8 +49,15 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const data = await res.json();
+      if (!res.ok) {
+        if (res.status === 401) {
+          localStorage.removeItem('authToken');
+          return (window.location.href = '/login.html');
+        }
+        throw new Error(`Server responded with ${res.status}`);
+      }
 
+      const data = await res.json();
       renderOrders(data.orders);
       renderPagination(data.page, data.totalPages);
     } catch (err) {
@@ -48,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderOrders(orders) {
     tbody.innerHTML = '';
-
     if (!orders.length) {
       tbody.innerHTML = `<tr><td colspan="5">No orders found</td></tr>`;
       return;
@@ -57,10 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
     orders.forEach(order => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>${order.orderId || order._id}</td>
+        <td>${order._id}</td>
         <td>${new Date(order.createdAt).toLocaleDateString()}</td>
-        <td><span class="status ${order.status.toLowerCase()}">${order.status}</span></td>
-        <td>₵${order.total?.toFixed(2)}</td>
+        <td><span class="status ${order.orderStatus?.toLowerCase()}">${order.orderStatus}</span></td>
+        <td>₵${order.total.toFixed(2)}</td>
         <td><a href="order-detail.html?id=${order._id}" class="btn-action">View</a></td>
       `;
       tbody.appendChild(tr);
@@ -87,12 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
       pageBtn.textContent = i;
       pageBtn.classList.add('page-btn');
       if (i === current) pageBtn.classList.add('active');
-
       pageBtn.addEventListener('click', () => {
         currentPage = i;
         fetchOrders();
       });
-
       paginationContainer.appendChild(pageBtn);
     }
 
