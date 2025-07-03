@@ -1,87 +1,97 @@
-//    const hamburgerBtn = document.getElementById('hamburgerBtn');
-//     const sidebar = document.querySelector('.admin-sidebar');
+document.addEventListener('DOMContentLoaded', () => {
+  const rangeSelect = document.getElementById('rangeSelect');
+  const customFields = document.getElementById('customRangeFields');
+  const applyBtn = document.getElementById('applyFilter');
 
-//     hamburgerBtn.addEventListener('click', () => {
-//         sidebar.classList.toggle('show');
-//     });
+  fetchDashboardData('week');
 
-//     // Optional: Hide sidebar when clicking outside
-//     document.addEventListener('click', function (e) {
-//         if (!sidebar.contains(e.target) && !hamburgerBtn.contains(e.target)) {
-//             sidebar.classList.remove('show');
-//         }
-//     });
+  rangeSelect.addEventListener('change', () => {
+    const val = rangeSelect.value;
+    customFields.style.display = val === 'custom' ? 'flex' : 'none';
+    if (val !== 'custom') fetchDashboardData(val);
+  });
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize charts
-    const salesCtx = document.getElementById('salesChart').getContext('2d');
-    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-    
-    // Sales chart (line chart)
-    new Chart(salesCtx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: 'Monthly Sales',
-                data: [2500, 3200, 2800, 4100, 3700, 4500],
-                borderColor: '#4a6bff',
-                tension: 0.1,
-                fill: true,
-                backgroundColor: 'rgba(74, 107, 255, 0.1)'
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    
-    // Revenue chart (doughnut chart)
-    new Chart(revenueCtx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Electronics', 'Clothing', 'Home Goods', 'Other'],
-            datasets: [{
-                data: [45, 25, 20, 10],
-                backgroundColor: [
-                    '#4a6bff',
-                    '#6c5ce7',
-                    '#00b894',
-                    '#fd79a8'
-                ]
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom'
-                }
-            }
-        }
-    });
-    
-    // Notification button
-    document.querySelector('.btn-notification').addEventListener('click', function() {
-        alert('Notifications would appear here');
-    });
-    
-    // View order buttons
-    document.querySelectorAll('.btn-edit').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const orderId = this.closest('tr').querySelector('td').textContent;
-            window.location.href = `orders.html?order_id=${orderId}`;
-        });
-    });
+  applyBtn.addEventListener('click', () => {
+    const start = document.getElementById('startDate').value;
+    const end = document.getElementById('endDate').value;
+    if (!start || !end) return alert('Select both start and end dates.');
+    fetchDashboardData('custom', start, end);
+  });
 });
+
+async function fetchDashboardData(range, start = null, end = null) {
+  const token = localStorage.getItem('authToken');
+  let url = `https://h-a-farms-backend.onrender.com/admin/summary`;
+  if (range === 'custom') url += `?start=${start}&end=${end}`;
+  else url += `?range=${range}`;
+
+  try {
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await res.json();
+
+    const [revenueEl, ordersEl, productsEl, usersEl] = document.querySelectorAll('.stat-card p');
+    revenueEl.textContent = `$${data.totalRevenue.toFixed(2)}`;
+    ordersEl.textContent = data.totalOrders;
+    productsEl.textContent = data.totalProducts;
+    usersEl.textContent = data.totalUsers;
+
+    const tbody = document.querySelector('.data-table tbody');
+    tbody.innerHTML = '';
+    data.recentOrders.forEach(order => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${order._id}</td>
+        <td>${order.customerName}</td>
+        <td>${new Date(order.createdAt).toLocaleDateString()}</td>
+        <td>$${order.total.toFixed(2)}</td>
+        <td><span class="status ${order.status.toLowerCase()}">${order.status}</span></td>
+        <td><button class="btn-edit" onclick="location.href='/admin/order-detail.html?id=${order._id}'">View</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    renderSalesChart(data.salesChartData);
+    renderRevenueChart(data.revenueSources);
+
+  } catch (err) {
+    console.error(err);
+    alert('Failed to load dashboard data.');
+  }
+}
+
+function renderSalesChart(chartData) {
+  const ctx = document.getElementById('salesChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: chartData.labels,
+      datasets: [{
+        label: 'Sales ($)',
+        data: chartData.data,
+        borderColor: '#4CAF50',
+        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+  });
+}
+
+function renderRevenueChart(chartData) {
+  const ctx = document.getElementById('revenueChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: chartData.labels,
+      datasets: [{
+        label: 'Revenue Sources',
+        data: chartData.data,
+        backgroundColor: ['#66BB6A', '#FFA726', '#42A5F5']
+      }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+  });
+}

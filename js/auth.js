@@ -95,17 +95,14 @@ document.addEventListener('DOMContentLoaded', () => {
           throw new Error(result.message || 'Login failed');
         }
 
-        // Log result to understand the structure
-        console.log('Login result:', result);
-
-        // Save user info and token
-        localStorage.setItem('currentUser', JSON.stringify(result));
-        localStorage.setItem('authToken', result.accessToken); // If available
+        // Save user and token separately
+        localStorage.setItem('currentUser', JSON.stringify(result.user));
+        localStorage.setItem('authToken', result.accessToken);
 
         alert('Login successful!');
 
-        // Redirect based on role
-        if (result.role === 'admin') {
+        // Redirect based on user role
+        if (result.user?.role === 'admin') {
           window.location.href = '../admin/dashboard.html';
         } else {
           window.location.href = '../user/dashboard.html';

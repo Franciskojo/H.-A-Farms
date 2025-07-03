@@ -3,9 +3,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   const orderId = params.get("id");
   const token = localStorage.getItem("authToken");
 
-  if (!orderId || !token) {
-    alert("Order not found or user not authenticated.");
+  if (!token) {
+    alert("User not authenticated.");
     window.location.href = "/auth/login.html";
+    return;
+  }
+
+  if (!orderId || !/^[a-f\d]{24}$/i.test(orderId)) {
+    alert("Invalid order ID.");
     return;
   }
 
@@ -21,6 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const order = await res.json();
 
+    // 🔽 Populate order details...
     document.getElementById("orderNumber").textContent = order._id;
     document.querySelector(".order-date").textContent = `Placed on ${new Date(order.createdAt).toDateString()}`;
     document.querySelector(".status").textContent = order.orderStatus;
