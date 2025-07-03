@@ -44,28 +44,55 @@
       </header>
 
       <div class="dashboard-content">
+        <!-- Stats Summary -->
         <div class="stats-grid">
-          <div class="stat-card"><h3>Total Revenue</h3><p>$0</p></div>
-          <div class="stat-card"><h3>Total Orders</h3><p>0</p></div>
-          <div class="stat-card"><h3>Total Products</h3><p>0</p></div>
-          <div class="stat-card"><h3>Total Customers</h3><p>0</p></div>
+          <div class="stat-card">
+            <h3>Total Revenue</h3>
+            <p id="revenue">$0.00</p>
+          </div>
+          <div class="stat-card">
+            <h3>Total Orders</h3>
+            <p id="orders">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Total Products</h3>
+            <p id="products">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Total Customers</h3>
+            <p id="users">0</p>
+          </div>
         </div>
 
+        <!-- Charts -->
         <div class="charts-grid">
-          <div class="chart-card"><h3>Sales Overview</h3><canvas id="salesChart"></canvas></div>
-          <div class="chart-card"><h3>Revenue Sources</h3><canvas id="revenueChart"></canvas></div>
+          <div class="chart-card">
+            <h3>Sales Overview</h3>
+            <canvas id="salesChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Revenue Sources</h3>
+            <canvas id="revenueChart"></canvas>
+          </div>
         </div>
 
+        <!-- Recent Orders -->
         <div class="recent-orders">
           <h3>Recent Orders</h3>
           <table class="data-table">
             <thead>
               <tr>
-                <th>Order ID</th><th>Customer</th><th>Date</th>
-                <th>Amount</th><th>Status</th><th>Action</th>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
-            <tbody><!-- dynamically injected --></tbody>
+            <tbody>
+              <!-- JS will inject order rows here -->
+            </tbody>
           </table>
         </div>
       </div>
