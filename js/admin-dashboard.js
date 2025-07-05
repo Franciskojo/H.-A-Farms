@@ -24,7 +24,7 @@ function redirectToLogin() {
 function formatCurrency(amount) {
   return new Intl.NumberFormat('en-GH', {
     style: 'currency',
-    currency: 'GH₵'
+    currency: 'GHS'
   }).format(amount);
 }
 
