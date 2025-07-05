@@ -29,11 +29,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 🔽 Populate order details...
     document.getElementById("orderNumber").textContent = order._id;
     document.querySelector(".order-date").textContent = `Placed on ${new Date(order.createdAt).toDateString()}`;
-    document.querySelector(".status").textContent = order.orderStatus;
+    document.querySelector(".status").textContent = order.status;
 
     const user = order.user || {};
-    document.getElementById("userName").textContent = user.name || "Customer";
+    document.getElementById("userName").textContent = user.name || "User";
     document.getElementById("userEmail").textContent = user.email || "";
+
+    // ✅ Define profileImg before using it
+    const profileImg = document.getElementById('userProfilePicture');
+    if (profileImg) {
+      profileImg.src = user.profilePicture || '/asset/default-avatar.png';
+      profileImg.alt = `${user.name}'s profile picture`;
+    }
 
     const sa = order.shippingAddress;
     document.querySelector(".order-shipping address").innerHTML = `

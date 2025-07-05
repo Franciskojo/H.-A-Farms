@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', async function () {
+  // const params = new URLSearchParams(window.location.search);
+  // const orderId = params.get("id");
   const token = localStorage.getItem('authToken');
   if (!token) {
     window.location.href = '/login.html';
@@ -16,6 +18,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     document.getElementById('userName').textContent = user.name || 'User';
     document.getElementById('userEmail').textContent = user.email;
+
+    const profileImg = document.getElementById('userProfilePicture');
+    if (profileImg) {
+      profileImg.src = user.profilePicture || '/asset/default-avatar.png';
+      profileImg.alt = `${user.name}'s profile picture`;
+    }
   } catch (err) {
     console.error('Error fetching profile:', err);
     return;
@@ -76,11 +84,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     orders.forEach(order => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>${order._id}</td>
+        <td>${order.id}</td>
         <td>${new Date(order.createdAt).toLocaleDateString()}</td>
-        <td><span class="status ${order.orderStatus?.toLowerCase()}">${order.orderStatus}</span></td>
+        <td><span class="status ${order.status?.toLowerCase()}">${order.status}</span></td>
         <td>₵${order.total.toFixed(2)}</td>
-        <td><a href="order-detail.html?id=${order._id}" class="btn-action">View</a></td>
+        <td><a href="order-detail.html?id=${order.id}" class="btn-action">View</a></td>
       `;
       tbody.appendChild(tr);
     });

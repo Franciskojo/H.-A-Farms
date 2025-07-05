@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', async function () {
+  // const params = new URLSearchParams(window.location.search);
+  // const orderId = params.get("id");
   const token = localStorage.getItem('authToken');
   if (!token) {
     window.location.href = '/login.html';
@@ -45,11 +47,11 @@ document.addEventListener('DOMContentLoaded', async function () {
       orders.slice(0, 5).forEach(order => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${order.orderId || order._id}</td>
+          <td>${order.orderId || order.id}</td>
           <td>${new Date(order.createdAt).toLocaleDateString()}</td>
           <td><span class="status ${order.status?.toLowerCase() || 'pending'}">${order.status || 'Pending'}</span></td>
           <td>₵${order.total?.toFixed(2) || '0.00'}</td>
-          <td><a href="order-detail.html?id=${order._id}" class="btn-action">View</a></td>
+          <td><a href="order-detail.html?id=${order.id}" class="btn-action">View</a></td>
         `;
         tbody.appendChild(tr);
       });
