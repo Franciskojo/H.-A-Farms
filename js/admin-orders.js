@@ -90,18 +90,18 @@ function renderOrders(orders) {
 
     return `
       <tr>
-        <td>${order._id}</td>
+        <td>${order.id}</td>
         <td>${order.user?.name || 'Guest'}</td>
         <td>${new Date(order.createdAt).toLocaleDateString()}</td>
         <td>GHS ${order.total?.toFixed(2) || '0.00'}</td>
         <td>
-          <select class="status-select" data-id="${order._id}">
+          <select class="status-select" data-id="${order.id}">
             ${statusOptions}
           </select>
         </td>
         <td>
           <div class="table-actions">
-            <a href="/admin/order-detail.html?id=${order._id}" class="btn-edit">View</a>
+            <a href="/admin/order-detail.html?id=${order.id}" class="btn-edit">View</a>
           </div>
         </td>
       </tr>
