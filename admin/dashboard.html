@@ -1,66 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ✅ Corrected Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://h-a-farms-backend.onrender.com;">
+
   <title>Admin Dashboard | H. A. Farms</title>
-  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/css/admin.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="/js/admin-dashboard.js" defer></script>
 </head>
 <body>
+  <!-- Loader -->
+  <div id="loaderOverlay" class="loader-overlay" aria-live="polite" aria-busy="true">
+    <div class="spinner" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Sidebar Toggle (Mobile) -->
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">&#9776;</button>
+
   <div class="admin-container">
-    <aside class="admin-sidebar">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
       <div class="sidebar-header">
         <h2>Admin Dashboard</h2>
       </div>
-      <nav class="sidebar-nav">
-        <a href="/admin/dashboard.html" class="active">Dashboard</a>
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a href="dashboard.html" class="active" aria-current="page">Dashboard</a>
         <a href="products.html">Products</a>
         <a href="orders.html">Orders</a>
         <a href="users.html">Users</a>
-        <a href="#">Settings</a>
+        <a href="settings.html">Settings</a>
       </nav>
     </aside>
 
+    <!-- Main Content -->
     <main class="admin-main">
       <header class="admin-header">
         <h1>Dashboard Overview</h1>
         <div class="admin-actions">
           <div class="dashboard-filters">
             <label for="rangeSelect">Quick View:</label>
-            <select id="rangeSelect">
+            <select id="rangeSelect" aria-label="Select time range">
               <option value="week" selected>This Week</option>
               <option value="month">This Month</option>
               <option value="custom">Custom Range</option>
             </select>
-            <div id="customRangeFields" style="display: none; gap: 0.5rem;">
-              <input type="date" id="startDate" />
-              <input type="date" id="endDate" />
-              <button id="applyFilter">Filter</button>
+            <div id="customRangeFields" class="custom-range-fields" style="display: none;">
+              <label for="startDate" class="sr-only">Start Date</label>
+              <input type="date" id="startDate" aria-label="Start date" />
+              <label for="endDate" class="sr-only">End Date</label>
+              <input type="date" id="endDate" aria-label="End date" />
+              <button id="applyFilter" class="btn-edit">Filter</button>
             </div>
           </div>
         </div>
       </header>
 
       <div class="dashboard-content">
-        <!-- Stats Summary -->
+        <!-- Stats -->
         <div class="stats-grid">
           <div class="stat-card">
-            <h3>Total Revenue</h3>
-            <p id="revenue">$0.00</p>
+            <div class="stat-info">
+              <h3>Total Revenue</h3>
+              <p id="revenue">Ghc0.00</p>
+            </div>
           </div>
           <div class="stat-card">
-            <h3>Total Orders</h3>
-            <p id="orders">0</p>
+            <div class="stat-info">
+              <h3>Total Orders</h3>
+              <p id="orders">0</p>
+            </div>
           </div>
           <div class="stat-card">
-            <h3>Total Products</h3>
-            <p id="products">0</p>
+            <div class="stat-info">
+              <h3>Total Products</h3>
+              <p id="products">0</p>
+            </div>
           </div>
           <div class="stat-card">
-            <h3>Total Customers</h3>
-            <p id="users">0</p>
+            <div class="stat-info">
+              <h3>Total Customers</h3>
+              <p id="users">0</p>
+            </div>
           </div>
         </div>
 
@@ -68,37 +95,38 @@
         <div class="charts-grid">
           <div class="chart-card">
             <h3>Sales Overview</h3>
-            <canvas id="salesChart"></canvas>
+            <canvas id="salesChart" aria-label="Sales overview chart" role="img"></canvas>
           </div>
           <div class="chart-card">
             <h3>Revenue Sources</h3>
-            <canvas id="revenueChart"></canvas>
+            <canvas id="revenueChart" aria-label="Revenue sources chart" role="img"></canvas>
           </div>
         </div>
 
         <!-- Recent Orders -->
         <div class="recent-orders">
           <h3>Recent Orders</h3>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- JS will inject order rows here -->
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="data-table">
+              <caption class="sr-only">List of recent orders</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Order ID</th>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="recentOrdersList">
+                <!-- JS will inject orders here -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </main>
   </div>
-
-  <script src="/js/admin-dashboard.js"></script>
 </body>
 </html>

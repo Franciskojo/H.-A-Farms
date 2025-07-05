@@ -1,107 +1,114 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const rangeSelect = document.getElementById('rangeSelect');
-  const customFields = document.getElementById('customRangeFields');
-  const applyFilterBtn = document.getElementById('applyFilter');
+// ======================
+// UTILITY FUNCTIONS
+// ======================
 
-  // Load default (week) on page load
-  fetchDashboardData({ range: 'week' });
+function showLoader() {
+  const loader = document.getElementById('loaderOverlay');
+  if (loader) loader.style.display = 'flex';
+}
 
-  // Show/hide custom range fields
-  rangeSelect.addEventListener('change', () => {
-    if (rangeSelect.value === 'custom') {
-      customFields.style.display = 'flex';
-    } else {
-      customFields.style.display = 'none';
-      fetchDashboardData({ range: rangeSelect.value });
-    }
-  });
+function hideLoader() {
+  const loader = document.getElementById('loaderOverlay');
+  if (loader) loader.style.display = 'none';
+}
 
-  // Handle custom date filter
-  applyFilterBtn.addEventListener('click', () => {
-    const start = document.getElementById('startDate').value;
-    const end = document.getElementById('endDate').value;
+function showError(message) {
+  console.error(message);
+  alert(message);
+}
 
-    if (!start || !end) {
-      alert('Please select both start and end dates');
-      return;
-    }
+function redirectToLogin() {
+  window.location.href = '/login.html';
+}
 
-    fetchDashboardData({ start, end });
-  });
-});
+function formatCurrency(amount) {
+  return new Intl.NumberFormat('en-GH', {
+    style: 'currency',
+    currency: 'GHC'
+  }).format(amount);
+}
+
+function formatDate(dateString) {
+  if (!dateString) return 'N/A';
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+}
+
+// ======================
+// DASHBOARD FUNCTIONS
+// ======================
 
 async function fetchDashboardData(params = {}) {
-  const token = localStorage.getItem('authToken');
-  if (!token) {
-    alert('Please log in as an admin.');
-    window.location.href = '/login.html';
-    return;
-  }
+  showLoader();
 
   try {
+    const token = localStorage.getItem('authToken');
+    if (!token) return redirectToLogin();
+
     const query = new URLSearchParams(params).toString();
-    const res = await fetch(`https://h-a-farms-backend.onrender.com/admin/summary?${query}`, {
+    const response = await fetch(`https://h-a-farms-backend.onrender.com/admin/summary?${query}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
 
-    const text = await res.text();
+    if (!response.ok) throw new Error(`Server returned ${response.status}`);
 
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch (e) {
-      console.error('❌ Server returned non-JSON:', text);
-      throw new Error('Invalid response from server');
-    }
-
-    updateStats(data);
-    updateRecentOrders(data.recentOrders || []);
-    renderChart('salesChart', 'Sales Overview', data.salesChartData);
-    renderChart('revenueChart', 'Revenue Sources', data.revenueSources);
-
+    const data = await response.json();
+    updateDashboard(data);
   } catch (err) {
     console.error('Dashboard error:', err);
-    alert('Failed to load dashboard data.');
+    showError('Failed to load dashboard data. Please try again.');
+  } finally {
+    hideLoader();
   }
+}
+
+function updateDashboard(data) {
+  updateStats(data);
+  updateRecentOrders(data.recentOrders || []);
+  renderChart('salesChart', 'Sales Overview', data.salesChartData);
+  renderChart('revenueChart', 'Revenue Sources', data.revenueSources);
 }
 
 function updateStats(data) {
-  document.getElementById('revenue').textContent = `$${(data.totalRevenue ?? 0).toFixed(2)}`;
-  document.getElementById('orders').textContent = data.totalOrders ?? 0;
-  document.getElementById('products').textContent = data.totalProducts ?? 0;
-  document.getElementById('users').textContent = data.totalUsers ?? 0;
+  document.getElementById('revenue').textContent = formatCurrency(data.totalRevenue || 0);
+  document.getElementById('orders').textContent = (data.totalOrders || 0).toLocaleString();
+  document.getElementById('products').textContent = (data.totalProducts || 0).toLocaleString();
+  document.getElementById('users').textContent = (data.totalUsers || 0).toLocaleString();
 }
 
 function updateRecentOrders(orders) {
-  const tbody = document.querySelector('.data-table tbody');
-  tbody.innerHTML = '';
+  const container = document.getElementById('recentOrdersList');
+  if (!container) return;
 
-  if (orders.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6">No recent orders</td></tr>`;
-    return;
-  }
-
-  orders.forEach(order => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${order._id}</td>
-      <td>${order.customerName}</td>
-      <td>${new Date(order.createdAt).toLocaleDateString()}</td>
-      <td>$${(order.total ?? 0).toFixed(2)}</td>
-      <td><span class="status ${order.status.toLowerCase()}">${order.status}</span></td>
-      <td><button class="btn-edit">View</button></td>
-    `;
-    tbody.appendChild(row);
-  });
+  container.innerHTML = orders.length
+    ? orders.map(createOrderRow).join('')
+    : `<tr><td colspan="6" class="no-orders">No recent orders found</td></tr>`;
 }
+
+function createOrderRow(order) {
+  const status = order.status?.toLowerCase() || 'unknown';
+  const statusClass = `status ${status}`;
+  return `
+    <tr>
+      <td>${order._id || ''}</td>
+      <td>${order.user?.name || 'Guest'}</td>
+      <td>${formatDate(order.createdAt)}</td>
+      <td>${formatCurrency(order.total || 0)}</td>
+      <td><span class="${statusClass}">${status}</span></td>
+      <td><a href="/admin/order-detail.html?id=${order._id}" class="action-link">View</a></td>
+    </tr>
+  `;
+}
+
+// ======================
+// CHART FUNCTIONS
+// ======================
 
 function renderChart(canvasId, label, chartData) {
   const ctx = document.getElementById(canvasId)?.getContext('2d');
-
-  // Safeguard: Don't continue if chartData is missing or malformed
-  if (!chartData || !Array.isArray(chartData.labels) || !Array.isArray(chartData.data)) {
+  if (!ctx || !isValidChartData(chartData)) {
     console.warn(`⚠️ Skipping chart "${canvasId}" due to missing or invalid data.`);
     return;
   }
@@ -110,25 +117,125 @@ function renderChart(canvasId, label, chartData) {
     window[canvasId].destroy();
   }
 
-  window[canvasId] = new Chart(ctx, {
-    type: 'line',
+  const type = canvasId === 'revenueChart' ? 'pie' : 'line';
+  window[canvasId] = new Chart(ctx, createChartConfig(type, label, chartData));
+}
+
+function isValidChartData(data) {
+  return Array.isArray(data?.labels) && Array.isArray(data?.data) && data.labels.length && data.data.length;
+}
+
+function createChartConfig(type, label, chartData) {
+  const isPie = type === 'pie';
+  const colors = ['#4a6bff', '#00b894', '#fd79a8', '#6c5ce7', '#ffa502', '#ff4757'];
+
+  return {
+    type,
     data: {
       labels: chartData.labels,
       datasets: [{
         label,
         data: chartData.data,
-        borderColor: '#4CAF50',
-        backgroundColor: 'rgba(76, 175, 80, 0.1)',
-        fill: true,
-        tension: 0.3
+        backgroundColor: isPie ? colors : 'rgba(76, 175, 80, 0.1)',
+        borderColor: isPie ? undefined : '#4CAF50',
+        borderWidth: isPie ? 1 : 2,
+        fill: !isPie,
+        tension: isPie ? 0 : 0.3
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      scales: {
-        y: { beginAtZero: true }
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            color: '#333',
+            font: { size: 12 }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const label = context.label || '';
+              const value = context.raw || 0;
+              return `${label}: ${formatCurrency(value)}`;
+            }
+          }
+        }
+      },
+      scales: isPie ? {} : {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: value => formatCurrency(value)
+          }
+        }
       }
     }
-  });
+  };
 }
+
+// ======================
+// UI INITIALIZATION
+// ======================
+
+function initDashboard() {
+  const today = new Date();
+  const lastWeek = new Date(today);
+  lastWeek.setDate(today.getDate() - 7);
+
+  const startInput = document.getElementById('startDate');
+  const endInput = document.getElementById('endDate');
+  if (startInput && endInput) {
+    startInput.valueAsDate = lastWeek;
+    endInput.valueAsDate = today;
+  }
+
+  const rangeSelect = document.getElementById('rangeSelect');
+  const filterBtn = document.getElementById('applyFilter');
+  if (rangeSelect) rangeSelect.addEventListener('change', handleRangeChange);
+  if (filterBtn) filterBtn.addEventListener('click', handleCustomFilter);
+
+  fetchDashboardData({ range: 'week' });
+}
+
+function handleRangeChange() {
+  const range = document.getElementById('rangeSelect').value;
+  const customFields = document.getElementById('customRangeFields');
+
+  customFields.style.display = range === 'user' ? 'flex' : 'none';
+
+  if (range !== 'user') {
+    fetchDashboardData({ range });
+  }
+}
+
+function handleCustomFilter() {
+  const start = document.getElementById('startDate').value;
+  const end = document.getElementById('endDate').value;
+
+  if (!start || !end) return showError('Please select both start and end dates');
+  if (new Date(start) > new Date(end)) return showError('Start date cannot be after end date');
+
+  fetchDashboardData({ start, end });
+}
+
+function initSidebar() {
+  const toggleBtn = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('adminSidebar');
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+  }
+}
+
+// ======================
+// MAIN INIT
+// ======================
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSidebar();
+  initDashboard();
+});

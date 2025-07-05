@@ -290,6 +290,21 @@ footer {
     object-fit: cover;
 }
 
+.status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  color: #fff;
+  text-transform: capitalize;
+}
+
+.status.pending { background-color: #f0ad4e; }
+.status.shipped { background-color: #5bc0de; }
+.status.delivered { background-color: #5cb85c; }
+.status.cancelled { background-color: #d9534f; }
+.status.unknown { background-color: #6c757d; }
+
+
 /* Status Select Dropdowns */
 .status-select,
 .role-select {

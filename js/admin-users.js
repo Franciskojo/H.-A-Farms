@@ -1,98 +1,79 @@
-//    const hamburgerBtn = document.getElementById('hamburgerBtn');
-//     const sidebar = document.querySelector('.admin-sidebar');
+document.addEventListener('DOMContentLoaded', () => {
+  fetchUsers();
 
-//     hamburgerBtn.addEventListener('click', () => {
-//         sidebar.classList.toggle('show');
-//     });
+  // Event listener for filters
+  document.getElementById('roleFilter').addEventListener('change', fetchUsers);
 
-//     // Optional: Hide sidebar when clicking outside
-//     document.addEventListener('click', function (e) {
-//         if (!sidebar.contains(e.target) && !hamburgerBtn.contains(e.target)) {
-//             sidebar.classList.remove('show');
-//         }
-//     });
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Filter functionality
-    document.getElementById('roleFilter').addEventListener('change', function() {
-        applyFilters();
+  // Event listener for pagination (basic)
+  document.querySelectorAll('.page-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const page = e.target.textContent;
+      if (!isNaN(page)) fetchUsers(page);
     });
-    
-    function applyFilters() {
-        const role = document.getElementById('roleFilter').value;
-        console.log('Filtering by role:', role);
-        // In a real app, you would filter users or make an API call
-    }
-    
-    // Search functionality
-    const searchInput = document.querySelector('.search-bar input');
-    const searchButton = document.querySelector('.search-bar button');
-    
-    searchButton.addEventListener('click', function() {
-        performSearch(searchInput.value);
-    });
-    
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            performSearch(searchInput.value);
-        }
-    });
-    
-    function performSearch(query) {
-        console.log('Searching for:', query);
-        // In a real app, you would filter users or make an API call
-    }
-    
-    // Role select changes
-    document.querySelectorAll('.role-select').forEach(select => {
-        select.addEventListener('change', function() {
-            const userId = this.closest('tr').querySelector('td').textContent;
-            const newRole = this.value;
-            
-            console.log(`Updating user ${userId} to role: ${newRole}`);
-            // In a real app, you would make an API call to update the role
-        });
-    });
-    
-    // Edit buttons
-    document.querySelectorAll('.btn-edit').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const userId = this.closest('tr').querySelector('td').textContent;
-            window.location.href = `user-edit.html?id=${userId}`;
-        });
-    });
-    
-    // Delete buttons
-    document.querySelectorAll('.btn-delete').forEach(btn => {
-        btn.addEventListener('click', function() {
-            if (confirm('Are you sure you want to delete this user?')) {
-                const row = this.closest('tr');
-                console.log('Deleting user:', row.querySelector('td').textContent);
-                // In a real app, you would make an API call to delete
-                row.remove();
-            }
-        });
-    });
-    
-    // Pagination
-    document.querySelectorAll('.page-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            if (this.disabled) return;
-            
-            document.querySelectorAll('.page-btn').forEach(b => {
-                b.classList.remove('active');
-                b.disabled = false;
-            });
-            
-            if (this.textContent === 'Previous' || this.textContent === 'Next') {
-                // Handle previous/next
-            } else {
-                this.classList.add('active');
-            }
-            
-            // In a real app, you would fetch the page from your backend
-            console.log('Loading page:', this.textContent);
-        });
-    });
+  });
 });
+
+async function fetchUsers(page = 1) {
+  const role = document.getElementById('roleFilter').value;
+  const token = localStorage.getItem('authToken');
+  const tbody = document.querySelector('table tbody');
+  const query = new URLSearchParams({ role, page });
+
+  try {
+    const response = await fetch(`https://h-a-farms-backend.onrender.com/users/all?${query}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) throw new Error('Failed to fetch users.');
+
+    const data = await response.json();
+    renderUsers(data.users || []);
+  } catch (err) {
+    console.error(err);
+    alert('Unable to load users.');
+  }
+}
+
+function renderUsers(users) {
+  const tbody = document.querySelector('table tbody');
+  if (!tbody) return;
+
+  if (!users.length) {
+    tbody.innerHTML = `<tr><td colspan="6">No users found.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = users.map(user => {
+    const roleOptions = `
+      <option value="customer" ${user.role === 'user' ? 'selected' : ''}>User</option>
+      <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Admin</option>
+    `;
+
+    return `
+      <tr>
+        <td>${user.id}</td>
+        <td>
+          <div class="user-info">
+            <img src="${user.profilePicture || '/assets/images/user-avatar.jpg'}" alt="User">
+            <span>${user.name || 'Unnamed'}</span>
+          </div>
+        </td>
+        <td>${user.email}</td>
+        <td>
+          <select class="role-select" data-userid="${user.id}">
+            ${roleOptions}
+          </select>
+        </td>
+        <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+        <td>
+          <div class="table-actions">
+            <button class="btn-edit" data-userid="${user.id}">Edit</button>
+            <button class="btn-delete" data-userid="${user.id}">Delete</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
