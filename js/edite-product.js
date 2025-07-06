@@ -83,6 +83,7 @@ async function loadProductData(productId) {
       badge.style.display = "inline-block";
     }
 
+
     // Preview images
     const preview = document.getElementById('imagePreview');
     if (preview) {
