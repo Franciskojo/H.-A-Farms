@@ -2,24 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Add/Edit Product</title>
-  <link rel="stylesheet" href="/css/edite-product.css" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="pageTitle">Add/Edit Product</title>
+  <link rel="stylesheet" href="/css/edite-product.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
   <div class="container">
-    <h1 id="pageTitle">Add/Edit Product</h1>
-    <h2 id="formTitle">
-      Add New Product
+    <h1 id="formTitle">
+      Add New Product 
       <span id="statusBadge" class="status-badge status-draft" style="display: none;">Draft</span>
-    </h2>
+    </h1>
 
     <form id="productForm" enctype="multipart/form-data">
-      <input type="hidden" id="productId" name="productId" value="" />
+      <input type="hidden" id="productId" name="productId" value=""/>
+      <input type="hidden" id="existingImages" name="existingImages" value="[]"/>
 
       <div class="form-group">
         <label for="productName">Product Name*</label>
@@ -85,40 +82,26 @@
         <p>Add different sizes or options for this product (e.g., 30 Eggs Crate, 60 Eggs Crate)</p>
 
         <div id="variantsContainer">
-          <div class="variant-item">
-            <div class="variant-header">
-              <h4 class="variant-title">Default Variant</h4>
-            </div>
-            <div class="form-row">
-              <div class="form-col">
-                <div class="form-group">
-                  <label for="variantName">Variant Name</label>
-                  <input type="text" id="variantName" name="variantName[]" placeholder="e.g., Standard Crate" />
-                </div>
-              </div>
-              <div class="form-col">
-                <div class="form-group">
-                  <label for="variantPrice">Price (₵)</label>
-                  <input type="number" id="variantPrice" name="variantPrice[]" min="0" step="0.01" />
-                </div>
-              </div>
-              <div class="form-col">
-                <div class="form-group">
-                  <label for="variantSku">SKU</label>
-                  <input type="text" id="variantSku" name="variantSku[]" placeholder="Product code" />
-                </div>
-              </div>
-            </div>
-          </div>
+          <!-- JS will add default variant here -->
         </div>
+
+        <button type="button" class="btn btn-small" id="addVariantBtn">
+          <i class="fas fa-plus"></i> Add Variant
+        </button>
       </div>
 
       <div class="form-group">
-        <label><input type="checkbox" id="trackInventory" name="trackInventory" /> Track inventory</label>
+        <label>
+          <input type="checkbox" id="trackInventory" name="trackInventory" />
+          Track inventory
+        </label>
       </div>
 
       <div class="form-group">
-        <label><input type="checkbox" id="physicalProduct" name="physicalProduct" checked /> This is a physical product</label>
+        <label>
+          <input type="checkbox" id="physicalProduct" name="physicalProduct" checked />
+          This is a physical product
+        </label>
       </div>
 
       <div class="form-group">
