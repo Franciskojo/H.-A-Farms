@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Detail | Admin</title>
+  <link rel="stylesheet" href="/css/admin-order-detail.css" />
+</head>
+<body>
+  <div class="admin-container">
+
+    <h1>Order Detail</h1>
+
+    <section id="orderMeta" class="order-meta">
+      <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+      <p><strong>Date:</strong> <span id="orderDate"></span></p>
+      <p><strong>Status:</strong> <span id="orderStatus" class="badge"></span></p>
+      <p><strong>Payment Method:</strong> <span id="paymentMethod"></span></p>
+      <p><strong>Total:</strong> <span id="orderTotal"></span></p>
+    </section>
+
+    <section class="customer-info">
+      <h2>Customer Info</h2>
+      <p><strong>Name:</strong> <span id="userName"></span></p>
+      <p><strong>Email:</strong> <span id="userEmail"></span></p>
+    </section>
+
+    <section class="shipping-info">
+      <h2>Shipping Address</h2>
+      <p id="shippingAddress"></p>
+    </section>
+
+    <section class="order-items">
+      <h2>Order Items</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Unit Price</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody id="orderItemsBody">
+          <!-- JS renders rows here -->
+        </tbody>
+      </table>
+    </section>
+
+    <button id="updateStatusBtn">Update Status</button>
+
+  </div>
+
+  <script src="/js/admin-order-detail.js"></script>
+</body>
+</html>

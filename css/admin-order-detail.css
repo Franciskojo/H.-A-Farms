@@ -1,0 +1,114 @@
+/* ===== Admin Order Detail Page ===== */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f9fc;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.admin-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+h1, h2 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+.order-meta p,
+.customer-info p,
+.shipping-info p {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+#orderStatus.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-transform: capitalize;
+  font-size: 13px;
+}
+
+.badge.processing {
+  background-color: #f1c40f;
+  color: #fff;
+}
+.badge.shipped {
+  background-color: #3498db;
+  color: #fff;
+}
+.badge.delivered {
+  background-color: #2ecc71;
+  color: #fff;
+}
+.badge.cancelled {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+thead {
+  background-color: #f0f2f5;
+  text-align: left;
+}
+
+th, td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #e0e6ed;
+  font-size: 14px;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+button#updateStatusBtn {
+  background-color: #27ae60;
+  color: white;
+  padding: 10px 20px;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+button#updateStatusBtn:hover {
+  background-color: #219150;
+}
+
+@media screen and (max-width: 768px) {
+  .admin-container {
+    padding: 15px;
+  }
+
+  th, td {
+    font-size: 13px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  button#updateStatusBtn {
+    width: 100%;
+  }
+}
