@@ -92,15 +92,16 @@ function createOrderRow(order) {
   const statusClass = `status ${status}`;
   return `
     <tr>
-      <td>${order.id || ''}</td>
+      <td>${order._id || ''}</td>
       <td>${order.user?.name || 'User'}</td>
       <td>${formatDate(order.createdAt)}</td>
       <td>${formatCurrency(order.total || 0)}</td>
       <td><span class="${statusClass}">${status}</span></td>
-      <td><a href="/admin/order-detail.html?id=${order.id}" class="action-link">View</a></td>
+      <td><a href="/admin/order-detail.html?id=${order._id}" class="action-link">View</a></td>
     </tr>
   `;
 }
+
 
 // ======================
 // CHART FUNCTIONS
