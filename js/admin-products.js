@@ -44,7 +44,7 @@ function renderProductTable(products) {
           <td><span class="status ${statusClass}">${p.status}</span></td>
           <td>
             <div class="table-actions">
-              <a href="/admin/edit-product.html?id=${p.id}">
+              <a href="/admin/edite-product.html?id=${p.id}">
                 <button class="btn-edit">Edit</button>
               </a>
               <button class="btn-delete" data-id="${p.id}">Delete</button>
