@@ -97,7 +97,7 @@ function createOrderRow(order) {
       <td>${formatDate(order.createdAt)}</td>
       <td>${formatCurrency(order.total || 0)}</td>
       <td><span class="${statusClass}">${status}</span></td>
-      <td><a href="/admin/order-detail.html?id=${order._id}" class="action-link">View</a></td>
+      <td><a href="/user/order-detail.html?id=${order._id}" class="action-link">View</a></td>
     </tr>
   `;
 }
