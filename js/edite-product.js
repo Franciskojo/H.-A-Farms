@@ -175,7 +175,7 @@ document.getElementById('productForm')?.addEventListener('submit', async functio
 
   try {
     const res = await fetch(`${API_BASE}/${productId}`, {
-      method: productId ? 'PUT' : 'POST',
+      method: productId ? 'PATCH' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
