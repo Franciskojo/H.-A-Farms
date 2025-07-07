@@ -24,8 +24,8 @@
       </div>
 
       <div class="form-group">
-        <label for="productDescription">Description*</label>
-        <textarea id="productDescription" name="productDescription" required></textarea>
+        <label for="description">Description*</label>
+        <textarea id="description" name="description" required></textarea>
       </div>
 
       <div class="form-row">
@@ -51,11 +51,6 @@
       </div>
 
       <div class="form-group">
-        <label for="tags">Tags</label>
-        <input type="text" id="tags" name="tags" placeholder="Separate tags with commas" />
-      </div>
-
-      <div class="form-group">
         <label for="productStatus">Status</label>
         <select id="productStatus" name="productStatus">
           <option value="draft">Draft</option>
@@ -65,29 +60,16 @@
       </div>
 
       <div class="form-group">
-        <label class="required-field">Product Images</label>
+        <label class="required-field">Product Image</label>
         <div class="image-upload">
-          <input type="file" id="productImages" name="productImages" multiple accept="image/*" />
+          <input type="file" id="productImages" name="productImages" accept="image/*" />
           <label for="productImages">
             <i class="fas fa-cloud-upload-alt" style="font-size: 24px; margin-bottom: 10px;"></i><br />
-            Click to upload images or drag and drop<br />
-            <small>Recommended size: 800x800px (max 5 images)</small>
+            Click to upload image or drag and drop<br />
+            <small>Only one image will be saved (recommended size: 800x800px)</small>
           </label>
           <div class="image-preview" id="imagePreview"></div>
         </div>
-      </div>
-
-      <div class="variant-section">
-        <h3>Product Variants</h3>
-        <p>Add different sizes or options for this product (e.g., 30 Eggs Crate, 60 Eggs Crate)</p>
-
-        <div id="variantsContainer">
-          <!-- JS will add default variant here -->
-        </div>
-
-        <button type="button" class="btn btn-small" id="addVariantBtn">
-          <i class="fas fa-plus"></i> Add Variant
-        </button>
       </div>
 
       <div class="form-group">

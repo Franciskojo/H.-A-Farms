@@ -31,7 +31,7 @@ function renderProductTable(products) {
       const statusClass = p.status === 'active' ? 'active' : 'inactive';
       return `
         <tr>
-          <td>${p._id}</td>
+          <td>${p.id}</td>
           <td>
             <div class="product-info">
               <img src="${p.productImage || '/assets/images/placeholder.jpg'}" alt="Product">

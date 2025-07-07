@@ -52,7 +52,7 @@
       <div class="form-group">
         <label class="required-field">Product Image</label>
         <div class="image-upload">
-          <input type="file" id="productImage" name="productImage" accept="image/*" />
+          <input type="file" id="productImage" name="productImage" accept="image/*" required />
           <label for="productImage">
             <i class="fas fa-cloud-upload-alt" style="font-size: 24px; margin-bottom: 10px;"></i><br>
             Click to upload image or drag and drop<br>
@@ -62,11 +62,11 @@
         </div>
       </div>
 
-      <div class="variant-section">
+      <!-- <div class="variant-section">
         <h3>Product Variants</h3>
-        <p>Add different sizes or options for this product (e.g., 30 Eggs Crate, 60 Eggs Crate)</p>
+        <p>Add different sizes or options for this product (e.g., 30 Eggs Crate, 60 Eggs Crate)</p> -->
 
-        <div id="variantsContainer">
+        <!-- <div id="variantsContainer">
           <div class="variant-item">
             <div class="variant-header">
               <h4 class="variant-title">Default Variant</h4>
@@ -75,25 +75,25 @@
               <div class="form-col">
                 <div class="form-group">
                   <label for="variantName">Variant Name</label>
-                  <input type="text" id="variantName" placeholder="e.g., Standard Crate" />
+                  <input type="text" id="variantName" name="variantName[]" placeholder="e.g., Standard Crate" />
                 </div>
-              </div>
-              <div class="form-col">
+              </div> -->
+              <!-- <div class="form-col">
                 <div class="form-group">
                   <label for="variantPrice">Variant Price (₵)</label>
-                  <input type="number" id="variantPrice" min="0" step="0.01" />
+                  <input type="number" name="variantPrice[]" min="0" step="0.01" />
                 </div>
-              </div>
-              <div class="form-col">
+              </div> -->
+              <!-- <div class="form-col">
                 <div class="form-group">
                   <label for="variantSku">SKU</label>
-                  <input type="text" id="variantSku" placeholder="Product code" />
+                  <input type="text" id="variantSku" name="sku[]" placeholder="Product code" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="form-group">
         <label>

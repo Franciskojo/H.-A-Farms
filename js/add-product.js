@@ -13,61 +13,49 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const formData = new FormData(form);
+    const formData = new FormData();
 
-    // 🧹 Clean up / format fields
-    formData.set('price', parseFloat(form.price.value) || 0);
-    formData.set('quantity', parseInt(form.quantity.value) || 0);
-    formData.set('trackInventory', form.trackInventory.checked);
-    formData.set('isPhysicalProduct', form.physicalProduct.checked);
+    // 🟢 Get form values
+    formData.append('productName', form.productName.value.trim());
+    formData.append('description', form.description.value.trim());
+    formData.append('category', form.category.value.trim());
+    formData.append('status', 'active'); // Default status or add a field if needed
+    formData.append('price', parseFloat(form.price.value) || 0);
+    formData.append('quantity', parseInt(form.quantity.value) || 0);
+    formData.append('trackInventory', form.trackInventory.checked);
+    formData.append('isPhysicalProduct', form.physicalProduct.checked);
 
-    // Remove invalid/unused field names
-    formData.delete('physicalProduct'); // Wrong key
-    if (!form.productId.value) {
-      formData.delete('productId');
+    // 🟢 Get image file
+    const imageFile = form.productImage.files[0];
+    if (!imageFile) {
+      alert('Please upload a product image.');
+      return;
+    }
+    formData.append('productImage', imageFile);
+
+    // 🟢 Get productId if present (for edit mode support)
+    if (form.productId?.value) {
+      formData.append('productId', form.productId.value);
     }
 
-    // 🔁 Prepare variants array
-    const variants = [];
-    const variantNameEls = document.querySelectorAll('input[name="variantName[]"]');
-    const variantPriceEls = document.querySelectorAll('input[name="variantPrice[]"]');
-    const variantSkuEls = document.querySelectorAll('input[name="sku[]"]');
-
-    for (let i = 0; i < variantNameEls.length; i++) {
-      const name = variantNameEls[i].value.trim();
-      const price = parseFloat(variantPriceEls[i].value);
-      const sku = variantSkuEls[i].value.trim();
-
-      if (name || sku || !isNaN(price)) {
-        variants.push({
-          variantName: name || 'Variant',
-          price: isNaN(price) ? 0 : price,
-          sku,
-          quantity: 0,
-          isDefault: i === 0
-        });
-      }
-    }
-
-    formData.append('variants', JSON.stringify(variants));
-
+    // 🚀 Submit product
     try {
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         },
         body: formData
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('❌ Server error:', errorText);
-        alert(`Error: ${errorText}`);
+        console.error('❌ Server error:', result);
+        alert(`❌ Error: ${result.error || 'Something went wrong'}`);
         return;
       }
 
-      const result = await response.json();
       alert('✅ Product created successfully!');
       window.location.href = '/admin/products.html';
 
