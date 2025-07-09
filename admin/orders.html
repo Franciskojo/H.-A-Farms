@@ -8,30 +8,31 @@
     <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
-    <div class="admin-container">
-        <aside class="admin-sidebar">
-            <div class="sidebar-header">
-                <h2>Admin Dashboard</h2>
-            </div>
-            <nav class="sidebar-nav">
-                <a href="/admin/dashboard.html">
-                    <i class="icon-dashboard"></i> Dashboard
-                </a>
-                <a href="products.html">
-                    <i class="icon-products"></i> Products
-                </a>
-                <a href="orders.html" class="active">
-                    <i class="icon-orders"></i> Orders
-                </a>
-                <a href="users.html">
-                    <i class="icon-users"></i> Users
-                </a>
-                <a href="#">
-                    <i class="icon-settings"></i> Settings
-                </a>
-            </nav>
-        </aside>
-        
+      <!-- Loader -->
+  <div id="loaderOverlay" class="loader-overlay" aria-live="polite" aria-busy="true">
+    <div class="spinner" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Sidebar Toggle (Mobile) -->
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">&#9776;</button>
+
+  <div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <h2>Admin Dashboard</h2>
+      </div>
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a href="dashboard.html" class="active" aria-current="page">Dashboard</a>
+        <a href="products.html">Products</a>
+        <a href="orders.html">Orders</a>
+        <a href="users.html">Users</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </aside>
+
         <main class="admin-main">
             <header class="admin-header">
                 <h1>Manage Orders</h1>

@@ -77,3 +77,21 @@ function renderUsers(users) {
     `;
   }).join('');
 }
+
+function initSidebar() {
+  const toggleBtn = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('adminSidebar');
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+  }
+}
+
+// ======================
+// MAIN INIT
+// ======================
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSidebar();
+});
