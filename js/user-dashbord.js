@@ -119,3 +119,16 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
   }
 });
+
+function logout() {
+  localStorage.removeItem('authToken');      // If using localStorage
+  sessionStorage.removeItem('authToken');    // If using sessionStorage
+
+  // Optional: clear cookies (if used)
+  document.cookie = 'token=; Max-Age=0; path=/';
+
+  // Redirect to login or homepage
+  window.location.href = '/auth/login.html';
+}
+
+

@@ -11,6 +11,22 @@
     --danger-color: #dc3545;
 }
 
+/* Optional button styling if not already in cart.css */
+    .product-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #eee;
+      color: #333;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .product-btn:hover {
+      background-color: #ddd;
+    }
+
 .cart-container {
     margin: 2rem 0;
 }
@@ -183,6 +199,7 @@
     background-color: #ccc;
     cursor: not-allowed;
 }
+
 
 /* 📱 Responsive Styles */
 @media (max-width: 768px) {

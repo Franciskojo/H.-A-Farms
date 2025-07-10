@@ -7,6 +7,7 @@
   <title>My Dashboard | H. A. Farms</title>
   <link rel="stylesheet" href="/css/main.css" />
   <link rel="stylesheet" href="/css/user.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
 <body>
@@ -17,10 +18,11 @@
         <div class="nav-links">
           <a href="/products.html">Products</a>
           <a href="../cart.html">Cart <span class="cart-count">0</span></a>
+          <button onclick="logout()" class="logout-btn">Logout</button>
           <div class="user-actions">
             <div class="logged-in">
-              <a href="/user/dasboard.html" class="user-profile">My Account</a>
-              <a href="#" id="logout">Logout</a>
+              <!-- <a href="/user/dasboard.html" class="user-profile">My Account</a> -->
+              
             </div>
           </div>
         </div>
@@ -51,6 +53,7 @@
         <a href="#"><i class="icon-address"></i> Addresses</a>
         <a href="account-settings.html"><i class="icon-settings"></i> Account Settings</a>
       </nav>
+      
     </aside>
 
     <div class="user-content">

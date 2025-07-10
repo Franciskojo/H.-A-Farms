@@ -193,6 +193,73 @@
     text-decoration: underline;
 }
 
+/* Header Styles */
+.main-header {
+    background-color: green;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.main-header nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.user-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.logged-in {
+    display: none;
+}
+
+/* Responsive Navigation */
+@media (max-width: 768px) {
+    .main-header .nav-links {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-top: 1rem;
+    }
+
+    .user-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .user-actions a {
+        width: 100%;
+        text-align: left;
+    }
+}
+
+
+
 /* ========================
    USER ORDERS STYLES
    ======================== */
