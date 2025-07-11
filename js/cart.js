@@ -1,10 +1,9 @@
 const CART_API = 'https://h-a-farms-backend.onrender.com/cart';
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadCart(); // Load cart before enabling checkout
+  await loadCart();
 
   const checkoutBtn = document.querySelector(".checkout-btn");
-
   if (checkoutBtn) {
     checkoutBtn.addEventListener("click", () => {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -48,8 +47,9 @@ async function loadCart() {
         cart = data.items
           .filter(item => item.product && item.product.id)
           .map(item => ({
-            id: item.product.id,
-            name: item.product.productName || item.product.name || "Unnamed",
+            id: item._id, // Cart item ID
+            productId: item.product.id,
+            name: item.product.productName || 'Unnamed',
             image: item.product.productImage || 'https://via.placeholder.com/80',
             price: item.price,
             quantity: item.quantity
@@ -95,11 +95,11 @@ function renderCart(cart) {
         <h4>${item.name}</h4>
         <p>Price: GH₵${item.price.toFixed(2)}</p>
         <div class="qty-controls">
-          <button data-id="${item.id}" class="minus">-</button>
+          <button data-id="${item.id}" data-product-id="${item.productId}" class="minus">-</button>
           <span>${item.quantity}</span>
-          <button data-id="${item.id}" class="plus">+</button>
+          <button data-id="${item.id}" data-product-id="${item.productId}" class="plus">+</button>
         </div>
-        <button class="remove" data-id="${item.id}">Remove</button>
+        <button class="remove" data-id="${item.id}" data-product-id="${item.productId}">Remove</button>
       </div>
     `;
 
@@ -113,7 +113,7 @@ function renderCart(cart) {
 
 function updateSummary(subtotal) {
   const shipping = 0.00;
-  const tax = subtotal * 0.1;
+  const tax = subtotal * 0.0;
   const total = subtotal + shipping + tax;
 
   document.querySelector('.subtotal').textContent = `GH₵${subtotal.toFixed(2)}`;
@@ -124,33 +124,47 @@ function updateSummary(subtotal) {
 
 function attachQtyHandlers() {
   document.querySelectorAll('.plus').forEach(btn => {
-    btn.addEventListener('click', () => updateQty(btn.dataset.id, 1));
+    btn.addEventListener('click', () => {
+      const cartItemId = btn.dataset.id;
+      const productId = btn.dataset.productId;
+      updateQty(cartItemId, productId, 1);
+    });
   });
+
   document.querySelectorAll('.minus').forEach(btn => {
-    btn.addEventListener('click', () => updateQty(btn.dataset.id, -1));
+    btn.addEventListener('click', () => {
+      const cartItemId = btn.dataset.id;
+      const productId = btn.dataset.productId;
+      updateQty(cartItemId, productId, -1);
+    });
   });
+
   document.querySelectorAll('.remove').forEach(btn => {
-    btn.addEventListener('click', () => removeItem(btn.dataset.id));
+    btn.addEventListener('click', () => {
+      const cartItemId = btn.dataset.id;
+      const productId = btn.dataset.productId;
+      removeItem(cartItemId, productId);
+    });
   });
 }
 
-async function updateQty(productId, change) {
-  const token = localStorage.getItem('authToken');
-  const qtySpan = document.querySelector(`button[data-id="${productId}"].minus`)?.nextElementSibling;
+async function updateQty(cartItemId, productId, change) {
+  const qtySpan = document.querySelector(`button[data-id="${cartItemId}"].minus`)?.nextElementSibling;
   if (!qtySpan) return;
 
   let currentQty = parseInt(qtySpan.textContent);
   const newQty = currentQty + change;
+  const token = localStorage.getItem('authToken');
 
   if (token) {
     if (newQty <= 0) {
-      await removeFromBackend(productId);
+      await removeFromBackend(cartItemId);
     } else {
-      await addOrUpdateInBackend(productId, newQty);
+      await updateCartItemInBackend(cartItemId, newQty);
     }
   } else {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const index = cart.findIndex(item => item.id === productId);
+    const index = cart.findIndex(item => item.productId === productId);
     if (index === -1) return;
 
     if (newQty <= 0) {
@@ -165,25 +179,33 @@ async function updateQty(productId, change) {
   loadCart();
 }
 
-function removeItem(productId) {
-  updateQty(productId, -Infinity);
+function removeItem(cartItemId, productId) {
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    removeFromBackend(cartItemId);
+  } else {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart = cart.filter(item => item.productId !== productId);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    loadCart();
+  }
 }
 
-async function addOrUpdateInBackend(productId, quantity) {
+async function updateCartItemInBackend(cartItemId, quantity) {
   const token = localStorage.getItem('authToken');
-  return safeFetch(`${CART_API}/add`, {
-    method: 'POST',
+  return safeFetch(`${CART_API}/items/${cartItemId}`, {
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify({ productId, quantity })
+    body: JSON.stringify({ quantity })
   });
 }
 
-async function removeFromBackend(productId) {
+async function removeFromBackend(itemId) {
   const token = localStorage.getItem('authToken');
-  return safeFetch(`${CART_API}/items/${productId}`, {
+  return safeFetch(`${CART_API}/items/${itemId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
