@@ -62,7 +62,7 @@ function attachCartListeners() {
       e.preventDefault();
 
       const product = {
-        id: button.dataset.id, // ✅ use `id`, not `_id`
+        id: button.dataset.id, 
         name: button.dataset.name,
         price: parseFloat(button.dataset.price),
         image: button.dataset.image,
@@ -88,7 +88,7 @@ async function handleAddToCart(product) {
   if (!token) {
     // Guest user - store in localStorage
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const index = cart.findIndex(item => item.id === productId); // ✅ use `id`
+    const index = cart.findIndex(item => item.id === productId);
 
     if (index !== -1) {
       if (cart[index].quantity + 1 > product.stock) {

@@ -53,7 +53,7 @@ function renderOrderSummary() {
   });
 
   const shipping = 0;
-  const tax = subtotal * 0.1;
+  const tax = subtotal * 0.00;
   const total = subtotal + shipping + tax;
 
   document.querySelector('.subtotal').textContent = `GH₵${subtotal.toFixed(2)}`;
@@ -83,7 +83,7 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
 
   const subtotal = parseFloat(document.querySelector('.subtotal').textContent.replace('GH₵', '')) || 0;
   const shippingCost = 5;
-  const tax = subtotal * 0.1;
+  const tax = subtotal * 0.00;
   const total = subtotal + tax + shippingCost;
 
   // ✅ Convert to format backend expects
