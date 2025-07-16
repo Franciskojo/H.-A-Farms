@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   try {
-    // Fetch current user profile
     const res = await fetch('https://h-a-farms-backend.onrender.com/me', {
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -23,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     fullNameInput.value = user.fullName || '';
     emailInput.value = user.email || '';
 
-    // Store correct user ID whether it's `id` or `_id`
+
     localStorage.setItem('userId', user.id || user._id);
   } catch (err) {
     console.error('Failed to load user:', err);
@@ -40,8 +39,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const formData = new FormData(settingsForm);
-
-    // ✅ Option B: Remove empty `email` if blank
     const email = formData.get('email');
     if (!email || email.trim() === '') {
       formData.delete('email');
@@ -52,7 +49,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${token}`
-          // Don't set Content-Type when sending FormData
         },
         body: formData
       });
@@ -71,12 +67,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Optional logout logic
-  // const logoutBtn = document.getElementById('logout');
-  // if (logoutBtn) {
-  //   logoutBtn.addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     localStorage.removeItem('authToken');
-  //     window.location.href = '/login.html';
-  //   });
-  // }
+  const logoutBtn = document.getElementById('logout');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('authToken');
+      window.location.href = '/login.html';
+    });
+  }
 });

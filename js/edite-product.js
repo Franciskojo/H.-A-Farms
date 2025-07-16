@@ -64,7 +64,7 @@ async function loadProductData(productId) {
 
   } catch (err) {
     console.error("Failed to load product:", err);
-    alert(`❌ ${err.message}`);
+    alert(`${err.message}`);
   }
 }
 
@@ -116,7 +116,7 @@ document.getElementById('productForm')?.addEventListener('submit', async functio
 
   } catch (err) {
     console.error('Submission error:', err);
-    alert(`❌ ${err.message}`);
+    alert(`${err.message}`);
   } finally {
     submitBtn.disabled = false;
     submitBtn.innerHTML = `<i class="fas fa-save"></i> Save Product`;

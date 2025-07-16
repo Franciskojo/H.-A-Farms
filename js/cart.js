@@ -47,7 +47,7 @@ async function loadCart() {
         cart = data.items
           .filter(item => item.product && item.product.id)
           .map(item => ({
-            id: item._id, // Cart item ID
+            id: item._id, 
             productId: item.product.id,
             name: item.product.productName || 'Unnamed',
             image: item.product.productImage || 'https://via.placeholder.com/80',

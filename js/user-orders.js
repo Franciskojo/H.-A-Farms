@@ -144,3 +144,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   fetchOrders();
 });
+
+const sidebarToggle = document.getElementById('sidebarToggle');
+  const userSidebar = document.querySelector('.user-sidebar');
+
+  sidebarToggle.addEventListener('click', () => {
+    userSidebar.classList.toggle('open'); 
+  });
+

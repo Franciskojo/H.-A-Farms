@@ -1,6 +1,3 @@
-// ======================
-// UTILITY FUNCTIONS
-// ======================
 
 function showLoader() {
   const loader = document.getElementById('loaderOverlay');
@@ -33,10 +30,6 @@ function formatDate(dateString) {
   const options = { year: 'numeric', month: 'short', day: 'numeric' };
   return new Date(dateString).toLocaleDateString(undefined, options);
 }
-
-// ======================
-// DASHBOARD FUNCTIONS
-// ======================
 
 async function fetchDashboardData(params = {}) {
   showLoader();
@@ -102,10 +95,6 @@ function createOrderRow(order) {
   `;
 }
 
-
-// ======================
-// CHART FUNCTIONS
-// ======================
 
 function renderChart(canvasId, label, chartData) {
   const ctx = document.getElementById(canvasId)?.getContext('2d');
@@ -177,10 +166,6 @@ function createChartConfig(type, label, chartData) {
   };
 }
 
-// ======================
-// UI INITIALIZATION
-// ======================
-
 function initDashboard() {
   const today = new Date();
   const lastWeek = new Date(today);
@@ -231,10 +216,6 @@ function initSidebar() {
     });
   }
 }
-
-// ======================
-// MAIN INIT
-// ======================
 
 document.addEventListener('DOMContentLoaded', () => {
   initSidebar();

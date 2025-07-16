@@ -30,7 +30,7 @@ async function loadCartItems() {
       discount: item.discount || 0
     }));
   } catch (err) {
-    alert("🛑 Your cart is empty. Redirecting...");
+    alert("Your cart is empty. Redirecting...");
     location.href = 'cart.html';
   }
 }
@@ -67,7 +67,7 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
   e.preventDefault();
 
   const token = localStorage.getItem('authToken');
-  if (!token) return alert("⚠️ You must be logged in to place an order.");
+  if (!token) return alert("You must be logged in to place an order.");
 
   const shipping = {
     streetAddress: document.getElementById('address').value.trim(),
@@ -86,7 +86,7 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
   const tax = subtotal * 0.00;
   const total = subtotal + tax + shippingCost;
 
-  // ✅ Convert to format backend expects
+  // Convert to format backend expects
   const orderItems = cartItems.map(item => ({
     product: item.productId,
     quantity: item.quantity,
@@ -119,13 +119,13 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
     try {
       data = JSON.parse(rawText);
     } catch {
-      console.error("🧨 Server responded with non-JSON:", rawText);
+      console.error("Server responded with non-JSON:", rawText);
       throw new Error("Server sent unexpected response. Check the console.");
     }
 
     if (!res.ok) {
-      console.error("❌ Validation errors:", data?.errors);
-      console.error("❌ Server error:", data?.message);
+      console.error("Validation errors:", data?.errors);
+      console.error("Server error:", data?.message);
       throw new Error(data?.message || "Order submission failed");
     }
 
@@ -133,7 +133,7 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
     location.href = `confirmation.html?orderId=${data.order.id}`;
 
   } catch (err) {
-    alert(`❌ ${err.message}`);
+    alert(`${err.message}`);
     console.error("Checkout failed:", err);
   }
 });
@@ -160,10 +160,10 @@ document.getElementById('debugCart')?.addEventListener('click', async () => {
     });
 
     const data = await res.json();
-    console.log("🛒 Cart from backend:", data);
-    alert("✅ Cart logged to console.");
+    console.log("Cart from backend:", data);
+    alert("Cart logged to console.");
   } catch (err) {
-    alert("❌ Failed to fetch cart.");
+    alert("Failed to fetch cart.");
     console.error("Cart fetch error:", err);
   }
 });

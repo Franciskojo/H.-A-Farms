@@ -121,8 +121,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 function logout() {
-  localStorage.removeItem('authToken');      // If using localStorage
-  sessionStorage.removeItem('authToken');    // If using sessionStorage
+  localStorage.removeItem('authToken');     
+  sessionStorage.removeItem('authToken');    
 
   // Optional: clear cookies (if used)
   document.cookie = 'token=; Max-Age=0; path=/';
@@ -130,5 +130,12 @@ function logout() {
   // Redirect to login or homepage
   window.location.href = '/auth/login.html';
 }
+
+const sidebarToggle = document.getElementById('sidebarToggle');
+  const userSidebar = document.querySelector('.user-sidebar');
+
+  sidebarToggle.addEventListener('click', () => {
+    userSidebar.classList.toggle('open'); 
+  });
 
 

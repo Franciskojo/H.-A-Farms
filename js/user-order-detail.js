@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const order = await res.json();
 
-    // 🔽 Populate order details...
+    //Populate order details...
     document.getElementById("orderNumber").textContent = order._id;
     document.querySelector(".order-date").textContent = `Placed on ${new Date(order.createdAt).toDateString()}`;
     document.querySelector(".status").textContent = order.status;
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("userName").textContent = user.name || "User";
     document.getElementById("userEmail").textContent = user.email || "";
 
-    // ✅ Define profileImg before using it
+    //Define profileImg before using it
     const profileImg = document.getElementById('userProfilePicture');
     if (profileImg) {
       profileImg.src = user.profilePicture || '/asset/default-avatar.png';
@@ -99,7 +99,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       <div class="summary-row total"><span>Total:</span><span>₵${order.total?.toFixed(2) || "0.00"}</span></div>
     `;
   } catch (err) {
-    console.error("❌ Unable to load order details:", err);
+    console.error("Unable to load order details:", err);
     alert("Unable to load order details.");
   }
 });
+
+const sidebarToggle = document.getElementById('sidebarToggle');
+  const userSidebar = document.querySelector('.user-sidebar');
+
+  sidebarToggle.addEventListener('click', () => {
+    userSidebar.classList.toggle('open'); 
+  });
+

@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       </tr>
     `).join('');
   } catch (err) {
-    console.error("❌ Unable to load order details:", err);
+    console.error("Unable to load order details:", err);
     alert("Error loading order details.");
   }
 });

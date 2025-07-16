@@ -88,9 +88,6 @@ function initSidebar() {
   }
 }
 
-// ======================
-// MAIN INIT
-// ======================
 
 document.addEventListener('DOMContentLoaded', () => {
   initSidebar();

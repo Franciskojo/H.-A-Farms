@@ -17,7 +17,7 @@ async function loadProducts(page = 1) {
     renderProductTable(products);
     renderPagination(totalPages, page);
   } catch (err) {
-    console.error('❌ Error loading products:', err);
+    console.error('Error loading products:', err);
     alert('Unable to load products.');
   }
 }
@@ -100,7 +100,7 @@ function attachDeleteHandlers() {
         alert('Product deleted');
         loadProducts();
       } catch (err) {
-        console.error('❌ Error deleting product:', err);
+        console.error('Error deleting product:', err);
         alert('Could not delete product.');
       }
     });
@@ -123,10 +123,6 @@ function initSidebar() {
     });
   }
 }
-
-// ======================
-// MAIN INIT
-// ======================
 
 document.addEventListener('DOMContentLoaded', () => {
   initSidebar();

@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (cart.length > 0) {
             const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-            const shipping = 5.99;
-            const tax = subtotal * 0.1;
+            const shipping = 0.00;
+            const tax = subtotal * 0.00;
             const total = subtotal + shipping + tax;
             
             document.getElementById('orderTotal').textContent = `$${total.toFixed(2)}`;

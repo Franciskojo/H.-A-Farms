@@ -48,13 +48,13 @@ function initOrderPage() {
       }
     }
   });
-} // ✅ <--- This was missing
+}
 
 async function fetchOrders(page = 1) {
   const token = localStorage.getItem('authToken');
   const status = document.getElementById('statusFilter').value;
   const params = new URLSearchParams({ page, limit: 10 });
-  if (status) params.append('status', status); // optional backend support
+  if (status) params.append('status', status);
 
   try {
     const res = await fetch(`https://h-a-farms-backend.onrender.com/admin/all?${params}`, {
@@ -138,10 +138,6 @@ function initSidebar() {
     });
   }
 }
-
-// ======================
-// MAIN INIT
-// ======================
 
 document.addEventListener('DOMContentLoaded', () => {
   initSidebar();

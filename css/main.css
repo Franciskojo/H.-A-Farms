@@ -58,16 +58,6 @@ a {
     background-color: #3a5bef;
 }
 
-.logout-btn {
-    padding: 8px 14px;
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
 @media (max-width: 768px) {
     .logout-btn {
         width: 100%;

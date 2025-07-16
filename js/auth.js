@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const fullName = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
-      const profilePicture = document.getElementById('profilePicture')?.files[0]; // Optional
+      const profilePicture = document.getElementById('profilePicture')?.files[0];
 
       if (!fullName || !email || !password) {
         alert('Please fill in all required fields.');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       const formData = new FormData();
-      formData.append('name', fullName); // ✅ match your backend model if `name`, or change to `fullName` if needed
+      formData.append('name', fullName);
       formData.append('email', email);
       formData.append('password', password);
       if (profilePicture) {
