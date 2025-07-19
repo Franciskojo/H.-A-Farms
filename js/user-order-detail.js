@@ -104,10 +104,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-const sidebarToggle = document.getElementById('sidebarToggle');
-  const userSidebar = document.querySelector('.user-sidebar');
 
-  sidebarToggle.addEventListener('click', () => {
-    userSidebar.classList.toggle('open'); 
+  document.addEventListener("DOMContentLoaded", function () {
+  const sidebar = document.querySelector(".user-sidebar");
+  const toggleBtn = document.querySelector(".sidebar-toggle");
+
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("active");
   });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  logoutBtn.addEventListener("click", () => {
+    // Remove auth token from localStorage/sessionStorage
+    localStorage.removeItem("authToken");
+    sessionStorage.removeItem("authToken");
+
+    // Optionally clear user info
+    localStorage.removeItem("user");
+    
+    // Redirect to login page
+    window.location.href = "/auth/login.html";
+  });
+});
 

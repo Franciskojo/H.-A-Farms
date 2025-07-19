@@ -120,22 +120,44 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 });
 
-function logout() {
-  localStorage.removeItem('authToken');     
-  sessionStorage.removeItem('authToken');    
+document.addEventListener("DOMContentLoaded", function () {
+  const logoutBtn = document.getElementById("logoutBtn");
 
-  // Optional: clear cookies (if used)
-  document.cookie = 'token=; Max-Age=0; path=/';
+  logoutBtn.addEventListener("click", () => {
+    // Remove auth token from localStorage/sessionStorage
+    localStorage.removeItem("authToken");
+    sessionStorage.removeItem("authToken");
 
-  // Redirect to login or homepage
-  window.location.href = '/auth/login.html';
-}
-
-const sidebarToggle = document.getElementById('sidebarToggle');
-  const userSidebar = document.querySelector('.user-sidebar');
-
-  sidebarToggle.addEventListener('click', () => {
-    userSidebar.classList.toggle('open'); 
+    // Optionally clear user info
+    localStorage.removeItem("user");
+    
+    // Redirect to login page
+    window.location.href = "/auth/login.html";
   });
+});
+
+
+ document.addEventListener("DOMContentLoaded", function () {
+  const sidebar = document.querySelector(".user-sidebar");
+  const toggleBtn = document.querySelector(".sidebar-toggle");
+
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("active");
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menuLinks = document.querySelectorAll(".user-menu a");
+
+  menuLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      // Remove active from all
+      menuLinks.forEach(l => l.classList.remove("active"));
+
+      // Add active to clicked one
+      link.classList.add("active");
+    });
+  });
+});
 
 

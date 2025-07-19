@@ -33,7 +33,7 @@ a {
     padding: 0 1rem;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .container {
         padding: 0 0.5rem;
     }
@@ -306,7 +306,7 @@ footer {
     text-transform: capitalize;
 }
 
-.status.pending { background-color: #f0ad4e; }
+.status.processing { background-color: #f44336 }
 .status.shipped { background-color: #5bc0de; }
 .status.delivered { background-color: #5cb85c; }
 .status.cancelled { background-color: #d9534f; }

@@ -6,6 +6,7 @@
     <title>My Orders | H. A. Farms</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
     <!-- <header class="main-header">
@@ -47,18 +48,18 @@
     </form>
 
     <nav class="user-menu">
-  <a href="/user/dashboard.html" class="active"><i class="icon-dashboard"></i> Dashboard</a>
-  <a href="/user/orders.html"><i class="icon-orders"></i> My Orders</a>
-  <a href="/products.html"><i class="icon-products"></i> Products</a>
+  <a href="/user/dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+  <a href="/user/orders.html"><i class="fas fa-shopping-bag"></i> My Orders</a>
+  <a href="/products.html"><i class="fas fa-store"></i> Products</a>
   <a href="/cart.html">
-    <i class="icon-cart"></i> Cart <span class="cart-count">0</span>
+    <i class="fas fa-shopping-cart"></i> Cart <span class="cart-count"></span>
   </a>
-  <a href="/index.html"><i class="icon-address"></i> Home</a>
-  <a href="account-settings.html"><i class="icon-settings"></i> Account Settings</a>
+  <a href="/index.html"><i class="fas fa-home"></i> Home</a>
+  <!-- <a href="account-settings.html"><i class="fas fa-cog"></i> Account Settings</a> -->
 </nav>
 
-<button onclick="logout()" class="logout-btn">
-  <i class="icon-logout"></i> Logout
+<button class="logout-btn" id="logoutBtn">
+  <i class="fas fa-sign-out-alt"></i> Logout
 </button>
 
   </aside>
@@ -105,12 +106,6 @@
             </div>
         </div>
     </main>
-
-    <footer>
-        <div class="container">
-           <p>&copy; 2025 H. A Farms. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script src="../js/user-orders.js"></script>
 </body>
