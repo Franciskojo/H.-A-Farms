@@ -119,6 +119,29 @@ function createChartConfig(type, label, chartData) {
   const isPie = type === 'pie';
   const colors = ['#4a6bff', '#00b894', '#fd79a8', '#6c5ce7', '#ffa502', '#ff4757'];
 
+  // Helper: Format YYYY-MM or YYYY-MM-DD
+  function formatDateLabel(rawLabel) {
+    // ✅ Monthly (YYYY-MM)
+    if (/^\d{4}-\d{2}$/.test(rawLabel)) {
+      const [year, month] = rawLabel.split('-');
+      const date = new Date(`${year}-${month}-01`);
+      const monthName = date.toLocaleString('default', { month: 'short' });
+      return `${monthName} ${year}`; // e.g. Jul 2025
+    }
+
+    // ✅ Daily (YYYY-MM-DD)
+    if (/^\d{4}-\d{2}-\d{2}$/.test(rawLabel)) {
+      const date = new Date(rawLabel);
+      const day = date.getDate();
+      const monthName = date.toLocaleString('default', { month: 'short' });
+      const year = date.getFullYear();
+      return `${day} ${monthName} ${year}`; // e.g. 23 Jul 2025
+    }
+
+    // ✅ Otherwise, leave unchanged
+    return rawLabel;
+  }
+
   return {
     type,
     data: {
@@ -146,8 +169,12 @@ function createChartConfig(type, label, chartData) {
         },
         tooltip: {
           callbacks: {
+            title: (tooltipItems) => {
+              const raw = tooltipItems[0].label;
+              return formatDateLabel(raw);
+            },
             label: (context) => {
-              const label = context.label || '';
+              const label = context.dataset.label || '';
               const value = context.raw || 0;
               return `${label}: ${formatCurrency(value)}`;
             }
@@ -155,6 +182,11 @@ function createChartConfig(type, label, chartData) {
         }
       },
       scales: isPie ? {} : {
+        x: {
+          ticks: {
+            callback: (val) => formatDateLabel(chartData.labels[val])
+          }
+        },
         y: {
           beginAtZero: true,
           ticks: {

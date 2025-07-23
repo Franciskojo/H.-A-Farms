@@ -98,15 +98,15 @@ body {
 
 .sidebar-nav a:hover,
 .sidebar-nav a:focus {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(14, 219, 41, 0.1);
   color: white;
   outline: none;
 }
 
-.sidebar-nav a.active {
+/* .sidebar-nav a.active {
   background-color: var(--sidebar-active);
   color: white;
-}
+} */
 
 /* Main Content */
 .admin-main {
