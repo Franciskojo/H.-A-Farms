@@ -529,74 +529,123 @@ address {
   border-top: 1px solid #ddd;
 }
 
-
 /* ===============================
-   Responsive Adjustments
+   RESPONSIVE DESIGN
 ================================= */
+
+/* Medium Screens (Tablets) */
 @media (max-width: 992px) {
   .user-sidebar {
-    transform: translateX(-100%);
-    position: fixed;
-    top: var(--header-height);
-    left: 0;
-    height: calc(100vh - var(--header-height));
-    z-index: 900;
+    width: var(--sidebar-collapsed-width);
+    padding: 15px;
   }
 
-  .user-sidebar.active {
-    transform: translateX(0);
+  .user-sidebar h2,
+  .user-sidebar p,
+  .edit-btn,
+  .user-menu a span {
+    display: none; /* Hide extra text */
   }
 
+  .user-sidebar img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .user-content {
+    margin-left: var(--sidebar-collapsed-width);
+    padding: 20px;
+  }
+
+  .dashboard-cards {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--spacing-sm);
+  }
+
+  .orders-table {
+    min-width: 600px;
+  }
+}
+
+/* Small Screens (Mobile) */
+@media (max-width: 768px) {
+  /* Show sidebar toggle button */
   .sidebar-toggle {
     display: block;
   }
 
+  .user-dashboard {
+    flex-direction: column;
+  }
+
+  .user-sidebar {
+    position: fixed;
+    top: var(--header-height);
+    left: -100%;
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--header-height));
+    background: #fff;
+    z-index: 999;
+    transition: left 0.3s ease;
+  }
+
+  /* When sidebar is active (add .active with JS) */
+  .user-sidebar.active {
+    left: 0;
+  }
+
   .user-content {
     margin-left: 0;
+    padding: 15px;
+  }
+
+  .dashboard-cards {
+    grid-template-columns: 1fr; /* Stack cards */
+  }
+
+  .orders-table {
+    min-width: 500px;
+  }
+
+  .order-detail-grid,
+  .totals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .order-items {
+    overflow-x: auto;
   }
 }
 
+/* Extra Small Screens */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
 
-@media (max-width: 768px) {
-  .dashboard-cards {
-    grid-template-columns: 1fr;
+  .dashboard-card {
+    padding: var(--spacing-sm);
+  }
+
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .recent-orders h2 {
+    font-size: 1.1rem;
   }
 
   .orders-table th,
   .orders-table td {
-  padding: 0.75rem;
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .edit-btn,
+  .logout-btn {
+    padding: 8px;
     font-size: 0.85rem;
-}
-  .orders-table {
-    display: block;
-    overflow-x: auto;
-  }
-  .order-status {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .orders-table {
-    min-width: 600px; 
-  }
-}
-
-@media (max-width: 576px) {
-  .user-content {
-    padding: 20px 15px;
-  }
-  .dashboard-card {
-    flex-direction: column;
-    text-align: center;
-  }
-  .card-icon {
-    margin: 0 auto;
-  }
-  .order-detail-grid,
-  .totals-grid {
-    grid-template-columns: 1fr;
   }
 }
