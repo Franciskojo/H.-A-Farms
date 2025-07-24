@@ -112,15 +112,13 @@ body {
   transition: var(--transition);
   position: fixed;
   height: calc(100vh - var(--header-height));
-  
-  /* ✅ Keep it scrollable but hide scrollbar */
   overflow-y: auto;
-  -ms-overflow-style: none;   /* IE/Edge */
-  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   
+  scrollbar-width: none;      
 }
 
 .user-sidebar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none; 
 }
 
 
@@ -204,7 +202,7 @@ body {
   top: 70px;
   left: 10px;
   z-index: 1000;
-  background: var(--primary-color);
+  background: var(--secondary-color);
   color: #fff;
   border: none;
   width: 40px;
@@ -245,8 +243,9 @@ body {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  gap: 12px;
   border-left: 4px solid var(--primary-color);
   transition: var(--transition);
 }
@@ -544,7 +543,7 @@ address {
   .user-sidebar p,
   .edit-btn,
   .user-menu a span {
-    display: none; /* Hide extra text */
+    display: none; 
   }
 
   .user-sidebar img {
@@ -569,7 +568,6 @@ address {
 
 /* Small Screens (Mobile) */
 @media (max-width: 768px) {
-  /* Show sidebar toggle button */
   .sidebar-toggle {
     display: block;
   }
@@ -589,7 +587,6 @@ address {
     transition: left 0.3s ease;
   }
 
-  /* When sidebar is active (add .active with JS) */
   .user-sidebar.active {
     left: 0;
   }
@@ -600,7 +597,7 @@ address {
   }
 
   .dashboard-cards {
-    grid-template-columns: 1fr; /* Stack cards */
+    grid-template-columns: 1fr;
   }
 
   .orders-table {
