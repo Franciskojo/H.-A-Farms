@@ -19,10 +19,10 @@
       <!-- ✅ Home Button -->
       <a href="/index.html" class="add-product-btn">+ Home</a>
 
-      <!-- ✅ Cart Icon with Link -->
-      <a href="/cart.html" class="cart-icon" title="View Cart">
+      <!-- ✅ Cart Icon with Shared Class -->
+      <a href="/cart.html" class="cart-icon">
         <i class="fas fa-shopping-cart"></i>
-        <span id="cart-count">0</span>
+        <span class="cart-count">0</span>
       </a>
     </h1>
 
@@ -51,15 +51,11 @@
     <a href="/terms.html">Terms of Service</a>
   </footer>
 
+  <!-- ✅ Your main JS -->
   <script src="/js/products.js"></script>
 
-  <!-- ✅ Optional: JS to update cart count from localStorage -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      document.getElementById("cart-count").textContent = cart.length;
-    });
-  </script>
+  <!-- ✅ Load shared cart logic -->
+  <script src="/js/cart.js"></script>
 
   <style>
     .cart-icon {
@@ -71,7 +67,7 @@
       color: #333;
     }
 
-    .cart-icon #cart-count {
+    .cart-icon .cart-count {
       position: absolute;
       top: -8px;
       right: -12px;

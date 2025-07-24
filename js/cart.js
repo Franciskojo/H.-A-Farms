@@ -23,6 +23,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+/**
+ * ✅ Updates ALL cart count icons on the page
+ * @param {Array} cart - Array of cart items
+ */
+function updateCartCountDisplay(cart) {
+  // Sum all item quantities
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Update ALL .cart-count elements
+  document.querySelectorAll('.cart-count').forEach(el => {
+    el.textContent = totalItems;
+  });
+}
+
 async function loadCart() {
   const token = localStorage.getItem('authToken');
   let cart = [];
@@ -47,7 +61,7 @@ async function loadCart() {
         cart = data.items
           .filter(item => item.product && item.product.id)
           .map(item => ({
-            id: item._id, 
+            id: item._id,
             productId: item.product.id,
             name: item.product.productName || 'Unnamed',
             image: item.product.productImage || 'https://via.placeholder.com/80',
@@ -55,6 +69,7 @@ async function loadCart() {
             quantity: item.quantity
           }));
 
+        // Save synced cart for offline display
         localStorage.setItem('cart', JSON.stringify(cart));
       } else {
         console.error('API error loading cart:', data.message);
@@ -65,16 +80,20 @@ async function loadCart() {
       alert('Failed to load cart. Please try again.');
     }
   } else {
+    // Guest cart from localStorage
     cart = JSON.parse(localStorage.getItem('cart')) || [];
   }
 
   renderCart(cart);
-  const cartCountEl = document.getElementById("cart-count");
-  if (cartCountEl) cartCountEl.textContent = cart.length;
+
+  // ✅ Update ALL cart icons at once
+  updateCartCountDisplay(cart);
 }
 
 function renderCart(cart) {
   const container = document.querySelector('.cart-items');
+  if (!container) return; // If not on cart page, skip rendering
+
   container.innerHTML = '';
 
   if (!cart.length) {
@@ -176,13 +195,13 @@ async function updateQty(cartItemId, productId, change) {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 
-  loadCart();
+  loadCart(); // ✅ Refresh cart + update icons
 }
 
 function removeItem(cartItemId, productId) {
   const token = localStorage.getItem('authToken');
   if (token) {
-    removeFromBackend(cartItemId);
+    removeFromBackend(cartItemId).then(() => loadCart());
   } else {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     cart = cart.filter(item => item.productId !== productId);
