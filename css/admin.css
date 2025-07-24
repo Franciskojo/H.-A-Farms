@@ -270,14 +270,14 @@ body {
 .table-responsive {
   width: 100%;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+  -webkit-overflow-scrolling: touch; 
 }
 
 /* Base table styles */
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 700px; /* keeps columns readable on small screens */
+  min-width: 700px; 
 }
 
 .data-table th,
