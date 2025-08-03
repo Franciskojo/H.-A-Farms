@@ -27,28 +27,51 @@
     </h1>
 
     <div class="search-bar">
-      <input type="text" placeholder="Search products..." />
-      <button>Search</button>
-    </div>
+  <input type="text" id="searchInput" placeholder="Search products..." />
+  <button id="searchBtn">Search</button>
+</div>
 
     <div class="product-grid">
       <!-- Products will be dynamically inserted here -->
     </div>
 
-    <div class="pagination">
-      <a href="#" class="active">1</a>
-      <a href="#">2</a>
-      <a href="#">3</a>
-      <a href="#">4</a>
-      <a href="#">5</a>
-    </div>
+    <div class="pagination" id="pagination"></div>
   </div>
 
-  <footer>
-    &copy; 2025 H.A. Farms. All rights reserved.
-    <br>
-    <a href="/privacy-policy.html">Privacy Policy</a> |
-    <a href="/terms.html">Terms of Service</a>
+ <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>H. A. Farms</h3>
+          <span class="farm">Providing organic, sustainable produce since 2005.</span>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact</h3>
+          <ul>
+            <li>Mankesim – New Kumasi / Fosu Station, OR</li>
+            <li>hannahaidoo.ha@gmail.com</li>
+            <li>+233542887480</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <span class="bl">&copy; 2025 H. A. Farms. All rights reserved.</span>
+      </div>
+    </div>
   </footer>
 
   <!-- ✅ Your main JS -->

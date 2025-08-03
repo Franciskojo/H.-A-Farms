@@ -1,24 +1,35 @@
 const API_URL = 'https://h-a-farms-backend.onrender.com/products';
 const CART_API_URL = 'https://h-a-farms-backend.onrender.com/cart';
 
+let currentPage = 1;
+let pageSize = 6;
+let currentSearch = "";
+
 // Load and display products
-async function loadProducts() {
+async function loadProducts(page = 1, searchTerm = "") {
   try {
-    const response = await fetch(API_URL);
-    const products = await response.json();
+    const skip = (page - 1) * pageSize;
+    const url = `${API_URL}?search=${encodeURIComponent(searchTerm)}&limit=${pageSize}&skip=${skip}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const products = data.products || [];
+    const total = data.total || 0;
 
     const container = document.querySelector('.product-grid');
     container.innerHTML = '';
 
+    if (products.length === 0) {
+      container.innerHTML = `<p>No products found.</p>`;
+    }
+
     products.forEach(product => {
-      console.log("Loaded product:", product);
       const card = document.createElement('div');
       card.classList.add('product-card');
 
       const imagePath = product.productImage || '';
-      const imageUrl = imagePath
-        ? imagePath
-        : 'https://via.placeholder.com/300x200?text=No+Image';
+      const imageUrl = imagePath ? imagePath : 'https://via.placeholder.com/300x200?text=No+Image';
 
       card.innerHTML = `
         <div class="product-image">
@@ -34,7 +45,7 @@ async function loadProducts() {
           <div class="product-actions">
             <a href="product-detail.html?id=${product.id}" class="action-btn view-btn">View</a>
             <a href="#" class="action-btn addtocart-btn" 
-               data-id="${product.id}" 
+               data-id="${product._id}" 
                data-name="${product.productName}" 
                data-price="${product.price}" 
                data-image="${imageUrl}" 
@@ -48,6 +59,7 @@ async function loadProducts() {
       container.appendChild(card);
     });
 
+    renderPagination(total, page);
     attachCartListeners();
   } catch (err) {
     console.error('Failed to load products:', err);
@@ -55,6 +67,30 @@ async function loadProducts() {
   }
 }
 
+// Render pagination links
+function renderPagination(total, currentPage) {
+  const pagination = document.querySelector('.pagination');
+  pagination.innerHTML = '';
+
+  const totalPages = Math.ceil(total / pageSize);
+  if (totalPages <= 1) return;
+
+  for (let i = 1; i <= totalPages; i++) {
+    const pageLink = document.createElement('a');
+    pageLink.href = '#';
+    pageLink.textContent = i;
+    if (i === currentPage) pageLink.classList.add('active');
+
+    pageLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      loadProducts(i, currentSearch);
+    });
+
+    pagination.appendChild(pageLink);
+  }
+}
+
+// Attach cart buttons
 function attachCartListeners() {
   const buttons = document.querySelectorAll('.addtocart-btn');
   buttons.forEach(button => {
@@ -62,7 +98,7 @@ function attachCartListeners() {
       e.preventDefault();
 
       const product = {
-        id: button.dataset.id, 
+        id: button.dataset.id,
         name: button.dataset.name,
         price: parseFloat(button.dataset.price),
         image: button.dataset.image,
@@ -74,19 +110,18 @@ function attachCartListeners() {
   });
 }
 
-// Handles both guest and authenticated add-to-cart
+// Handle add to cart for guest and logged-in user
 async function handleAddToCart(product) {
   const token = localStorage.getItem('authToken');
-
   const productId = product.id;
+
   if (!productId || productId === 'undefined') {
-    console.error("🚨 Missing or invalid product ID in handleAddToCart", product);
+    console.error("🚨 Invalid product ID in handleAddToCart", product);
     alert("Failed to add product: invalid product ID.");
     return;
   }
 
   if (!token) {
-    // Guest user - store in localStorage
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const index = cart.findIndex(item => item.id === productId);
 
@@ -111,20 +146,15 @@ async function handleAddToCart(product) {
     return;
   }
 
-  // Authenticated user - sync with backend
+  // Logged-in user
   try {
-    console.log("✅ Adding to backend cart:", { productId, quantity: 1 });
-
     const response = await fetch(`${CART_API_URL}/add`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({
-        productId,
-        quantity: 1
-      })
+      body: JSON.stringify({ productId, quantity: 1 })
     });
 
     const text = await response.text();
@@ -148,4 +178,22 @@ async function handleAddToCart(product) {
   }
 }
 
-window.addEventListener('DOMContentLoaded', loadProducts);
+// DOM Ready
+window.addEventListener('DOMContentLoaded', () => {
+  loadProducts();
+
+  const searchInput = document.querySelector('.search-bar input');
+  const searchButton = document.querySelector('.search-bar button');
+
+  searchButton.addEventListener('click', () => {
+    currentSearch = searchInput.value.trim();
+    loadProducts(1, currentSearch);
+  });
+
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      currentSearch = searchInput.value.trim();
+      loadProducts(1, currentSearch);
+    }
+  });
+});

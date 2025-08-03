@@ -190,28 +190,97 @@ h1 {
 footer {
   background-color: var(--primary-color);
   color: white;
-  padding: 40px 15px 20px;
+  padding: 50px 0 30px;
   text-align: center;
-  font-size: 14px;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
 }
 
-footer a {
-  color: #007BFF;
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-column h3 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+  color: #ddd;
   text-decoration: none;
+  transition: color 0.3s;
 }
 
-footer a:hover {
-  text-decoration: underline;
+.bl {
+  color: #f8f1e5;
 }
 
-/* ===== Responsive Enhancements for Small Screens ===== */
+.footer-column ul li a:hover {
+  color: white;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.social-links a {
+  color: white;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.social-links a:hover {
+  color: var(--accent-color);
+}
+
+.copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.farm, .right {
+  color: white;
+}
+
+@media (max-width: 600px) {
+  footer {
+    padding: 30px 15px 15px;
+  }
+
+  .footer-column {
+    margin-bottom: 20px;
+  }
+}
+
+
+
+
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
   /* Search bar stacks vertically */
   .search-bar {
     flex-direction: row;
-    /* align-items: stretch; */
   }
 
   .search-bar input,
@@ -224,6 +293,7 @@ footer a:hover {
     font-size: 1rem;
     box-sizing: border-box;
   }
+
 
   /* Product actions stack vertically */
   .product-actions {

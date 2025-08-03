@@ -156,6 +156,12 @@ h2::after {
 p {
   margin-bottom: 15px;
   color: var(--text-light);
+  font-size: 1.3rem;
+  font-weight: 100;
+}
+
+h4 {
+  font-size: 1.3rem;
 }
 
 /* Mission Section */
@@ -213,6 +219,7 @@ p {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
+  margin-top: 70px;
 }
 
 .gallery-item {
@@ -233,6 +240,8 @@ p {
   transform: scale(1.1);
 }
 
+
+
 /* Team Section */
 .team h2 {
   margin-bottom: 40px;
@@ -242,6 +251,7 @@ p {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
+  margin-top: 70px;
 }
 
 .team-member {

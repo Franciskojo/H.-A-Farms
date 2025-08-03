@@ -135,7 +135,8 @@ form textarea {
   resize: vertical;
 }
 
-form textarea {
+form textarea, 
+form input {
   min-height: 120px;
 }
 
