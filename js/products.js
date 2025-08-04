@@ -45,7 +45,7 @@ async function loadProducts(page = 1, searchTerm = "") {
           <div class="product-actions">
             <a href="product-detail.html?id=${product.id}" class="action-btn view-btn">View</a>
             <a href="#" class="action-btn addtocart-btn" 
-               data-id="${product._id}" 
+               data-id="${product.id}" 
                data-name="${product.productName}" 
                data-price="${product.price}" 
                data-image="${imageUrl}" 
