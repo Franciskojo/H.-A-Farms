@@ -6,6 +6,7 @@
     <title>Manage Orders | H. A. Farms</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
       <!-- Loader -->
@@ -30,21 +31,19 @@
         <a href="orders.html">Orders</a>
         <a href="users.html">Users</a>
         <a href="settings.html">Settings</a>
+        <a href="#" id="logoutBtn">Logout</a>
       </nav>
     </aside>
 
         <main class="admin-main">
             <header class="admin-header">
                 <h1>Manage Orders</h1>
-                <!-- <div class="admin-actions">
-                    <button class="btn-notification">
-                        <i class="icon-bell"></i>
-                        <span class="notification-badge">3</span>
-                    </button>
-                    <div class="admin-profile">
-                        <img src="../../assets/images/admin-avatar.jpg" alt="Admin">
+                <div class="admin-actions">
+                      <div class="admin-profile">
+                        <img id="adminAvatar" src="/default-avatar.jpg" alt="Admin" />
+                        <p id="adminName">Admin Name</p>
                     </div>
-                </div> -->
+                </div>
             </header>
             
             <div class="dashboard-content">

@@ -116,18 +116,19 @@ async function handleAddToCart(product) {
   const productId = product.id;
 
   if (!productId || productId === 'undefined') {
-    console.error("🚨 Invalid product ID in handleAddToCart", product);
-    alert("Failed to add product: invalid product ID.");
+    console.error("Invalid product ID in handleAddToCart", product);
+    Swal.fire('Error', 'Invalid product ID.', 'error');
     return;
   }
 
   if (!token) {
+    // Guest cart using localStorage
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const index = cart.findIndex(item => item.id === productId);
 
     if (index !== -1) {
       if (cart[index].quantity + 1 > product.stock) {
-        return alert(`Only ${product.stock} items available in stock.`);
+        return Swal.fire('Stock Limit', `Only ${product.stock} items available.`, 'warning');
       }
       cart[index].quantity += 1;
     } else {
@@ -142,7 +143,18 @@ async function handleAddToCart(product) {
     }
 
     localStorage.setItem('cart', JSON.stringify(cart));
-    alert(`${product.name} added to cart.`);
+
+    // SweetAlert2 toast success
+    Swal.fire({
+      icon: 'success',
+      title: `${product.name} added to cart!`,
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true
+    });
+
     return;
   }
 
@@ -163,20 +175,29 @@ async function handleAddToCart(product) {
       data = JSON.parse(text);
     } catch {
       console.error("❌ Non-JSON response from backend:", text);
-      alert("Unexpected server response. Please try again.");
+      Swal.fire('Error', 'Unexpected server response.', 'error');
       return;
     }
 
     if (response.ok) {
-      alert(`${product.name} added to cart!`);
+      Swal.fire({
+        icon: 'success',
+        title: `${product.name} added to cart!`,
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true
+      });
     } else {
-      alert(`Error: ${data.message}`);
+      Swal.fire('Error', data.message || 'Failed to add to cart.', 'error');
     }
   } catch (error) {
     console.error('💥 Add to cart failed:', error);
-    alert('Failed to add product to cart.');
+    Swal.fire('Error', 'Failed to add product to cart.', 'error');
   }
 }
+
 
 // DOM Ready
 window.addEventListener('DOMContentLoaded', () => {

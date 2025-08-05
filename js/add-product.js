@@ -8,8 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const token = localStorage.getItem('authToken');
     if (!token) {
-      alert('You must be logged in to perform this action.');
-      window.location.href = 'login.html';
+      Swal.fire({
+        icon: 'warning',
+        title: 'Authentication Required',
+        text: 'You must be logged in to perform this action.',
+        confirmButtonText: 'Login'
+      }).then(() => {
+        window.location.href = 'login.html';
+      });
       return;
     }
 
@@ -26,10 +32,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const imageFile = form.productImage.files[0];
     if (!imageFile) {
-      alert('Please upload a product image.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Missing Image',
+        text: 'Please upload a product image.'
+      });
       return;
     }
+
     formData.append('productImage', imageFile);
+
     if (form.productId?.value) {
       formData.append('productId', form.productId.value);
     }
@@ -47,16 +59,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!response.ok) {
         console.error('Server error:', result);
-        alert(`Error: ${result.error || 'Something went wrong'}`);
+        Swal.fire({
+          icon: 'error',
+          title: 'Submission Failed',
+          text: result.error || 'Something went wrong'
+        });
         return;
       }
 
-      alert('✅ Product created successfully!');
-      window.location.href = '/admin/products.html';
+      Swal.fire({
+        icon: 'success',
+        title: 'Product Created',
+        text: '✅ Product created successfully!',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        window.location.href = '/admin/products.html';
+      });
 
     } catch (err) {
       console.error('Submission failed:', err);
-      alert(err.message || 'Failed to submit product.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Network Error',
+        text: err.message || 'Failed to submit product.'
+      });
     }
   });
 });

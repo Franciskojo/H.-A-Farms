@@ -85,7 +85,19 @@ function attachDeleteHandlers() {
   document.querySelectorAll('.btn-delete').forEach(button => {
     button.addEventListener('click', async () => {
       const id = button.getAttribute('data-id');
-      if (!confirm('Are you sure you want to delete this product?')) return;
+
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: 'This product will be permanently deleted!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      });
+
+      if (!result.isConfirmed) return;
 
       const token = localStorage.getItem('authToken');
 
@@ -97,15 +109,16 @@ function attachDeleteHandlers() {
 
         if (!res.ok) throw new Error('Failed to delete product');
 
-        alert('Product deleted');
+        Swal.fire('Deleted!', 'Product has been deleted.', 'success');
         loadProducts();
       } catch (err) {
         console.error('Error deleting product:', err);
-        alert('Could not delete product.');
+        Swal.fire('Error', 'Could not delete product.', 'error');
       }
     });
   });
 }
+
 
 function formatCurrency(amount) {
   return new Intl.NumberFormat('en-GH', {
@@ -126,6 +139,49 @@ function initSidebar() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initSidebar();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSidebar();
+  fetchAdminProfile(); // Fetch avatar when page loads
+});
+
+async function fetchAdminProfile() {
+  const token = localStorage.getItem('authToken');
+
+  try {
+    const response = await fetch('https://h-a-farms-backend.onrender.com/users/me', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) throw new Error('Failed to fetch admin profile');
+
+    const data = await response.json();
+
+    const avatarEl = document.getElementById('adminAvatar');
+    if (data.profilePicture && avatarEl) {
+      avatarEl.src = data.profilePicture;
+    }
+
+     // Set admin name
+    const nameEl = document.getElementById('adminName');
+    if (data.name && nameEl) {
+      nameEl.textContent = data.name;
+    }
+
+  } catch (err) {
+    console.error('Avatar load error:', err);
+  }
+}
+
+
+// logout function
+document.getElementById("logoutBtn").addEventListener("click", function (e) {
+  e.preventDefault();
+  localStorage.removeItem("authToken"); // or the appropriate token key
+  window.location.href = "/auth/login.html";
 });
 
 

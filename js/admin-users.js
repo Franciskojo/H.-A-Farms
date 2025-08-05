@@ -92,3 +92,61 @@ function initSidebar() {
 document.addEventListener('DOMContentLoaded', () => {
   initSidebar();
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSidebar();
+  fetchAdminProfile(); // Fetch avatar when page loads
+});
+
+async function fetchAdminProfile() {
+  const token = localStorage.getItem('authToken');
+
+  try {
+    const response = await fetch('https://h-a-farms-backend.onrender.com/users/me', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) throw new Error('Failed to fetch admin profile');
+
+    const data = await response.json();
+
+    const avatarEl = document.getElementById('adminAvatar');
+    if (data.profilePicture && avatarEl) {
+      avatarEl.src = data.profilePicture;
+    }
+
+     // Set admin name
+    const nameEl = document.getElementById('adminName');
+    if (data.name && nameEl) {
+      nameEl.textContent = data.name;
+    }
+
+  } catch (err) {
+    console.error('Avatar load error:', err);
+  }
+}
+
+function initSidebar() {
+  const toggleBtn = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('adminSidebar');
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSidebar();
+});
+
+
+// logout function
+document.getElementById("logoutBtn").addEventListener("click", function (e) {
+  e.preventDefault();
+  localStorage.removeItem("authToken"); // or the appropriate token key
+  window.location.href = "/auth/login.html";
+});
+

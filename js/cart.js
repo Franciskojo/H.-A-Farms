@@ -199,16 +199,42 @@ async function updateQty(cartItemId, productId, change) {
 }
 
 function removeItem(cartItemId, productId) {
-  const token = localStorage.getItem('authToken');
-  if (token) {
-    removeFromBackend(cartItemId).then(() => loadCart());
-  } else {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart = cart.filter(item => item.productId !== productId);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    loadCart();
-  }
+  Swal.fire({
+    title: 'Remove Item?',
+    text: 'Are you sure you want to remove this item from your cart?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, remove it',
+    cancelButtonText: 'Cancel'
+  }).then(async (result) => {
+    if (!result.isConfirmed) return;
+
+    const token = localStorage.getItem('authToken');
+
+    if (token) {
+      await removeFromBackend(cartItemId);
+    } else {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart = cart.filter(item => item.productId !== productId);
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    await loadCart();
+
+    Swal.fire({
+      toast: true,
+      icon: 'success',
+      title: 'Item removed from cart',
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true
+    });
+  });
 }
+
 
 async function updateCartItemInBackend(cartItemId, quantity) {
   const token = localStorage.getItem('authToken');

@@ -66,8 +66,17 @@ function renderOrderSummary() {
 document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
+  const submitBtn = e.submitter;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Processing...';
+
   const token = localStorage.getItem('authToken');
-  if (!token) return alert("You must be logged in to place an order.");
+  if (!token) {
+    Swal.fire('Not Logged In', 'You must be logged in to place an order.', 'warning');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Place Order';
+    return;
+  }
 
   const shipping = {
     streetAddress: document.getElementById('address').value.trim(),
@@ -81,12 +90,18 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
   const billing = { ...shipping };
   const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value;
 
+  if (!shipping.streetAddress || !shipping.town || !paymentMethod) {
+    Swal.fire('Missing Fields', 'Please fill all required fields and choose a payment method.', 'error');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Place Order';
+    return;
+  }
+
   const subtotal = parseFloat(document.querySelector('.subtotal').textContent.replace('GH₵', '')) || 0;
   const shippingCost = 5;
   const tax = subtotal * 0.00;
   const total = subtotal + tax + shippingCost;
 
-  // Convert to format backend expects
   const orderItems = cartItems.map(item => ({
     product: item.productId,
     quantity: item.quantity,
@@ -120,21 +135,31 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
       data = JSON.parse(rawText);
     } catch {
       console.error("Server responded with non-JSON:", rawText);
-      throw new Error("Server sent unexpected response. Check the console.");
+      throw new Error("Unexpected server response.");
     }
 
     if (!res.ok) {
-      console.error("Validation errors:", data?.errors);
-      console.error("Server error:", data?.message);
-      throw new Error(data?.message || "Order submission failed");
+      throw new Error(data?.message || 'Order submission failed');
     }
 
     await clearCart(token);
-    location.href = `confirmation.html?orderId=${data.order.id}`;
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Order Placed!',
+      text: 'Your order was submitted successfully.',
+      timer: 3000,
+      showConfirmButton: false
+    }).then(() => {
+      window.location.href = `confirmation.html?orderId=${data.order.id}`;
+    });
 
   } catch (err) {
-    alert(`${err.message}`);
     console.error("Checkout failed:", err);
+    Swal.fire('Checkout Failed', err.message, 'error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Place Order';
   }
 });
 
