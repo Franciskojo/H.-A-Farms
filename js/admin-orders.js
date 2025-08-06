@@ -1,6 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
+  initSidebar();
   initOrderPage();
+  fetchAdminProfile();
+
+  document.getElementById("logoutBtn").addEventListener("click", function (e) {
+    e.preventDefault();
+    localStorage.removeItem("authToken");
+    window.location.href = "/auth/login.html";
+  });
 });
+
+function initSidebar() {
+  const toggleBtn = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('adminSidebar');
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+  }
+}
 
 function initOrderPage() {
   fetchOrders();
@@ -8,7 +26,7 @@ function initOrderPage() {
   // Filter by status
   document.getElementById('statusFilter').addEventListener('change', () => fetchOrders(1));
 
-  // Pagination buttons
+  // Pagination
   document.querySelector('.pagination').addEventListener('click', (e) => {
     if (e.target.classList.contains('page-btn') && !e.target.disabled) {
       const page = parseInt(e.target.textContent);
@@ -115,7 +133,7 @@ function renderPagination(current, totalPages) {
 
   let buttons = '';
 
-  // Previous button
+  // Previous
   buttons += `<button class="page-btn" ${current === 1 ? 'disabled' : ''}>Previous</button>`;
 
   // Page numbers
@@ -123,32 +141,11 @@ function renderPagination(current, totalPages) {
     buttons += `<button class="page-btn ${i === current ? 'active' : ''}">${i}</button>`;
   }
 
-  // Next button
+  // Next
   buttons += `<button class="page-btn" ${current === totalPages ? 'disabled' : ''}>Next</button>`;
 
   container.innerHTML = buttons;
 }
-
-function initSidebar() {
-  const toggleBtn = document.getElementById('sidebarToggle');
-  const sidebar = document.getElementById('adminSidebar');
-  if (toggleBtn && sidebar) {
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
-    });
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  initSidebar();
-});
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  initSidebar();
-  fetchAdminProfile(); // Fetch avatar when page loads
-});
 
 async function fetchAdminProfile() {
   const token = localStorage.getItem('authToken');
@@ -169,20 +166,11 @@ async function fetchAdminProfile() {
       avatarEl.src = data.profilePicture;
     }
 
-     // Set admin name
     const nameEl = document.getElementById('adminName');
     if (data.name && nameEl) {
       nameEl.textContent = data.name;
     }
-
   } catch (err) {
     console.error('Avatar load error:', err);
   }
 }
-
-// logout function
-document.getElementById("logoutBtn").addEventListener("click", function (e) {
-  e.preventDefault();
-  localStorage.removeItem("authToken"); // or the appropriate token key
-  window.location.href = "/auth/login.html";
-});

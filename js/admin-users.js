@@ -1,22 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
   fetchUsers();
-
-  // Event listener for filters
-  document.getElementById('roleFilter').addEventListener('change', fetchUsers);
-
-  // Event listener for pagination (basic)
-  document.querySelectorAll('.page-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const page = e.target.textContent;
-      if (!isNaN(page)) fetchUsers(page);
-    });
-  });
+  initSidebar();
+  fetchAdminProfile();
+  setupFilters();
+  setupPagination();
+  setupLogout();
 });
 
+// Fetch users with optional pagination and role filter
 async function fetchUsers(page = 1) {
-  const role = document.getElementById('roleFilter').value;
+  const role = document.getElementById('roleFilter')?.value || '';
   const token = localStorage.getItem('authToken');
-  const tbody = document.querySelector('table tbody');
   const query = new URLSearchParams({ role, page });
 
   try {
@@ -36,6 +30,7 @@ async function fetchUsers(page = 1) {
   }
 }
 
+// Render user rows
 function renderUsers(users) {
   const tbody = document.querySelector('table tbody');
   if (!tbody) return;
@@ -78,9 +73,11 @@ function renderUsers(users) {
   }).join('');
 }
 
+// Initialize sidebar toggle
 function initSidebar() {
   const toggleBtn = document.getElementById('sidebarToggle');
   const sidebar = document.getElementById('adminSidebar');
+
   if (toggleBtn && sidebar) {
     toggleBtn.addEventListener('click', () => {
       sidebar.classList.toggle('active');
@@ -88,16 +85,25 @@ function initSidebar() {
   }
 }
 
+// Setup role filter listener
+function setupFilters() {
+  const roleFilter = document.getElementById('roleFilter');
+  if (roleFilter) {
+    roleFilter.addEventListener('change', () => fetchUsers(1));
+  }
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-  initSidebar();
-});
+// Setup pagination buttons
+function setupPagination() {
+  document.querySelectorAll('.page-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const page = e.target.textContent;
+      if (!isNaN(page)) fetchUsers(page);
+    });
+  });
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-  initSidebar();
-  fetchAdminProfile(); // Fetch avatar when page loads
-});
-
+// Fetch and display admin avatar and name
 async function fetchAdminProfile() {
   const token = localStorage.getItem('authToken');
 
@@ -109,7 +115,6 @@ async function fetchAdminProfile() {
     });
 
     if (!response.ok) throw new Error('Failed to fetch admin profile');
-
     const data = await response.json();
 
     const avatarEl = document.getElementById('adminAvatar');
@@ -117,7 +122,6 @@ async function fetchAdminProfile() {
       avatarEl.src = data.profilePicture;
     }
 
-     // Set admin name
     const nameEl = document.getElementById('adminName');
     if (data.name && nameEl) {
       nameEl.textContent = data.name;
@@ -128,25 +132,14 @@ async function fetchAdminProfile() {
   }
 }
 
-function initSidebar() {
-  const toggleBtn = document.getElementById('sidebarToggle');
-  const sidebar = document.getElementById('adminSidebar');
-  if (toggleBtn && sidebar) {
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
+// Logout button event
+function setupLogout() {
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      localStorage.removeItem("authToken");
+      window.location.href = "/auth/login.html";
     });
   }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  initSidebar();
-});
-
-
-// logout function
-document.getElementById("logoutBtn").addEventListener("click", function (e) {
-  e.preventDefault();
-  localStorage.removeItem("authToken"); // or the appropriate token key
-  window.location.href = "/auth/login.html";
-});
-

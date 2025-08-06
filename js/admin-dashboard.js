@@ -1,4 +1,3 @@
-
 function showLoader() {
   const loader = document.getElementById('loaderOverlay');
   if (loader) loader.style.display = 'flex';
@@ -31,7 +30,59 @@ function formatDate(dateString) {
   return new Date(dateString).toLocaleDateString(undefined, options);
 }
 
+// 👇 All DOM-ready logic merged here
+document.addEventListener('DOMContentLoaded', () => {
+  initSidebar();
+  initDashboard();
+  fetchAdminProfile();
 
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      localStorage.removeItem("authToken");
+      window.location.href = "/auth/login.html";
+    });
+  }
+});
+
+function initSidebar() {
+  const toggleBtn = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('adminSidebar');
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+  }
+}
+
+async function fetchAdminProfile() {
+  const token = localStorage.getItem('authToken');
+  try {
+    const response = await fetch('https://h-a-farms-backend.onrender.com/users/me', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) throw new Error('Failed to fetch admin profile');
+
+    const data = await response.json();
+
+    const avatarEl = document.getElementById('adminAvatar');
+    if (data.profilePicture && avatarEl) {
+      avatarEl.src = data.profilePicture;
+    }
+
+    const nameEl = document.getElementById('adminName');
+    if (data.name && nameEl) {
+      nameEl.textContent = data.name;
+    }
+
+  } catch (err) {
+    console.error('Avatar load error:', err);
+  }
+}
 
 async function fetchDashboardData(params = {}) {
   showLoader();
@@ -97,7 +148,6 @@ function createOrderRow(order) {
   `;
 }
 
-
 function renderChart(canvasId, label, chartData) {
   const ctx = document.getElementById(canvasId)?.getContext('2d');
   if (!ctx || !isValidChartData(chartData)) {
@@ -121,26 +171,17 @@ function createChartConfig(type, label, chartData) {
   const isPie = type === 'pie';
   const colors = ['#4a6bff', '#00b894', '#fd79a8', '#6c5ce7', '#ffa502', '#ff4757'];
 
-  // Helper: Format YYYY-MM or YYYY-MM-DD
   function formatDateLabel(rawLabel) {
-    // ✅ Monthly (YYYY-MM)
     if (/^\d{4}-\d{2}$/.test(rawLabel)) {
       const [year, month] = rawLabel.split('-');
       const date = new Date(`${year}-${month}-01`);
       const monthName = date.toLocaleString('default', { month: 'short' });
-      return `${monthName} ${year}`; // e.g. Jul 2025
+      return `${monthName} ${year}`;
     }
-
-    // ✅ Daily (YYYY-MM-DD)
     if (/^\d{4}-\d{2}-\d{2}$/.test(rawLabel)) {
       const date = new Date(rawLabel);
-      const day = date.getDate();
-      const monthName = date.toLocaleString('default', { month: 'short' });
-      const year = date.getFullYear();
-      return `${day} ${monthName} ${year}`; // e.g. 23 Jul 2025
+      return `${date.getDate()} ${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
     }
-
-    // ✅ Otherwise, leave unchanged
     return rawLabel;
   }
 
@@ -171,15 +212,8 @@ function createChartConfig(type, label, chartData) {
         },
         tooltip: {
           callbacks: {
-            title: (tooltipItems) => {
-              const raw = tooltipItems[0].label;
-              return formatDateLabel(raw);
-            },
-            label: (context) => {
-              const label = context.dataset.label || '';
-              const value = context.raw || 0;
-              return `${label}: ${formatCurrency(value)}`;
-            }
+            title: (items) => formatDateLabel(items[0].label),
+            label: (ctx) => `${ctx.dataset.label}: ${formatCurrency(ctx.raw)}`
           }
         }
       },
@@ -192,7 +226,7 @@ function createChartConfig(type, label, chartData) {
         y: {
           beginAtZero: true,
           ticks: {
-            callback: value => formatCurrency(value)
+            callback: (val) => formatCurrency(val)
           }
         }
       }
@@ -239,63 +273,4 @@ function handleCustomFilter() {
   if (new Date(start) > new Date(end)) return showError('Start date cannot be after end date');
 
   fetchDashboardData({ start, end });
-}
-
-function initSidebar() {
-  const toggleBtn = document.getElementById('sidebarToggle');
-  const sidebar = document.getElementById('adminSidebar');
-  if (toggleBtn && sidebar) {
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
-    });
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  initSidebar();
-  initDashboard();
-});
-
-// logout function
-document.getElementById("logoutBtn").addEventListener("click", function (e) {
-  e.preventDefault();
-  localStorage.removeItem("authToken"); // or the appropriate token key
-  window.location.href = "/auth/login.html";
-});
-
-
-// Admin profile function
-document.addEventListener('DOMContentLoaded', () => {
-  initSidebar();
-  fetchAdminProfile(); // Fetch avatar when page loads
-});
-
-async function fetchAdminProfile() {
-  const token = localStorage.getItem('authToken');
-
-  try {
-    const response = await fetch('https://h-a-farms-backend.onrender.com/users/me', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    if (!response.ok) throw new Error('Failed to fetch admin profile');
-
-    const data = await response.json();
-
-    const avatarEl = document.getElementById('adminAvatar');
-    if (data.profilePicture && avatarEl) {
-      avatarEl.src = data.profilePicture;
-    }
-
-     // Set admin name
-    const nameEl = document.getElementById('adminName');
-    if (data.name && nameEl) {
-      nameEl.textContent = data.name;
-    }
-
-  } catch (err) {
-    console.error('Avatar load error:', err);
-  }
 }
