@@ -62,12 +62,11 @@ function renderUsers(users) {
           </select>
         </td>
         <td>${new Date(user.createdAt).toLocaleDateString()}</td>
-        // <td>
-        //   <div class="table-actions">
-        //     <button class="btn-edit" data-userid="${user.id}">Edit</button>
-        //     <button class="btn-delete" data-userid="${user.id}">Delete</button>
-        //   </div>
-        // </td>
+        <td>
+          <div class="table-actions">
+           
+          </div>
+        </td>
       </tr>
     `;
   }).join('');
