@@ -1,67 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register | H. A. Farmsgh</title>
-  <link rel="stylesheet" href="/css/auth.css" />
+  <link rel="icon" href="/asset/hafarms_favicon_32x32.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/auth.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body>
-  <div class="auth-container">
-    <div class="auth-card">
-      <h1>Create Account</h1>
+<body class="auth-page">
 
-      <form id="registerForm" enctype="multipart/form-data">
-        <div class="form-group">
-          <label for="name">Full Name</label>
-          <input type="text" id="name" name="fullName" required />
+  <div class="auth-layout">
+    <!-- Left Panel -->
+    <div class="auth-panel">
+      <div class="auth-panel-inner">
+        <div class="auth-brand">
+          <a href="/index.html"><img src="/asset/hafarms_logo.png" alt="H.A. Farmsgh"></a>
         </div>
+        <div class="auth-card">
+          <div class="auth-card-header">
+            <h1>Create Account</h1>
+            <p>Join the H.A. Farmsgh family today</p>
+          </div>
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required />
+          <form id="registerForm" class="auth-form" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="name"><i class="fas fa-user"></i> Full Name</label>
+              <input type="text" id="name" name="fullName" placeholder="e.g. Kwame Mensah" required>
+            </div>
+            <div class="form-group">
+              <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="password"><i class="fas fa-lock"></i> Password</label>
+              <div class="input-with-toggle">
+                <input type="password" id="password" name="password" placeholder="At least 6 characters" required minlength="6">
+                <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="profilePicture"><i class="fas fa-image"></i> Profile Picture <span class="optional">(optional)</span></label>
+              <div class="file-input-wrapper">
+                <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+                <label for="profilePicture" class="file-label">
+                  <i class="fas fa-upload"></i> Choose a photo
+                </label>
+                <span class="file-name" id="fileName">No file chosen</span>
+              </div>
+            </div>
+            <button type="submit" class="auth-btn">
+              <span>Create Account</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </form>
+
+          <div class="auth-divider"><span>Already have an account?</span></div>
+          <a href="login.html" class="auth-alt-btn">Sign In Instead</a>
         </div>
+        <p class="auth-back"><a href="/index.html"><i class="fas fa-arrow-left"></i> Back to Home</a></p>
+      </div>
+    </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required minlength="6" />
-        </div>
-
-        <!-- <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" required />
-        </div> -->
-
-        <div class="form-group">
-          <label for="profilePicture">Profile Picture (optional)</label>
-          <input type="file" id="profilePicture" name="profilePicture" accept="image/*" />
-        </div>
-
-        <button type="submit" class="btn-primary">Register</button>
-      </form>
-
-      <!-- <div class="social-login">
-        <p>Or register with</p>
-        <div class="social-buttons">
-          <button class="social-btn google"><i class="icon-google"></i></button>
-          <button class="social-btn facebook"><i class="icon-facebook"></i></button>
-          <button class="social-btn twitter"><i class="icon-twitter"></i></button>
-        </div>
-      </div> -->
-
-      <div class="auth-footer">
-        Already have an account? <a href="login.html">Login</a>
+    <!-- Right Panel -->
+    <div class="auth-visual">
+      <div class="auth-visual-overlay"></div>
+      <div class="auth-visual-content">
+        <blockquote>"Fresh from our farm, straight to your table."</blockquote>
+        <p>Create your account to enjoy fast checkouts, order tracking, and exclusive deals from H.A. Farmsgh.</p>
       </div>
     </div>
   </div>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 H. A. Farmsgh. All rights reserved.</p>
-    </div>
-  </footer>
-
   <script src="/js/auth.js"></script>
+  <script>
+    document.querySelector('.toggle-password')?.addEventListener('click', function () {
+      const input = document.getElementById('password');
+      const icon = this.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+      }
+    });
+    document.getElementById('profilePicture')?.addEventListener('change', function () {
+      document.getElementById('fileName').textContent = this.files[0]?.name || 'No file chosen';
+    });
+  </script>
 </body>
 </html>

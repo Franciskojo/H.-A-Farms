@@ -1,112 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product List</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products | H. A. Farmsgh</title>
+  <meta name="description" content="Shop farm-fresh poultry, eggs and farm inputs from H.A. Farmsgh — delivered straight from our farm to your table.">
+  <link rel="icon" href="/asset/hafarms_favicon_32x32.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared.css">
   <link rel="stylesheet" href="/css/product.css">
-
-  <!-- ✅ Add Font Awesome for Cart Icon -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
 <body>
-  <div class="container">
-     <a href="javascript:history.back()" class="back-arrow">&#8592; Back</a>
-    <h1>
-      Our Products
 
-      <!-- ✅ Home Button -->
-      <a href="/index.html" class="add-product-btn">+ Home</a>
-
-      <!-- ✅ Cart Icon with Shared Class -->
-      <a href="/cart.html" class="cart-icon">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-count">0</span>
-      </a>
-    </h1>
-
-    <div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Search products..." />
-  <button id="searchBtn">Search</button>
-</div>
-
-    <div class="product-grid">
-      <!-- Products will be dynamically inserted here -->
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
+    <div class="logo">
+      <a href="/index.html"><img src="/asset/hafarms_logo.png" alt="H.A. Farmsgh Logo"></a>
     </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">&#9776;</button>
+    <nav id="mainNav">
+      <div class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/products.html" class="active">Products</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+      <div class="auth-links">
+        <a href="/cart.html" class="nav-link cart-nav-link">
+          <i class="fas fa-shopping-cart"></i>
+          Cart <span class="cart-count cart-badge">0</span>
+        </a>
+        <a href="/auth/login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="/auth/register.html" class="nav-link register-link"><i class="fas fa-user-plus"></i> Register</a>
+      </div>
+    </nav>
+  </header>
 
-    <div class="pagination" id="pagination"></div>
-  </div>
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <div class="breadcrumb">
+        <a href="/index.html">Home</a>
+        <span>/</span>
+        <span>Products</span>
+      </div>
+      <h1>Our Products</h1>
+      <p>Farm-fresh eggs, poultry &amp; agricultural inputs — straight from our farm to you.</p>
+    </div>
+  </section>
 
-<footer>
+  <!-- PRODUCTS SECTION -->
+  <section class="products-section">
     <div class="container">
+
+      <!-- Toolbar: search + filter + view toggle -->
+      <div class="products-toolbar">
+        <div class="search-bar">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="searchInput" placeholder="Search products…" autocomplete="off">
+          <button id="searchBtn" aria-label="Search">Search</button>
+        </div>
+
+        <div class="toolbar-right">
+          <div class="filter-pills" id="filterPills">
+            <button class="pill active" data-category="">All</button>
+            <button class="pill" data-category="Eggs">🥚 Eggs</button>
+            <button class="pill" data-category="Chicken">🍗 Chicken</button>
+            <button class="pill" data-category="Farm Inputs">🌱 Farm Inputs</button>
+          </div>
+          <div class="view-toggle">
+            <button class="view-btn-toggle active" id="gridView" aria-label="Grid view"><i class="fas fa-th"></i></button>
+            <button class="view-btn-toggle" id="listView" aria-label="List view"><i class="fas fa-list"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results count -->
+      <div class="results-bar">
+        <span id="resultsCount" class="results-count"></span>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="product-grid" id="productGrid">
+        <!-- Skeleton loaders shown while fetching -->
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <i class="fas fa-box-open"></i>
+        <h3>No products found</h3>
+        <p>Try a different search term or category.</p>
+        <button onclick="resetFilters()" class="reset-btn">Clear Filters</button>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
       <div class="footer-content">
         <div class="footer-column">
-          <h3>H. A Farmsgh</h3>
-          <p>Providing organic, sustainable produce since 2005.</p>
+          <h3>H. A. Farmsgh</h3>
+          <p>Providing organic, sustainable farm produce to families and businesses across Ghana since 2005.</p>
           <div class="social-links">
-            <a href="https://www.facebook.com/share/18Y9SyVPVZ/"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.instagram.com/reel/DG8t7bSM8lk/?igsh=cnF2bnJqNWtjNnMx"><i class="fab fa-instagram"></i></a>
-            <a href="https://x.com/HAFARMS1?t=7EC4HIYV3PUszVxEQk2lXQ&s=08"><i class="fab fa-twitter"></i></a>
-            <a href="https://youtube.com/@h.afarms?si=8-xk7uLcwEmRamwP"><i class="fab fa-youtube"></i></a>
-            <a href="https://www.tiktok.com/@miss_aidoo?_r=1&_d=ejeh6hkk79ej8b&sec_uid=MS4wLjABAAAAx4NZVGrc3oscG7NhgCGhmrvSVzJkuvtEHhKfjV4ntMyY3XKSC-TxHzKRJJxJ8rta&share_author_id=7112019566671561733&sharer_language=en&source=h5_m&u_code=e2c5m9kiji36g5&timestamp=1751122041&user_id=7112019566671561733&sec_user_id=MS4wLjABAAAAx4NZVGrc3oscG7NhgCGhmrvSVzJkuvtEHhKfjV4ntMyY3XKSC-TxHzKRJJxJ8rta&utm_source=whatsapp&utm_campaign=client_share&utm_medium=android&share_iid=7509866140467857157&share_link_id=3e25afd1-0ecd-4f47-8509-b0e9140080c1&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb4907&social_share_type=5&enable_checksum=1"><i class="fab fa-tiktok"></i></a>
-            <a href="https://www.linkedin.com/in/hannah-aidoo-71aa6b242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.facebook.com/share/18Y9SyVPVZ/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/reel/DG8t7bSM8lk/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/HAFARMS1" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://youtube.com/@h.afarms" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@miss_aidoo" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.linkedin.com/in/hannah-aidoo-71aa6b242" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
           </div>
         </div>
         <div class="footer-column">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/products.html">Products</a></li>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-column">
-          <h3>Location</h3>
-          <ul>
-            <li> Mankesim – New Kumasi / Fosu Station,</li>
-            <li>hannahaidoo.ha@gmail.com</li>
-            <li>+233542887480</li>
-          </ul>
+          <h3>Contact Us</h3>
+          <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>Mankesim – New Kumasi / Fosu Station, Ghana</span></div>
+          <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>hannahaidoo.ha@gmail.com</span></div>
+          <div class="footer-contact-item"><i class="fas fa-phone"></i><span>+233 542 887 480</span></div>
         </div>
       </div>
       <div class="copyright">
-        <p>&copy; 2025 H. A. Farmsgh. All rights reserved.</p>
-        <!-- <a href="#hero" class="back-to-top">Back to Top</a> -->
+        <p>&copy; 2025 H. A. Farmsgh. All rights reserved. Crafted with <span style="color:#f4a623;">&#10084;</span> in Ghana.</p>
       </div>
     </div>
   </footer>
 
-  <!-- ✅ Your main JS -->
   <script src="/js/products.js"></script>
-
-  <!-- ✅ Load shared cart logic -->
   <script src="/js/cart.js"></script>
+  <script>
+    // Header scroll
+    const hdr = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
+    document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
 
-  <style>
-    .cart-icon {
-      float: right;
-      margin-left: 20px;
-      text-decoration: none;
-      font-size: 1.5rem;
-      position: relative;
-      color: #333;
-    }
+    // View toggle (grid / list)
+    document.getElementById('gridView').addEventListener('click', function () {
+      document.getElementById('productGrid').classList.remove('list-mode');
+      this.classList.add('active');
+      document.getElementById('listView').classList.remove('active');
+    });
+    document.getElementById('listView').addEventListener('click', function () {
+      document.getElementById('productGrid').classList.add('list-mode');
+      this.classList.add('active');
+      document.getElementById('gridView').classList.remove('active');
+    });
 
-    .cart-icon .cart-count {
-      position: absolute;
-      top: -8px;
-      right: -12px;
-      background: red;
-      color: white;
-      border-radius: 50%;
-      padding: 2px 6px;
-      font-size: 0.8rem;
+    // Category filter pills
+    document.querySelectorAll('.pill').forEach(pill => {
+      pill.addEventListener('click', function () {
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        currentSearch = document.getElementById('searchInput').value.trim();
+        currentCategory = this.dataset.category;
+        loadProducts(1, currentSearch, currentCategory);
+      });
+    });
+
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      document.querySelector('.pill[data-category=""]').classList.add('active');
+      currentSearch = '';
+      currentCategory = '';
+      loadProducts(1, '', '');
     }
-  </style>
+  </script>
 </body>
-
 </html>

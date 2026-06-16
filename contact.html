@@ -1,41 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact – H.A. Farmsgh</title>
-  <link rel="stylesheet" href="/css/contact.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | H. A. Farmsgh</title>
+  <meta name="description" content="Get in touch with H.A. Farmsgh. Send us a message, call us, or visit our farm in Mankesim, Ghana.">
+  <link rel="icon" href="/asset/hafarms_favicon_32x32.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared.css">
+  <link rel="stylesheet" href="/css/contact.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <header>
-    <div class="logo"><img src="asset/hafarms_logo.png" alt="Logo" /></div>
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
-  <i class="fas fa-bars"></i>
-</button>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="products.html">Products</a>
-      <a href="contact.html" class="active">Contact</a>
+
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
+    <div class="logo">
+      <a href="/index.html"><img src="/asset/hafarms_logo.png" alt="H.A. Farmsgh Logo"></a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">&#9776;</button>
+    <nav id="mainNav">
+      <div class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/products.html">Products</a>
+        <a href="/contact.html" class="active">Contact</a>
+      </div>
+      <div class="auth-links">
+        <a href="/auth/login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="/auth/register.html" class="nav-link register-link"><i class="fas fa-user-plus"></i> Register</a>
+      </div>
     </nav>
   </header>
 
-  <main class="container">
-     <a href="javascript:history.back()" class="back-arrow">&#8592; Back</a>
-    <h1>Contact Us</h1>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <div class="breadcrumb">
+        <a href="/index.html">Home</a>
+        <span>/</span>
+        <span>Contact</span>
+      </div>
+      <h1>Get In Touch</h1>
+      <p>We'd love to hear from you. Send a message or give us a call.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <main class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Info Panel -->
+        <div class="contact-info">
+          <h2>Let's Talk</h2>
+          <p>Whether you have a question about our products, want to place a bulk order, or just want to say hello — we're here and ready to help.</p>
+
+          <div class="info-items">
+            <div class="info-item">
+              <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <h4>Our Location</h4>
+                <p>Mankesim – New Kumasi / Fosu Station, Central Region, Ghana</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon"><i class="fas fa-phone"></i></div>
+              <div>
+                <h4>Phone</h4>
+                <p><a href="tel:+233542887480">+233 542 887 480</a></p>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon"><i class="fas fa-envelope"></i></div>
+              <div>
+                <h4>Email</h4>
+                <p><a href="mailto:hannahaidoo.ha@gmail.com">hannahaidoo.ha@gmail.com</a></p>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon"><i class="fas fa-clock"></i></div>
+              <div>
+                <h4>Business Hours</h4>
+                <p>Monday – Saturday: 8:00am – 5:00pm</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-social">
+            <p>Follow us</p>
+            <div class="social-row">
+              <a href="https://www.facebook.com/share/18Y9SyVPVZ/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://www.instagram.com/reel/DG8t7bSM8lk/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="https://x.com/HAFARMS1" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+              <a href="https://youtube.com/@h.afarms" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+              <a href="https://www.tiktok.com/@miss_aidoo" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Panel -->
+        <div class="contact-form-wrap">
+          <h2>Send a Message</h2>
+          <form id="contactForm" class="contact-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contactName">Full Name</label>
+                <input type="text" id="contactName" placeholder="e.g. Kwame Mensah" required>
+              </div>
+              <div class="form-group">
+                <label for="contactEmail">Email Address</label>
+                <input type="email" id="contactEmail" placeholder="you@example.com" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="contactPhone">Phone Number (optional)</label>
+              <input type="tel" id="contactPhone" placeholder="+233 XX XXX XXXX">
+            </div>
+            <div class="form-group">
+              <label for="contactSubject">Subject</label>
+              <select id="contactSubject">
+                <option value="">Select a subject...</option>
+                <option>Product Inquiry</option>
+                <option>Bulk Order</option>
+                <option>Delivery Question</option>
+                <option>Partnership</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="contactMessage">Message</label>
+              <textarea id="contactMessage" placeholder="Tell us how we can help you..." required rows="5"></textarea>
+            </div>
+            <button type="submit" class="submit-btn">
+              <span>Send Message</span>
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
   </main>
 
-  <footer>
-    <p>&copy; 2025 H. A. Farmsgh. All rights reserved.</p>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>H. A. Farmsgh</h3>
+          <p>Providing organic, sustainable farm produce to families and businesses across Ghana since 2005.</p>
+          <div class="social-links">
+            <a href="https://www.facebook.com/share/18Y9SyVPVZ/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/reel/DG8t7bSM8lk/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/HAFARMS1" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://youtube.com/@h.afarms" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@miss_aidoo" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.linkedin.com/in/hannah-aidoo-71aa6b242" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/products.html">Products</a></li>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact Us</h3>
+          <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>Mankesim – New Kumasi / Fosu Station, Ghana</span></div>
+          <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>hannahaidoo.ha@gmail.com</span></div>
+          <div class="footer-contact-item"><i class="fas fa-phone"></i><span>+233 542 887 480</span></div>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 H. A. Farmsgh. All rights reserved. Crafted with <span style="color:#f4a623;">&#10084;</span> in Ghana.</p>
+      </div>
+    </div>
   </footer>
+
   <script src="/js/contact.js"></script>
+  <script>
+    /* Sticky header scroll effect — kept here since contact.js handles everything else */
+    const hdr = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
+  </script>
 </body>
 </html>

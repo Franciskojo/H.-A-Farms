@@ -52,7 +52,7 @@ function renderOrderSummary() {
     `;
   });
 
-  const shipping = 0;
+  const shipping = 5;
   const tax = subtotal * 0.00;
   const total = subtotal + shipping + tax;
 

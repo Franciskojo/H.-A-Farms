@@ -1,85 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | H. A. Farmsgh</title>
-    <link rel="stylesheet" href="/css/auth.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | H. A. Farmsgh</title>
+  <link rel="icon" href="/asset/hafarms_favicon_32x32.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/auth.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body>
-    <!-- <header class="main-header">
-        <div class="container">
-            <nav>
-                <a href="../index.html" class="logo">E-Shop</a>
-                <div class="nav-links">
-                    <a href="../products.html">Products</a>
-                    <a href="../cart.html">Cart</a>
-                    <div class="user-actions">
-                        <a href="login.html">Login</a>
-                        <a href="register.html">Register</a>
-                        <div class="logged-in">
-                            <a href="/user/dasboard.html" class="user-profile">My Account</a>
-                            <a href="#" id="logout">Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header> -->
+<body class="auth-page">
 
-    <div class="auth-container">
-        <div class="auth-card">
-            <h1>Login</h1>
-            
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="rememberMe"> Remember me
-                    </label>
-                    <!-- <a href="#" class="forgot-password">Forgot password?</a> -->
-                </div>
-                
-                <button type="submit" class="btn-primary">Login</button>
-            </form>
-            
-            <!-- <div class="social-login">
-                <p>Or login with</p>
-                <div class="social-buttons">
-                    <button class="social-btn google">
-                        <i class="icon-google"></i>
-                    </button>
-                    <button class="social-btn facebook">
-                        <i class="icon-facebook"></i>
-                    </button>
-                    <button class="social-btn twitter">
-                        <i class="icon-twitter"></i>
-                    </button>
-                </div>
-            </div>
-             -->
-            <div class="auth-footer">
-                Don't have an account? <a href="register.html">Register</a>
-            </div>
+  <div class="auth-layout">
+    <!-- Left Panel -->
+    <div class="auth-panel">
+      <div class="auth-panel-inner">
+        <div class="auth-brand">
+          <a href="/index.html"><img src="/asset/hafarms_logo.png" alt="H.A. Farmsgh"></a>
         </div>
+        <div class="auth-card">
+          <div class="auth-card-header">
+            <h1>Welcome Back</h1>
+            <p>Sign in to your H.A. Farmsgh account</p>
+          </div>
+
+          <form id="loginForm" class="auth-form">
+            <div class="form-group">
+              <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+              <input type="email" id="email" placeholder="you@example.com" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="password"><i class="fas fa-lock"></i> Password</label>
+              <div class="input-with-toggle">
+                <input type="password" id="password" placeholder="Your password" required autocomplete="current-password">
+                <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+            <div class="form-check">
+              <label><input type="checkbox" id="rememberMe"> Remember me</label>
+            </div>
+            <button type="submit" class="auth-btn">
+              <span>Sign In</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </form>
+
+          <div class="auth-divider"><span>New to H.A. Farmsgh?</span></div>
+          <a href="register.html" class="auth-alt-btn">Create an Account</a>
+        </div>
+        <p class="auth-back"><a href="/index.html"><i class="fas fa-arrow-left"></i> Back to Home</a></p>
+      </div>
     </div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 H. A. Farmsgh. All rights reserved.</p>
-        </div>
-    </footer>
+    <!-- Right Panel (decorative) -->
+    <div class="auth-visual">
+      <div class="auth-visual-overlay"></div>
+      <div class="auth-visual-content">
+        <blockquote>"Farm-fresh quality, delivered with care."</blockquote>
+        <p>Join thousands of families across Ghana who trust H.A. Farmsgh for their daily poultry and farm produce needs.</p>
+      </div>
+    </div>
+  </div>
 
-    <script src="/js/auth.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    // Toggle password visibility
+    document.querySelector('.toggle-password')?.addEventListener('click', function () {
+      const input = document.getElementById('password');
+      const icon = this.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+      }
+    });
+  </script>
 </body>
 </html>

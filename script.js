@@ -1,72 +1,138 @@
-// JavaScript for interactive elements
+// ============================================================
+//  H.A. FARMSGH — Homepage Script
+// ============================================================
+
 document.addEventListener('DOMContentLoaded', function () {
-  // Smooth scrolling for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      document.querySelector(this.getAttribute('href')).scrollIntoView({
-        behavior: 'smooth'
-      });
+
+  // ----------------------------------------------------------
+  // 1. STICKY HEADER — add "scrolled" class on scroll
+  // ----------------------------------------------------------
+  const header = document.getElementById('siteHeader');
+  if (header) {
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+  }
+
+  // ----------------------------------------------------------
+  // 2. MOBILE MENU TOGGLE
+  // ----------------------------------------------------------
+  document.getElementById('menuToggle')?.addEventListener('click', function () {
+    document.getElementById('mainNav').classList.toggle('open');
+  });
+
+  // Close nav when a link is clicked (mobile)
+  document.querySelectorAll('#mainNav a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('mainNav')?.classList.remove('open');
     });
   });
 
-  // Slide-up animation for cards
-  const observerOptions = { threshold: 0.1 };
-  const observer = new IntersectionObserver((entries) => {
+  // ----------------------------------------------------------
+  // 3. SMOOTH SCROLL for anchor links
+  // ----------------------------------------------------------
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ----------------------------------------------------------
+  // 4. SCROLL REVEAL (IntersectionObserver)
+  // ----------------------------------------------------------
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // ----------------------------------------------------------
+  // 5. CARD SLIDE-UP (IntersectionObserver)
+  // ----------------------------------------------------------
+  const cardObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('slide-up');
-        observer.unobserve(entry.target);
+        cardObserver.unobserve(entry.target);
       }
     });
-  }, observerOptions);
+  }, { threshold: 0.1 });
 
-  document.querySelectorAll('.highlight-card, .link-card').forEach(card => {
-    observer.observe(card);
-    card.addEventListener('mouseenter', () => {
-      card.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
-    });
-  });
+  document.querySelectorAll('.link-card').forEach(card => cardObserver.observe(card));
 
-  document.getElementById("menuToggle").addEventListener("click", function () {
-    document.getElementById("mainNav").classList.toggle("open");
-  });
-
-
-
-  // Testimonials carousel
+  // ----------------------------------------------------------
+  // 6. TESTIMONIALS CAROUSEL with dots
+  // ----------------------------------------------------------
   const testimonialItems = document.querySelector('.testimonial-items');
-  const testimonialItem = document.querySelector('.testimonial-item');
-  const prevButton = document.querySelector('.carousel-button.prev');
-  const nextButton = document.querySelector('.carousel-button.next');
+  const testimonialItem  = document.querySelector('.testimonial-item');
+  const prevButton       = document.querySelector('.carousel-button.prev');
+  const nextButton       = document.querySelector('.carousel-button.next');
+  const dotsContainer    = document.getElementById('carouselDots');
 
   if (testimonialItems && testimonialItem) {
-    let testimonialItemWidth = testimonialItem.clientWidth;
+    const totalItems = testimonialItems.children.length;
     let currentIndex = 0;
-    let autoSlide = setInterval(nextTestimonial, 5000);
+    let autoSlide    = setInterval(nextTestimonial, 5000);
+    let isDragging   = false;
+    let startX       = 0;
+
+    // Get item width including its margins
+    function getItemWidth() {
+      const style = window.getComputedStyle(testimonialItem);
+      return testimonialItem.offsetWidth
+        + parseFloat(style.marginLeft  || 0)
+        + parseFloat(style.marginRight || 0);
+    }
+
+    let itemWidth = getItemWidth();
+
+    // Build dots
+    if (dotsContainer) {
+      for (let i = 0; i < totalItems; i++) {
+        const dot = document.createElement('button');
+        dot.classList.add('carousel-dot');
+        if (i === 0) dot.classList.add('active');
+        dot.setAttribute('aria-label', `Go to testimonial ${i + 1}`);
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    function updateDots() {
+      document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+      });
+    }
 
     function updateCarousel() {
-      const offset = -currentIndex * testimonialItemWidth;
-      testimonialItems.style.transform = `translateX(${offset}px)`;
+      testimonialItems.style.transform = `translateX(${-currentIndex * itemWidth}px)`;
+      updateDots();
     }
 
-    function nextTestimonial() {
-      currentIndex = (currentIndex + 1) % testimonialItems.children.length;
+    function goTo(index) {
+      currentIndex = (index + totalItems) % totalItems;
       updateCarousel();
     }
 
-    function prevTestimonial() {
-      currentIndex = (currentIndex - 1 + testimonialItems.children.length) % testimonialItems.children.length;
-      updateCarousel();
-    }
+    function nextTestimonial() { goTo(currentIndex + 1); }
+    function prevTestimonial() { goTo(currentIndex - 1); }
 
     // Resize handler
     window.addEventListener('resize', () => {
-      testimonialItemWidth = testimonialItem.clientWidth;
+      itemWidth = getItemWidth();
       updateCarousel();
-    });
+    }, { passive: true });
 
-    // Navigation buttons
+    // Buttons
     prevButton?.addEventListener('click', () => {
       clearInterval(autoSlide);
       prevTestimonial();
@@ -80,90 +146,79 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Touch support
-    let startX = 0;
-    let isDragging = false;
-
     testimonialItems.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
+      startX     = e.touches[0].clientX;
       isDragging = true;
     }, { passive: true });
 
     testimonialItems.addEventListener('touchmove', (e) => {
       if (!isDragging) return;
-      const currentX = e.touches[0].clientX;
-      const diffX = startX - currentX;
-      testimonialItems.style.transform = `translateX(${-currentIndex * testimonialItemWidth - diffX}px)`;
+      const diffX = startX - e.touches[0].clientX;
+      testimonialItems.style.transform =
+        `translateX(${-currentIndex * itemWidth - diffX}px)`;
     }, { passive: true });
 
     testimonialItems.addEventListener('touchend', (e) => {
       if (!isDragging) return;
       isDragging = false;
-      const endX = e.changedTouches[0].clientX;
-      const diffX = startX - endX;
+      const diffX = startX - e.changedTouches[0].clientX;
 
-      if (Math.abs(diffX) > testimonialItemWidth / 4) {
-        if (diffX > 0) {
-          nextTestimonial();
-        } else {
-          prevTestimonial();
-        }
+      clearInterval(autoSlide);
+      if (Math.abs(diffX) > itemWidth / 4) {
+        diffX > 0 ? nextTestimonial() : prevTestimonial();
       } else {
         updateCarousel();
       }
+      autoSlide = setInterval(nextTestimonial, 5000);
     });
 
-    // Disable carousel if only 1 item
-    if (testimonialItems.children.length <= 1) {
-      prevButton.style.display = 'none';
-      nextButton.style.display = 'none';
+    // Disable when only 1 item
+    if (totalItems <= 1) {
+      prevButton && (prevButton.style.display = 'none');
+      nextButton && (nextButton.style.display = 'none');
       clearInterval(autoSlide);
     }
+
   } else {
-    console.error('Testimonial carousel elements not found!');
+    console.warn('Testimonial carousel elements not found.');
   }
 
-  // Placeholder form handler (if needed)
-  function handleContactSubmit(e) {
-    e.preventDefault();
-    alert('Thank you for your message! We will get back to you soon.');
-    e.target.reset();
-  }
-});
+  // ----------------------------------------------------------
+  // 7. ROTATING HERO HEADLINE & TAGLINE
+  // ----------------------------------------------------------
+  const headlines = [
+    "Fresh, Healthy & Affordable Poultry",
+    "Farm-Raised Chicken You Can Trust",
+    "Naturally Nutritious. Deliciously Local.",
+    "Your Daily Source of Farm-Fresh Eggs"
+  ];
+  const taglines = [
+    "Premium Eggs and Chicken delivered with care.",
+    "Responsibly Raised, Expertly Packed.",
+    "Direct from Our Farm to Your Family.",
+    "High-Quality Produce. Honest Prices."
+  ];
 
+  const headlineEl = document.getElementById('dynamicHeadline');
+  const taglineEl  = document.getElementById('dynamicTagline');
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const headlines = [
-      "Fresh, Healthy & Affordable Poultry",
-      "Farm-Raised Chicken You Can Trust",
-      "Naturally Nutritious. Deliciously Local.",
-      "Your Daily Source of Farm-Fresh Eggs"
-    ];
-
-    const taglines = [
-      "Premium Eggs and Chicken delivered with care.",
-      "Responsibly Raised, Expertly Packed.",
-      "Direct from Our Farm to Your Family.",
-      "High-Quality Produce. Honest Prices."
-    ];
-
-    let index = 0;
-    const headlineEl = document.getElementById("dynamicHeadline");
-    const taglineEl = document.getElementById("dynamicTagline");
+  if (headlineEl && taglineEl) {
+    let textIndex = 0;
 
     function updateText() {
-      headlineEl.classList.remove("fade-in");
-      taglineEl.classList.remove("fade-in");
+      headlineEl.classList.remove('fade-in');
+      taglineEl.classList.remove('fade-in');
 
       setTimeout(() => {
-        headlineEl.textContent = headlines[index];
-        taglineEl.textContent = taglines[index];
-        headlineEl.classList.add("fade-in");
-        taglineEl.classList.add("fade-in");
-        index = (index + 1) % headlines.length;
-      }, 300); // fade out time
+        headlineEl.textContent = headlines[textIndex];
+        taglineEl.textContent  = taglines[textIndex];
+        headlineEl.classList.add('fade-in');
+        taglineEl.classList.add('fade-in');
+        textIndex = (textIndex + 1) % headlines.length;
+      }, 350);
     }
 
-    setInterval(updateText, 4000); // Change text every 4 seconds
-  });
+    setInterval(updateText, 4500);
+  }
 
-
+});

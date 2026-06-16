@@ -14,7 +14,7 @@ function showError(message) {
 }
 
 function redirectToLogin() {
-  window.location.href = '/login.html';
+  window.location.href = '/auth/login.html';
 }
 
 function formatCurrency(amount) {

@@ -1,243 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Us | H. A. Farmsgh</title>
-  <link rel="stylesheet" href="about.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  <meta name="description" content="Learn about H.A. Farmsgh – our mission, story, farm, and the passionate team behind Ghana's premium poultry and farm produce.">
+  <link rel="icon" href="/asset/hafarms_favicon_32x32.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared.css">
+  <link rel="stylesheet" href="/about.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
 </head>
-
 <body>
-  <!-- Header -->
- <header class="header-nav">
-  <div class="top-bar">
-    <div class="logo-im">
-      <img src="asset/hafarms_logo.png" alt="H. A. Farms Logo" />
+
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
+    <div class="logo">
+      <a href="/index.html"><img src="/asset/hafarms_logo.png" alt="H.A. Farmsgh Logo"></a>
     </div>
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">&#9776;</button>
-  </div>
-  <nav id="navLinks">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="products.html" class="active">Products</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+    <nav id="mainNav">
+      <div class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/about.html" class="active">About</a>
+        <a href="/products.html">Products</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+      <div class="auth-links">
+        <a href="/auth/login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="/auth/register.html" class="nav-link register-link"><i class="fas fa-user-plus"></i> Register</a>
+      </div>
+    </nav>
+  </header>
 
-
-  <!-- Hero Section -->
-  <!-- <section class="hero">
-    <div class="hero-content">
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <div class="breadcrumb">
+        <a href="/index.html">Home</a>
+        <span>/</span>
+        <span>About Us</span>
+      </div>
       <h1>Our Story</h1>
-      <p>Discover the passion behind our farm</p>
+      <p>Rooted in Ghana's soil. Driven by passion. Committed to quality.</p>
     </div>
-  </section> -->
+  </section>
 
-  <!-- Mission Section -->
-  <section class="mission">
+  <!-- MISSION -->
+  <section class="about-mission">
     <div class="container">
-      <div class="mission-content">
-        <h2>Our Mission</h2>
-        <p>At H. A. Farmsgh, we are committed to providing fresh, organic, and sustainably grown produce while
-          nurturing the land and supporting our local community. Every day, we strive to deliver farm-to-table goodness
-          with integrity, transparency, and a deep respect for nature.</p>
+      <div class="mission-grid">
+        <div class="mission-card">
+          <div class="mission-icon"><i class="fas fa-bullseye"></i></div>
+          <h3>Our Mission</h3>
+          <p>To provide fresh, organic, and sustainably grown produce while nurturing the land and supporting our local community — delivered with integrity and a deep respect for nature.</p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon"><i class="fas fa-eye"></i></div>
+          <h3>Our Vision</h3>
+          <p>To be Ghana's most trusted farm brand — setting the gold standard in ethical poultry farming and farm-to-table freshness for every household and business.</p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon"><i class="fas fa-leaf"></i></div>
+          <h3>Our Values</h3>
+          <p>Transparency, sustainability, and community. We believe healthy food starts with honest farming practices and a genuine care for people and the planet.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Story Section -->
+  <!-- STORY -->
   <section class="story-section">
     <div class="container">
-      <div class="story">
+      <div class="story-grid">
         <div class="story-content">
-          <h2>About H.A. Farmsgh</h2>
-
-          <p>H. A. Farmsgh is a thriving agricultural enterprise based in Mankesim, Central Region, Ghana, strategically
-            positioned at New Kumasi (fosu Station). Committed to excellence in poultry farming, the company focuses on
-            the production, processing, and distribution of high-quality, healthy, and affordable poultry products,
-            including: Premium Eggs – Fresh, nutrient-rich eggs produced under strict hygienic conditions.
-
-            Quality Chicken – Healthy, well-raised poultry, free from harmful additives, ensuring superior taste and
-            nutritional value. </p>
-          <p>
-          </p>
-          <!-- <a href="#" class="btn">Learn More</a> -->
+          <span class="section-label">Who We Are</span>
+          <h2 class="section-title">About H.A. Farmsgh</h2>
+          <p>H. A. Farmsgh is a thriving agricultural enterprise based in Mankesim, Central Region, Ghana, strategically positioned at New Kumasi (Fosu Station). Committed to excellence in poultry farming, we focus on the production, processing, and distribution of high-quality, healthy, and affordable poultry products.</p>
+          <p style="margin-top: 1rem;">Our range includes <strong>Premium Eggs</strong> – fresh, nutrient-rich eggs produced under strict hygienic conditions, and <strong>Quality Chicken</strong> – healthy, well-raised poultry, free from harmful additives, ensuring superior taste and nutritional value.</p>
+          <div class="story-stats">
+            <div class="stat-item">
+              <span class="stat-number">20+</span>
+              <span class="stat-label">Years Farming</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">10K+</span>
+              <span class="stat-label">Customers</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Natural</span>
+            </div>
+          </div>
         </div>
         <div class="story-image">
-          <img
-            src="https://images.unsplash.com/photo-1538170989343-ce003278e1a3?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Our farm history">
+          <img src="https://images.unsplash.com/photo-1538170989343-ce003278e1a3?q=80&w=1470&auto=format&fit=crop" alt="H.A. Farmsgh farm operations">
+          <div class="image-badge"><i class="fas fa-award"></i> Est. 2005</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Farm Gallery -->
-  <section class="gallery">
+  <!-- FARM GALLERY -->
+  <section class="gallery-section">
     <div class="container">
-      <h2>Our Farm</h2>
-      <p class="text-center">Welcome to H. A. Farmsgh, where nature, care, and quality come together to create food you can trust.
-
-Nestled in the heart of Ghana’s fertile lands, our farm is a thriving hub of sustainable agriculture. We raise our poultry and produce with integrity, combining traditional farming wisdom with modern best practices to deliver clean, nutritious, and ethically grown food.</p><br>
-
- <h4>What Makes Our Farm Special</h4><br>
- <p>Healthy, Free-Roaming Poultry : Our chickens are raised in spacious, stress-free environments with access to natural feed and clean water.<br>
-
- Daily-Fresh Eggs : Collected every morning, our eggs are known for their rich yolks, strong shells, and unbeatable taste.<br>
-
- Clean & Sustainable Practices : We use eco-friendly methods to reduce waste, enrich the soil, and protect our environment.<br>
-
- Passionate Farmers, Real Results : Our dedicated team works around the clock to ensure every product meets the highest standards of safety and quality.<br>
-
-Whether you're enjoying a hearty meal or planting the next season’s crops, H. A. Farmsgh is where it all begins with honesty, heart, and a deep respect for the land.
-
-From our farm to your family, the freshness speaks for itself.</p>
-
+      <div style="text-align:center; margin-bottom: 3rem;">
+        <span class="section-label">Our Farm</span>
+        <h2 class="section-title">Where Quality Begins</h2>
+        <p class="section-subtitle" style="max-width:600px; margin: 0 auto;">Nestled in Ghana's fertile lands, our farm combines traditional wisdom with modern best practices to deliver clean, nutritious, and ethically grown food.</p>
+      </div>
+      <div class="farm-features">
+        <div class="farm-feature">
+          <i class="fas fa-dove"></i>
+          <p>Free-Roaming Poultry in stress-free environments</p>
+        </div>
+        <div class="farm-feature">
+          <i class="fas fa-egg"></i>
+          <p>Daily-fresh eggs with rich yolks and strong shells</p>
+        </div>
+        <div class="farm-feature">
+          <i class="fas fa-recycle"></i>
+          <p>Clean &amp; sustainable eco-friendly practices</p>
+        </div>
+        <div class="farm-feature">
+          <i class="fas fa-users"></i>
+          <p>Passionate team committed to quality and safety</p>
+        </div>
+      </div>
       <div class="gallery-grid">
-        <div class="gallery-item">
-          <img
-            src="https://images.unsplash.com/photo-1628615315488-14ec7d02daaf?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Farm field">
-        </div>
-        <div class="gallery-item">
-          <img
-            src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-            alt="Harvesting">
-        </div>
-        <div class="gallery-item">
-          <img
-            src="https://plus.unsplash.com/premium_photo-1663089230678-4d2f31b1829d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Farm stand">
-        </div>
-        <div class="gallery-item">
-          <img
-            src="https://plus.unsplash.com/premium_photo-1661812833073-7b47478ffafe?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Organic vegetables">
-        </div>
-        <div class="gallery-item">
-          <img
-            src="https://plus.unsplash.com/premium_photo-1664298896164-d177a0097450?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Farm workers">
-        </div>
-        <div class="gallery-item">
-          <img
-            src="https://images.unsplash.com/photo-1589923188651-268a9765e432?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Farm at sunset">
-        </div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1628615315488-14ec7d02daaf?q=80&w=1632&auto=format&fit=crop" alt="Farm field"></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=1350&auto=format&fit=crop" alt="Harvesting"></div>
+        <div class="gallery-item"><img src="https://plus.unsplash.com/premium_photo-1663089230678-4d2f31b1829d?q=80&w=1470&auto=format&fit=crop" alt="Farm stand"></div>
+        <div class="gallery-item"><img src="https://plus.unsplash.com/premium_photo-1661812833073-7b47478ffafe?q=80&w=1472&auto=format&fit=crop" alt="Organic produce"></div>
+        <div class="gallery-item"><img src="https://plus.unsplash.com/premium_photo-1664298896164-d177a0097450?q=80&w=1470&auto=format&fit=crop" alt="Farm workers"></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1589923188651-268a9765e432?q=80&w=1470&auto=format&fit=crop" alt="Farm at sunset"></div>
       </div>
     </div>
   </section>
 
-  <!-- Team Section -->
-  <section class="team">
+  <!-- TEAM -->
+  <section class="team-section">
     <div class="container">
-      <h2>Our Team</h2>
-      <p class="text-center">Behind every fresh egg, tender chicken, and satisfied customer is a team of passionate people who make it all possible.
-
-At H. A. Farmsgh, our strength lies in our people. From expert farmers and skilled animal handlers to logistics managers and customer care professionals, every member of our team plays a vital role in bringing you the best of farm-fresh quality — every single day.</p>
-
+      <div style="text-align:center; margin-bottom: 3rem;">
+        <span class="section-label">Our People</span>
+        <h2 class="section-title">Meet the Team</h2>
+        <p class="section-subtitle" style="max-width:550px; margin: 0 auto;">Behind every fresh egg and satisfied customer is a team of passionate people who make it all possible.</p>
+      </div>
       <div class="team-grid">
-        <div class="team-member">
-          <img src="/asset/H.A-Farms-CEO.jpg" alt="Sarah Johnson">
-          <h3>Hannah Aidoo</h3>
-          <p class="position">Founder/CEO</p>
-          <p>A lifelong farmer with a vision for sustainable agriculture.</p>
+        <div class="team-card">
+          <div class="team-photo"><img src="/asset/H.A-Farms-CEO.jpg" alt="Hannah Aidoo – CEO"></div>
+          <div class="team-info">
+            <h3>Hannah Aidoo</h3>
+            <p class="team-role">Founder &amp; CEO</p>
+            <p class="team-bio">A lifelong farmer with a vision for sustainable agriculture.</p>
+          </div>
         </div>
-        <div class="team-member">
-          <img src="/asset/Collins Gyan1.jpg" alt="Michael Chen">
-          <h3>Collins Gyan</h3>
-          <p class="position">Director of Human Resource</p>
-          <p>Ensuring every Human capital meets our high standards.</p>
+        <div class="team-card">
+          <div class="team-photo"><img src="/asset/Collins Gyan1.jpg" alt="Collins Gyan"></div>
+          <div class="team-info">
+            <h3>Collins Gyan</h3>
+            <p class="team-role">Director of Human Resource</p>
+            <p class="team-bio">Ensuring every human capital meets our high standards.</p>
+          </div>
         </div>
-        <div class="team-member">
-          <img src="/asset/h1.jpg" alt="Elena Rodriguez">
-          <h3>Jude Bosomtwe</h3>
-          <p class="position">Operations Manager</p>
-          <p>Overseeing daily operations to ensure efficiency and quality control.</p>
+        <div class="team-card">
+          <div class="team-photo"><img src="/asset/h1.jpg" alt="Jude Bosomtwe"></div>
+          <div class="team-info">
+            <h3>Jude Bosomtwe</h3>
+            <p class="team-role">Operations Manager</p>
+            <p class="team-bio">Overseeing daily operations for efficiency and quality control.</p>
+          </div>
         </div>
-        <div class="team-member">
-          <img src="/asset/Sam1.jpg" alt="James Wilson">
-          <h3>Precious Sam</h3>
-          <p class="position">Head of Sales and Marketing</p>
-          <p>Leading strategic sales initiatives and marketing campaigns.</p>
+        <div class="team-card">
+          <div class="team-photo"><img src="/asset/Sam1.jpg" alt="Precious Sam"></div>
+          <div class="team-info">
+            <h3>Precious Sam</h3>
+            <p class="team-role">Head of Sales &amp; Marketing</p>
+            <p class="team-bio">Leading strategic sales initiatives and marketing campaigns.</p>
+          </div>
         </div>
-        <div class="team-member">
-          <img src="/asset/mich.jpg" alt="James Wilson">
-          <h3>Michael Ansah</h3>
-          <p class="position">Head of procurement and logistics</p>
-          <p>Overseeing the sourcing, transportation, and delivery of goods.</p>
+        <div class="team-card">
+          <div class="team-photo"><img src="/asset/mich.jpg" alt="Michael Ansah"></div>
+          <div class="team-info">
+            <h3>Michael Ansah</h3>
+            <p class="team-role">Head of Procurement &amp; Logistics</p>
+            <p class="team-bio">Overseeing sourcing, transportation, and delivery of goods.</p>
+          </div>
         </div>
-        <div class="team-member">
-          <img src="/asset/mercy aidoo.jpg" alt="James Wilson">
-          <h3>Mercy Aidoo</h3>
-          <p class="position">Head of Customer Relations</p>
-          <p>Ensuring exceptional customer experiences and building lasting relationships.</p>
+        <div class="team-card">
+          <div class="team-photo"><img src="/asset/mercy aidoo.jpg" alt="Mercy Aidoo"></div>
+          <div class="team-info">
+            <h3>Mercy Aidoo</h3>
+            <p class="team-role">Head of Customer Relations</p>
+            <p class="team-bio">Ensuring exceptional customer experiences and lasting relationships.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Location Section -->
-  <section class="location">
+  <!-- VISIT -->
+  <section class="visit-section">
     <div class="container">
-      <h2>Visit Us</h2>
-      <div class="location-content">
-        <p>We love connecting with our customers and community — and there’s no better way to experience the heart of H. A. Farmsgh than by visiting us in person.
-
-Come see where your food comes from, meet the people behind the process, and experience firsthand the care and commitment we put into everything we do.</p>
-        <p><strong>Open:</strong> Monday-Saturday, 8am-5pm</p>
-      </div>
-
-      <div class="map-container">
-        <!-- Embedded Google Map -->
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7945.864136439555!2d-1.0260667970007489!3d5.273282004456559!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfde1164d99bd6df%3A0x604104aa0ddce2ba!2sMankessim%20-%20Kumasi%2C%20Fosu%2C%20Ajumako%20Lorry%20Station!5e0!3m2!1sen!2sgh!4v1748732313097!5m2!1sen!2sgh"
-          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="visit-grid">
+        <div class="visit-info">
+          <span class="section-label">Find Us</span>
+          <h2 class="section-title">Visit Our Farm</h2>
+          <p>Come see where your food comes from. Meet the people behind the process and experience firsthand the care we put into everything we do.</p>
+          <div class="visit-details">
+            <div class="visit-detail-item"><i class="fas fa-map-marker-alt"></i><span>Mankesim – New Kumasi / Fosu Station, Central Region</span></div>
+            <div class="visit-detail-item"><i class="fas fa-clock"></i><span>Monday – Saturday, 8:00am – 5:00pm</span></div>
+            <div class="visit-detail-item"><i class="fas fa-phone"></i><span>+233 542 887 480</span></div>
+            <div class="visit-detail-item"><i class="fas fa-envelope"></i><span>hannahaidoo.ha@gmail.com</span></div>
+          </div>
+        </div>
+        <div class="visit-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7945.864136439555!2d-1.0260667970007489!3d5.273282004456559!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfde1164d99bd6df%3A0x604104aa0ddce2ba!2sMankessim%20-%20Kumasi%2C%20Fosu%2C%20Ajumako%20Lorry%20Station!5e0!3m2!1sen!2sgh!4v1748732313097!5m2!1sen!2sgh"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
       <div class="footer-content">
         <div class="footer-column">
           <h3>H. A. Farmsgh</h3>
-          <span class="farm">Providing organic, sustainable produce since 2005.</span>
+          <p>Providing organic, sustainable farm produce to families and businesses across Ghana since 2005.</p>
           <div class="social-links">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.facebook.com/share/18Y9SyVPVZ/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/reel/DG8t7bSM8lk/?igsh=cnF2bnJqNWtjNnMx" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/HAFARMS1" aria-label="Twitter/X"><i class="fab fa-twitter"></i></a>
+            <a href="https://youtube.com/@h.afarms" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@miss_aidoo" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.linkedin.com/in/hannah-aidoo-71aa6b242" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
           </div>
         </div>
         <div class="footer-column">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/products.html">Products</a></li>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-column">
-          <h3>Contact</h3>
-          <ul>
-            <li>Mankesim – New Kumasi / Fosu Station</li>
-            <li>hannahaidoo.ha@gmail.com</li>
-            <li>+233542887480</li>
-          </ul>
+          <h3>Contact Us</h3>
+          <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>Mankesim – New Kumasi / Fosu Station, Ghana</span></div>
+          <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>hannahaidoo.ha@gmail.com</span></div>
+          <div class="footer-contact-item"><i class="fas fa-phone"></i><span>+233 542 887 480</span></div>
         </div>
       </div>
       <div class="copyright">
-        <span class="bl">&copy; 2025 H. A. Farmsgh. All rights reserved.</span>
+        <p>&copy; 2025 H. A. Farmsgh. All rights reserved. Crafted with <span style="color:#f4a623;">&#10084;</span> in Ghana.</p>
       </div>
     </div>
   </footer>
-  <script src="about.js"></script>
-</body>
 
+  <script src="/about.js"></script>
+</body>
 </html>

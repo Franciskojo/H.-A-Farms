@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Title (SEO) -->
-  <title>H. A. Farms – Premium Fresh Poultry, Eggs & Farm Inputs in Ghana</title>
+  <title>H. A. Farms – Premium Fresh Poultry, Eggs &amp; Farm Inputs in Ghana</title>
 
   <!-- SEO Meta Tags -->
   <meta name="description" content="Shop farm-fresh poultry, organic eggs, and high-quality farm inputs from H.A. Farmsgh – trusted by farmers and families across Ghana.">
@@ -16,196 +16,293 @@
   <meta http-equiv="Content-Language" content="en">
 
   <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
-  <meta property="og:title" content="H.A. Farmsgh – Fresh Poultry, Eggs & Farm Supplies">
+  <meta property="og:title" content="H.A. Farmsgh – Fresh Poultry, Eggs &amp; Farm Supplies">
   <meta property="og:description" content="Premium farm products from H.A. Farms – your source for fresh poultry, organic eggs, and top-grade agricultural inputs in Ghana.">
-  <meta property="og:image" content="https://hafarmsgh.com/asset/og-image-1200x630.jpg"> <!-- ✅ Replace with actual image (1200x630px recommended) -->
-  <meta property="og:url" content="https://hafarmsgh.com">
+  <meta property="og:image" content="https://hafarmsgh.com/asset/og-image-1200x630.jpg">
+  <meta property="og:url" content="https://hafarmgh.com">
   <meta property="og:type" content="website">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="H.A. Farmsgh – Fresh Poultry, Eggs & Farm Supplies">
+  <meta name="twitter:title" content="H.A. Farmsgh – Fresh Poultry, Eggs &amp; Farm Supplies">
   <meta name="twitter:description" content="Premium farm products from H.A. Farmsgh – your source for fresh poultry, organic eggs, and top-grade agricultural inputs in Ghana.">
-  <meta name="twitter:image" content="https://hafarmsgh.com/asset/og-image-1200x630.jpg">
+  <meta name="twitter:image" content="https://hafarmgh.com/asset/og-image-1200x630.jpg">
 
   <!-- Canonical URL -->
-  <link rel="canonical" href="https://hafarmsgh.com">
+  <link rel="canonical" href="https://hafarmgh.com">
 
   <!-- Favicon -->
   <link rel="icon" href="/asset/hafarms_favicon_32x32.png" type="image/png">
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMOjX8k4lA6Jux1iCFwrH6W2fOZkUwMMu9vIw4u" crossorigin="anonymous">
-
-  <!-- Preload for Performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
 </head>
 
 <body>
 
- <header>
-  <div class="logo"><img src="/asset/hafarms_logo.png" alt="H.A. Farmsgh Logo" /></div>
-  <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">&#9776;</button>
-</button>
-  <nav id="mainNav">
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="products.html">Products</a>
-      <a href="contact.html">Contact</a>
+  <!-- ===== HEADER ===== -->
+  <header id="siteHeader">
+    <div class="logo">
+      <a href="index.html"><img src="/asset/hafarms_logo.png" alt="H.A. Farmsgh Logo"></a>
     </div>
-    <div class="auth-links">
-      <a href="/auth/login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i>Login</a>
-      <a href="/auth/register.html" class="nav-link register-link"><i class="fas fa-user-plus"></i>Register</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">&#9776;</button>
+    <nav id="mainNav">
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Products</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="auth-links">
+        <a href="/auth/login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="/auth/register.html" class="nav-link register-link"><i class="fas fa-user-plus"></i> Register</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <span class="hero-badge"><i class="fas fa-leaf"></i> Farm Fresh · Ghana Proud</span>
+      <h1 class="fade-in">
+        <span id="dynamicHeadline">Fresh, Healthy &amp; Affordable Poultry</span>
+      </h1>
+      <p class="tagline fade-in" style="animation-delay: 0.15s">
+        <span id="dynamicTagline">Premium Eggs and Chicken delivered with care.</span>
+      </p>
+      <div class="cta-buttons">
+        <a href="products.html" class="btn btn-primary slide-up" style="animation-delay: 0.35s">
+          <i class="fas fa-shopping-basket"></i> Shop Now
+        </a>
+        <a href="contact.html" class="btn btn-secondary slide-up" style="animation-delay: 0.5s">
+          <i class="fas fa-envelope"></i> Contact Us
+        </a>
+      </div>
     </div>
-  </nav>
-</header>
-  <!-- Hero Banner Section -->
-  <section class="hero">
-  <div class="hero-content">
-    <h1 class="fade-in">
-      <span id="dynamicHeadline">Fresh, Healthy & Affordable Poultry</span>
-    </h1>
-    <p class="tagline fade-in" style="animation-delay: 0.2s">
-      <span id="dynamicTagline">Premium Eggs and Chicken delivered with care.</span>
-    </p>
-    <div class="cta-buttons">
-      <a href="products.html" class="btn btn-primary slide-up" style="animation-delay: 0.4s">Shop Now</a>
-      <a href="contact.html" class="btn btn-secondary slide-up" style="animation-delay: 0.6s">Contact Us</a>
+
+    <!-- Stats Bar -->
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-number">20+</span>
+        <span class="hero-stat-label">Years of Farming</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number">10K+</span>
+        <span class="hero-stat-label">Happy Customers</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number">100%</span>
+        <span class="hero-stat-label">Natural &amp; Hormone-Free</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number">5★</span>
+        <span class="hero-stat-label">Customer Rating</span>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
-  <!-- Product Highlights Section -->
+  <!-- ===== PRODUCT HIGHLIGHTS ===== -->
   <section class="highlights" id="shop">
-    <h2 class="section-title">Featured Products</h2>
+    <span class="section-label">Our Products</span>
+    <h2 class="section-title">Farm-Fresh. Every Time.</h2>
+    <p class="section-subtitle">From our farm straight to your table — nutritious, ethically raised, and always fresh.</p>
+
     <div class="highlight-grid">
-      <div class="highlight-card">
+      <div class="highlight-card reveal">
         <div class="card-image">
           <img
-            src="https://plus.unsplash.com/premium_photo-1737292149352-f63479229462?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Smart Watch">
+            src="https://plus.unsplash.com/premium_photo-1737292149352-f63479229462?q=80&w=1470&auto=format&fit=crop"
+            alt="Premium Fresh Eggs from H.A. Farmsgh">
         </div>
         <div class="card-content">
+          <span class="card-tag">🥚 Eggs</span>
           <h3 class="card-title">Premium Eggs – Freshness You Can Taste, Quality You Can Trust!</h3>
-          <p class="card-description">Start your day right with H. A. Farmsgh Premium Eggs – nature’s perfect protein, straight from our happy, healthy hens. Carefully gathered daily from free-roaming birds and delivered fresh, our eggs offer unbeatable rich flavor, vibrant yolks, and superior nutrition.</p>
-          <!-- <a href="products.html" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a> -->
+          <p class="card-description">Start your day right with H.A. Farmsgh Premium Eggs — nature's perfect protein, straight from our happy, healthy hens. Carefully gathered daily and delivered fresh, our eggs offer rich flavour, vibrant yolks, and superior nutrition.</p>
         </div>
       </div>
-      <div class="highlight-card">
+
+      <div class="highlight-card reveal">
         <div class="card-image">
           <img
-            src="https://images.unsplash.com/photo-1642102903996-cdad15f5dcdd?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Wireless Headphones">
+            src="https://images.unsplash.com/photo-1642102903996-cdad15f5dcdd?q=80&w=1374&auto=format&fit=crop"
+            alt="Premium Farm-Raised Chicken from H.A. Farmsgh">
         </div>
         <div class="card-content">
+          <span class="card-tag">🍗 Chicken</span>
           <h3 class="card-title">Premium Chicken – Farm-Fresh, Tender, and Naturally Delicious!</h3>
-          <p class="card-description">Discover the unbeatable taste of H. A. Farmsgh Premium Chicken – the gold standard in farm-raised poultry. Grown with care and commitment to quality, our chicken is 100% natural, hormone-free, and ethically sourced to bring you the healthiest and most flavorful meat on the market.</p>
-          <!-- <a href="products.html" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a> -->
+          <p class="card-description">Discover the unbeatable taste of H.A. Farmsgh Premium Chicken — the gold standard in farm-raised poultry. 100% natural, hormone-free, and ethically sourced for the healthiest, most flavourful meat on the market.</p>
         </div>
       </div>
-      <div class="highlight-card">
+
+      <div class="highlight-card reveal">
         <div class="card-image">
           <img
-            src="https://images.unsplash.com/photo-1694854038360-56b29a16fb0c?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Compact Camera">
+            src="https://images.unsplash.com/photo-1694854038360-56b29a16fb0c?q=80&w=1632&auto=format&fit=crop"
+            alt="Premium Farm Inputs from H.A. Farmsgh">
         </div>
         <div class="card-content">
+          <span class="card-tag">🌱 Farm Inputs</span>
           <h3 class="card-title">Premium Farm Inputs – Grow Stronger, Harvest Better!</h3>
-          <p class="card-description">Fuel your farm’s success with H. A. Farmsgh Premium Farm Inputs – your trusted source for high-quality agricultural essentials. Whether you're planting, feeding, or protecting your crops and livestock, we provide reliable, science-backed solutions that boost productivity and yield.</p>
-          <!-- <a href="products.html" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a> -->
+          <p class="card-description">Fuel your farm's success with H.A. Farmsgh Premium Farm Inputs — your trusted source for high-quality agricultural essentials. Science-backed solutions that boost productivity and yield, season after season.</p>
         </div>
       </div>
     </div>
   </section>
-  <!-- Testimonials Section -->
+
+
+  <!-- ===== TESTIMONIALS ===== -->
   <section id="testimonials">
-    <h2>Testimonials</h2>
+    <span class="section-label">Customer Reviews</span>
+    <h2 class="section-title">What Our Customers Say</h2>
+    <p class="section-subtitle">Trusted by families, restaurants, and farmers across Ghana.</p>
+
     <div class="testimonial-carousel">
       <div class="testimonial-items">
+
         <div class="testimonial-item">
-          <!-- <img src="./assets/ester.jpg" alt="Esther Odoi" class="testimonial-img"> -->
-          <p class="testimonial-text">"The chicken I buy from H. A. Farmsgh is always fresh and well-cleaned. You can taste the difference — it’s tender, juicy, and cooks perfectly every time!"</p>
+          <span class="quote-icon">"</span>
           <div class="stars">★★★★★</div>
-          <p class="testimonial-author">Emmanuel A. – Accra</p>
+          <p class="testimonial-text">The chicken I buy from H. A. Farmsgh is always fresh and well-cleaned. You can taste the difference — it's tender, juicy, and cooks perfectly every time!</p>
+          <div class="testimonial-footer">
+            <div class="testimonial-avatar">E</div>
+            <div>
+              <p class="testimonial-author">Emmanuel A.</p>
+              <p class="testimonial-location">Accra, Ghana</p>
+            </div>
+          </div>
         </div>
+
         <div class="testimonial-item">
-          <!-- <img src="./assets/Gideon Hemans.jpg" alt="Gideon Hemans" class="testimonial-img"> -->
-          <p class="testimonial-text">"We’ve switched completely to H. A. Farmsgh poultry for our restaurant. It’s consistently high-quality, and our customers have noticed the improvement too!"</p>
+          <span class="quote-icon">"</span>
           <div class="stars">★★★★☆</div>
-          <p class="testimonial-author">Abena K. – Kumasi</p>
+          <p class="testimonial-text">We've switched completely to H. A. Farmsgh poultry for our restaurant. It's consistently high-quality, and our customers have noticed the improvement too!</p>
+          <div class="testimonial-footer">
+            <div class="testimonial-avatar">A</div>
+            <div>
+              <p class="testimonial-author">Abena K.</p>
+              <p class="testimonial-location">Kumasi, Ghana</p>
+            </div>
+          </div>
         </div>
+
         <div class="testimonial-item">
-          <!-- <img src="./assets/nkr1.jpg" alt="Sarah Johnson" class="testimonial-img"> -->
-          <p class="testimonial-text">"The eggs are always large, clean, and farm-fresh. I no longer buy from the market — H. A. Farmsgh delivers straight to my home and never disappoints!"</p>
+          <span class="quote-icon">"</span>
           <div class="stars">★★★★★</div>
-          <p class="testimonial-author">Josephine M. – Cape Coast</p>
+          <p class="testimonial-text">The eggs are always large, clean, and farm-fresh. I no longer buy from the market — H. A. Farmsgh delivers straight to my home and never disappoints!</p>
+          <div class="testimonial-footer">
+            <div class="testimonial-avatar">J</div>
+            <div>
+              <p class="testimonial-author">Josephine M.</p>
+              <p class="testimonial-location">Cape Coast, Ghana</p>
+            </div>
+          </div>
         </div>
+
         <div class="testimonial-item">
-          <!-- <img src="./assets/nkr1.jpg" alt="Sarah Johnson" class="testimonial-img"> -->
-          <p class="testimonial-text">"As a caterer, reliable poultry is non-negotiable. H. A. Farmsgh gives me just that — clean cuts, prompt delivery, and affordable pricing!"</p>
+          <span class="quote-icon">"</span>
           <div class="stars">★★★★★</div>
-          <p class="testimonial-author">Kwesi T. – Takoradi</p>
+          <p class="testimonial-text">As a caterer, reliable poultry is non-negotiable. H. A. Farmsgh gives me just that — clean cuts, prompt delivery, and affordable pricing!</p>
+          <div class="testimonial-footer">
+            <div class="testimonial-avatar">K</div>
+            <div>
+              <p class="testimonial-author">Kwesi T.</p>
+              <p class="testimonial-location">Takoradi, Ghana</p>
+            </div>
+          </div>
         </div>
+
         <div class="testimonial-item">
-          <!-- <img src="./assets/nkr1.jpg" alt="Sarah Johnson" class="testimonial-img"> -->
-          <p class="testimonial-text">"Their broilers are healthy, well-fed, and taste so good. I feel confident knowing I’m feeding my family poultry raised with care!"</p>
+          <span class="quote-icon">"</span>
           <div class="stars">★★★★★</div>
-          <p class="testimonial-author">Linda O. – Tema</p>
+          <p class="testimonial-text">Their broilers are healthy, well-fed, and taste so good. I feel confident knowing I'm feeding my family poultry raised with care!</p>
+          <div class="testimonial-footer">
+            <div class="testimonial-avatar">L</div>
+            <div>
+              <p class="testimonial-author">Linda O.</p>
+              <p class="testimonial-location">Tema, Ghana</p>
+            </div>
+          </div>
         </div>
+
       </div>
       <!-- Navigation Buttons -->
       <button class="carousel-button prev" aria-label="Previous Testimonial">&#10094;</button>
       <button class="carousel-button next" aria-label="Next Testimonial">&#10095;</button>
     </div>
+
+    <!-- Dots -->
+    <div class="carousel-dots" id="carouselDots"></div>
   </section>
 
 
-  <!-- Quick Links Section -->
+  <!-- ===== QUICK LINKS ===== -->
   <section class="quick-links" id="contact">
+    <span class="section-label">How Can We Help?</span>
+    <h2 class="section-title">We're Here For You</h2>
+    <p class="section-subtitle">Browse our products, reach our team, or get in touch — whatever you need.</p>
+
     <div class="links-container">
-      <div class="link-card">
+      <div class="link-card reveal">
         <div class="link-icon">
-          <i class="fas fa-shopping-cart"></i>
+          <i class="fas fa-shopping-basket"></i>
         </div>
         <h3 class="link-title">Shop Products</h3>
-        <button class="link-btn" onclick="window.location.href='products.html'">Browse Collection</button>
+        <p class="link-description">Browse our full range of fresh poultry, eggs, and farm inputs available for order.</p>
+        <button class="link-btn" onclick="window.location.href='products.html'">
+          Browse Collection <i class="fas fa-arrow-right"></i>
+        </button>
       </div>
-      <div class="link-card">
+
+      <div class="link-card reveal">
         <div class="link-icon">
           <i class="fas fa-headset"></i>
         </div>
         <h3 class="link-title">Customer Support</h3>
-        <button class="link-btn" onclick="window.location.href='tel:+233542887480'">Call Now</button>
+        <p class="link-description">Need help with an order or have a question? Our team is ready to assist you.</p>
+        <button class="link-btn" onclick="window.location.href='tel:+233542887480'">
+          Call Now <i class="fas fa-phone"></i>
+        </button>
       </div>
-      <div class="link-card">
+
+      <div class="link-card reveal">
         <div class="link-icon">
-          <i class="fas fa-envelope"></i>
+          <i class="fas fa-envelope-open-text"></i>
         </div>
-        <h3 class="link-title">Contact Us</h3>
-        <button class="link-btn" onclick="window.location.href='contact.html'">Message</button>
+        <h3 class="link-title">Send a Message</h3>
+        <p class="link-description">Prefer to write? Send us a message and we'll get back to you within 24 hours.</p>
+        <button class="link-btn" onclick="window.location.href='contact.html'">
+          Contact Us <i class="fas fa-paper-plane"></i>
+        </button>
       </div>
     </div>
   </section>
-  <!-- Footer -->
+
+
+  <!-- ===== FOOTER ===== -->
   <footer>
-    <div class="container">
+    <div class="footer-inner">
       <div class="footer-content">
+
         <div class="footer-column">
-          <h3>H. A Farmsgh</h3>
-          <p>Providing organic, sustainable produce since 2005.</p>
+          <h3>H. A. Farmsgh</h3>
+          <p>Providing organic, sustainable farm produce to families and businesses across Ghana since 2005. Quality you can trust, freshness you can taste.</p>
           <div class="social-links">
-            <a href="https://www.facebook.com/share/18Y9SyVPVZ/"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.instagram.com/reel/DG8t7bSM8lk/?igsh=cnF2bnJqNWtjNnMx"><i class="fab fa-instagram"></i></a>
-            <a href="https://x.com/HAFARMS1?t=7EC4HIYV3PUszVxEQk2lXQ&s=08"><i class="fab fa-twitter"></i></a>
-            <a href="https://youtube.com/@h.afarms?si=8-xk7uLcwEmRamwP"><i class="fab fa-youtube"></i></a>
-            <a href="https://www.tiktok.com/@miss_aidoo?_r=1&_d=ejeh6hkk79ej8b&sec_uid=MS4wLjABAAAAx4NZVGrc3oscG7NhgCGhmrvSVzJkuvtEHhKfjV4ntMyY3XKSC-TxHzKRJJxJ8rta&share_author_id=7112019566671561733&sharer_language=en&source=h5_m&u_code=e2c5m9kiji36g5&timestamp=1751122041&user_id=7112019566671561733&sec_user_id=MS4wLjABAAAAx4NZVGrc3oscG7NhgCGhmrvSVzJkuvtEHhKfjV4ntMyY3XKSC-TxHzKRJJxJ8rta&utm_source=whatsapp&utm_campaign=client_share&utm_medium=android&share_iid=7509866140467857157&share_link_id=3e25afd1-0ecd-4f47-8509-b0e9140080c1&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb4907&social_share_type=5&enable_checksum=1"><i class="fab fa-tiktok"></i></a>
-            <a href="https://www.linkedin.com/in/hannah-aidoo-71aa6b242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.facebook.com/share/18Y9SyVPVZ/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/reel/DG8t7bSM8lk/?igsh=cnF2bnJqNWtjNnMx" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/HAFARMS1?t=7EC4HIYV3PUszVxEQk2lXQ&s=08" aria-label="Twitter / X"><i class="fab fa-twitter"></i></a>
+            <a href="https://youtube.com/@h.afarms?si=8-xk7uLcwEmRamwP" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@miss_aidoo" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.linkedin.com/in/hannah-aidoo-71aa6b242" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
           </div>
         </div>
+
         <div class="footer-column">
           <h3>Quick Links</h3>
           <ul>
@@ -213,23 +310,35 @@
             <li><a href="products.html">Products</a></li>
             <li><a href="about.html">About Us</a></li>
             <li><a href="contact.html">Contact</a></li>
+            <li><a href="/auth/login.html">Login</a></li>
+            <li><a href="/auth/register.html">Register</a></li>
           </ul>
         </div>
+
         <div class="footer-column">
-          <h3>Location</h3>
-          <ul>
-            <li> Mankesim – New Kumasi / Fosu Station,</li>
-            <li>hannahaidoo.ha@gmail.com</li>
-            <li>+233542887480</li>
-          </ul>
+          <h3>Contact Us</h3>
+          <div class="footer-contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Mankesim – New Kumasi / Fosu Station, Central Region, Ghana</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>hannahaidoo.ha@gmail.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone"></i>
+            <span>+233 542 887 480</span>
+          </div>
         </div>
+
       </div>
+
       <div class="copyright">
-        <p>&copy; 2025 H. A. Farmsgh. All rights reserved.</p>
-        <!-- <a href="#hero" class="back-to-top">Back to Top</a> -->
+        <p>&copy; 2025 H. A. Farmsgh. All rights reserved. Crafted with <span style="color:#f4a623;">&#10084;</span> in Ghana.</p>
       </div>
     </div>
   </footer>
+
   <script src="script.js"></script>
 </body>
 

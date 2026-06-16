@@ -4,12 +4,23 @@ const CART_API_URL = 'https://h-a-farms-backend.onrender.com/cart';
 let currentPage = 1;
 let pageSize = 6;
 let currentSearch = "";
+let currentCategory = "";
 
 // Load and display products
-async function loadProducts(page = 1, searchTerm = "") {
+async function loadProducts(page = 1, searchTerm = "", category = "") {
+  const container = document.getElementById('productGrid');
+  const emptyState = document.getElementById('emptyState');
+  const resultsCount = document.getElementById('resultsCount');
+
+  // Show skeletons while loading
+  container.style.display = 'grid';
+  emptyState.style.display = 'none';
+  container.innerHTML = Array(6).fill('<div class="skeleton-card"></div>').join('');
+
   try {
     const skip = (page - 1) * pageSize;
-    const url = `${API_URL}?search=${encodeURIComponent(searchTerm)}&limit=${pageSize}&skip=${skip}`;
+    let url = `${API_URL}?search=${encodeURIComponent(searchTerm)}&limit=${pageSize}&skip=${skip}`;
+    if (category) url += `&category=${encodeURIComponent(category)}`;
 
     const response = await fetch(url);
     const data = await response.json();
@@ -17,11 +28,20 @@ async function loadProducts(page = 1, searchTerm = "") {
     const products = data.products || [];
     const total = data.total || 0;
 
-    const container = document.querySelector('.product-grid');
     container.innerHTML = '';
 
+    // Update results count
+    if (resultsCount) {
+      resultsCount.textContent = total > 0
+        ? `Showing ${products.length} of ${total} product${total !== 1 ? 's' : ''}`
+        : '';
+    }
+
     if (products.length === 0) {
-      container.innerHTML = `<p>No products found.</p>`;
+      container.style.display = 'none';
+      emptyState.style.display = 'block';
+      renderPagination(0, 1);
+      return;
     }
 
     products.forEach(product => {
@@ -29,29 +49,36 @@ async function loadProducts(page = 1, searchTerm = "") {
       card.classList.add('product-card');
 
       const imagePath = product.productImage || '';
-      const imageUrl = imagePath ? imagePath : 'https://via.placeholder.com/300x200?text=No+Image';
+      const imageUrl = imagePath || 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&auto=format&fit=crop';
+      const inStock = product.quantity > 0;
+      const stockLabel = inStock ? `In Stock (${product.quantity})` : 'Out of Stock';
+      const cartClass = inStock ? 'addtocart-btn' : 'addtocart-btn disabled';
+      const cartDisabled = inStock ? '' : 'disabled';
 
       card.innerHTML = `
+        <span class="stock-badge${inStock ? '' : ' out'}">${stockLabel}</span>
         <div class="product-image">
-          <img src="${imageUrl}" alt="${product.productName}">
+          <img src="${imageUrl}" alt="${product.productName}" loading="lazy">
         </div>
         <div class="product-info">
+          <p class="product-category">${product.category || 'Farm Produce'}</p>
           <h3 class="product-title">${product.productName}</h3>
-          <div class="product-price">GH₵${product.price.toFixed(2)}</div>
+          <div class="product-price">GH&#8373;${product.price.toFixed(2)}</div>
           <div class="product-meta">
-            <span>${product.category}</span>
-            <span>In Stock: ${product.quantity}</span>
+            <span class="meta-tag"><i class="fas fa-box"></i> ${product.quantity} available</span>
           </div>
           <div class="product-actions">
-            <a href="product-detail.html?id=${product.id}" class="action-btn view-btn">View</a>
-            <a href="#" class="action-btn addtocart-btn" 
-               data-id="${product.id}" 
-               data-name="${product.productName}" 
-               data-price="${product.price}" 
-               data-image="${imageUrl}" 
-               data-stock="${product.quantity}">
-              Add to cart
+            <a href="/product-detail.html?id=${product.id}" class="action-btn view-btn">
+              <i class="fas fa-eye"></i> View
             </a>
+            <button class="action-btn ${cartClass}" ${cartDisabled}
+               data-id="${product.id}"
+               data-name="${product.productName}"
+               data-price="${product.price}"
+               data-image="${imageUrl}"
+               data-stock="${product.quantity}">
+              <i class="fas fa-cart-plus"></i> Add to Cart
+            </button>
           </div>
         </div>
       `;
@@ -63,7 +90,7 @@ async function loadProducts(page = 1, searchTerm = "") {
     attachCartListeners();
   } catch (err) {
     console.error('Failed to load products:', err);
-    alert('Failed to load products. Please try again.');
+    container.innerHTML = '<p style="text-align:center;color:#e53e3e;padding:3rem;">Failed to load products. Please try again.</p>';
   }
 }
 
@@ -92,10 +119,11 @@ function renderPagination(total, currentPage) {
 
 // Attach cart buttons
 function attachCartListeners() {
-  const buttons = document.querySelectorAll('.addtocart-btn');
+  const buttons = document.querySelectorAll('.addtocart-btn:not(.disabled)');
   buttons.forEach(button => {
     button.addEventListener('click', async (e) => {
       e.preventDefault();
+      if (button.disabled) return;
 
       const product = {
         id: button.dataset.id,
@@ -105,7 +133,13 @@ function attachCartListeners() {
         stock: parseInt(button.dataset.stock)
       };
 
+      button.disabled = true;
+      button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding…';
       await handleAddToCart(product);
+      setTimeout(() => {
+        button.disabled = false;
+        button.innerHTML = '<i class="fas fa-cart-plus"></i> Add to Cart';
+      }, 1500);
     });
   });
 }
@@ -201,20 +235,22 @@ async function handleAddToCart(product) {
 
 // DOM Ready
 window.addEventListener('DOMContentLoaded', () => {
-  loadProducts();
+  loadProducts(1, '', '');
 
-  const searchInput = document.querySelector('.search-bar input');
-  const searchButton = document.querySelector('.search-bar button');
+  const searchInput = document.getElementById('searchInput');
+  const searchButton = document.getElementById('searchBtn');
 
   searchButton.addEventListener('click', () => {
     currentSearch = searchInput.value.trim();
-    loadProducts(1, currentSearch);
+    currentPage = 1;
+    loadProducts(1, currentSearch, currentCategory);
   });
 
   searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       currentSearch = searchInput.value.trim();
-      loadProducts(1, currentSearch);
+      currentPage = 1;
+      loadProducts(1, currentSearch, currentCategory);
     }
   });
 });

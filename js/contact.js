@@ -62,6 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById("menuToggle").addEventListener("click", function () {
-    document.querySelector("nav").classList.toggle("open");
+    document.getElementById("mainNav").classList.toggle("open");
   });
 });
